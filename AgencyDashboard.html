@@ -403,7 +403,7 @@ let campaignsData = [];
 // 1. Fetch Clients 
 $.ajax({
     
-    url: `http://localhost:8080/api/agency/clients/all?agencyId=${aid}`, 
+    url: `https://quantifire-iris-backend.onrender.com/api/agency/clients/all?agencyId=${aid}`, 
     type: "GET",
     headers: { "X-Agency-Id": aid },
     success: function (data) { 
@@ -418,7 +418,7 @@ $.ajax({
 
 // 2. Fetch Campaigns
 $.ajax({
-    url: `http://localhost:8080/api/agency/campaigns/all?filter=all`,
+    url: `https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all?filter=all`,
     type: "GET",
     headers: { "X-Agency-Id": aid },
     success: function (data) { 
@@ -485,7 +485,7 @@ $("#globalSearchInput").on("keyup input", function () {
         if (!aid) return;
 
         $.ajax({
-            url: "http://localhost:8080/api/agency/dashboard/summary",
+            url: "https://quantifire-iris-backend.onrender.com/api/agency/dashboard/summary",
             type: "GET",
             headers: { "X-Agency-Id": aid }, 
             success: function (data) {
