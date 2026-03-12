@@ -75,7 +75,7 @@
                 var userPassword = $("#password").val().trim();
 
                 $.ajax({
-                    url: "http://localhost:8080/api/agency/login",
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/login",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({ email: userEmail, password: userPassword }),
@@ -91,7 +91,7 @@
                             now.setTime(now.getTime() + (24 * 60 * 60 * 1000));
                             document.cookie = "isAgencyLoggedIn=true; expires=" + now.toUTCString() + "; path=/; SameSite=Lax";
 
-                            window.location.href = "AgencyDashboard.html";
+                            window.location.href = "index.html";
                         }
                     },
                     error: function (xhr) {
