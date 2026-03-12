@@ -78,6 +78,10 @@
                     url: "https://quantifire-iris-backend.onrender.com/api/agency/login",
                     type: "POST",
                     contentType: "application/json",
+                    // 🌟 YE LINE ADD KARNA SABSE ZAROORI HAI CORS KE LIYE
+                    xhrFields: {
+                        withCredentials: true 
+                    },
                     data: JSON.stringify({ email: userEmail, password: userPassword }),
                     success: function (response) {
                         if (response.status === "success") {
