@@ -1,0 +1,26 @@
+/* Initial State: Sab kuch hidden */
+.glass-card, .pagination-wrapper, .btn-search { display: none !important; }
+
+/* Large Search Button Styling */
+.initial-search-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; text-align: center; }
+.btn-large-search { background: linear-gradient(135deg, #00ffaa 0%, #00b377 100%); color: #05110f; border: none; padding: 18px 45px; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0, 255, 170, 0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.btn-large-search:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 40px rgba(0, 255, 170, 0.4); }
+
+/* Table Visible State: Jab button click ho jaye */
+.table-visible .glass-card { display: block !important; }
+.table-visible .pagination-wrapper { display: flex !important; justify-content: space-between; align-items: center; width: 100%; margin-top: 25px; padding: 0 10px; }
+.table-visible .btn-search { display: block !important; } /* Box ke andar wala button show hoga */
+.table-visible .initial-search-container { display: none !important; }
+
+/* Mobile View Support */
+@media(max-width: 991px){
+    .btn-large-search { padding: 15px 30px; font-size: 1rem; width: 90%; justify-content: center; }
+    .table-visible .pagination-wrapper { flex-direction: column; gap: 15px; }
+}
+
+/* -------------------------------- Back To Search Button All Page CSS  ------------------------------------*/
+
+#backBtnWrapper { display: none; margin-bottom: 20px; justify-content: flex-end; }
+        .table-visible #backBtnWrapper { display: flex;}
+        .btn-action { cursor: pointer;transition: 0.3s ease; }
+         @media(max-width: 991px) {.search-input-wrapper {width: 100%; } }

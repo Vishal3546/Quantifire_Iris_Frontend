@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Client Login</title>
+    <link rel="stylesheet" href="Css/client_style.css">
+    <link rel="stylesheet" href="Css/client_sidebar.css">
+
+    <link rel="stylesheet" href="Css/fontstyle.css">
+    <link rel="stylesheet" href="Css/all.css">
+    
+</head>
+<body class="lbody">
+
+    <div class="login-card">
+        <div class="logo-section">
+            <img src="Images/quantifirelogo.png" alt="Quantifyre Iris Logo" class="logo">
+        </div>
+
+        <h2 class="form-title">Client Login</h2>
+
+        <form action="#">
+            <div class="input-group">
+                <label for="email">Email Id</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="Enter Your Email" required>
+                    <i class="fa-regular fa-envelope input-icon"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Enter Your Password" required>
+                    
+                    <i class="fa-regular fa-eye input-icon" id="toggleEye" style="cursor: pointer; z-index: 10;"></i>
+                </div>
+            </div>
+
+            <div class="forgot-pass">
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="button" class="login-btn" id="loginbtn">Login</button>
+        </form>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        // --- LOGIN BUTTON LOGIC ---
+        $("#loginbtn").off('click').click(function (e) {
+            e.preventDefault(); 
+
+            // 1. Get Values
+            var email = $("#email").val().trim();
+            var password = $("#password").val().trim();
+            var $btn = $(this); 
+
+            // 2. FRONTEND VALIDATION
+            if (email === "" || password === "") {
+                alert("Please fill in both Email and Password.");
+                return; 
+            }
+
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid Email ID.");
+                return;
+            }
+
+            // 3. LOADING STATE
+            var originalText = $btn.text();
+            $btn.text("Verifying...").prop("disabled", true);
+
+            // 4. AJAX CALL
+            $.ajax({
+                url: "http://localhost:8080/api/auth/login",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+                success: function (response) {
+                    if (response.status === "success") {
+                        
+                        // --- YE LINE SABSE JARURI HAI (MISSING THI) ---
+                        // Browser me likh do ki user login hai
+                        localStorage.setItem("userEmail", email);
+                        localStorage.setItem("isLoggedIn", "true"); 
+                        // ---------------------------------------------
+
+                        // Ab Dashboard par jao
+                        window.location.href = "ClientDashboard.html"; 
+                    } else {
+                        alert(response.message || "Login Failed");
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        alert("Invalid Email or Password!"); 
+                    } else if (xhr.status === 0) {
+                        alert("Server Error: Backend start nahi hai.");
+                    } else {
+                        alert("Error: " + xhr.status);
+                    }
+                },
+                complete: function () {
+                    $btn.text(originalText).prop("disabled", false);
+                }
+            });
+        });
+
+        // Toggle Password Logic
+        $('#toggleEye').off('click').click(function() {
+            var passwordField = $('#password');
+            var icon = $(this); 
+            var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+            passwordField.attr('type', type);
+            if (type === 'text') {
+                icon.removeClass('fa-eye').addClass('fa-eye-slash'); 
+            } else {
+                icon.removeClass('fa-eye-slash').addClass('fa-eye'); 
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

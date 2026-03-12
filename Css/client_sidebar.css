@@ -1,0 +1,308 @@
+html,body{background:#050505;height: 100%;}
+
+body{
+      background: radial-gradient(circle at 50% 70%, rgba(41,171,226,0.2), transparent 50%),
+              radial-gradient(circle at 30% 30%, rgba(57,181,74,0.2), transparent 60%);
+  
+    position: fixed;
+    inset: 0;
+}
+
+/* Sidebar Navigation */
+.sidebar nav ul {
+    list-style: none;
+    -padding: 0 15px;
+}
+
+.sidebar nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav a {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: #8b9c9c;
+    padding: 12px 20px;
+    border-radius: 0px;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+.sidebar nav a i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar nav a:hover {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(0, 255, 157, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    border-right: 4px solid #056943;
+    -background: rgba(255, 255, 255, 0.05);
+}
+
+/* Active State */
+.sidebar nav li.active a {
+    background: linear-gradient(90deg, rgba(0, 255, 157, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    color: #00ff9d;
+    border-right: 4px solid #056943;
+}
+
+.sidebar .logo-icon img{
+  width: 100px;
+}
+
+/* table wrap */
+.ac-table-wrap {
+  overflow-x: auto;
+}
+
+/* table */
+.ac-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #D7FCD2;
+  font-size: 14px;
+  min-width: 900px;
+}
+
+.ac-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #D7FCD2;
+  opacity: 0.95;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.ac-table tr:last-child td{
+    border-bottom: 0 !important;
+}
+.ac-table tr td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: #D7FCD2;
+}
+/* hover */
+.ac-table tbody tr:hover {
+  background: rgba(20,80,60,0.15);
+  transition: 0.2s ease;
+}
+/* ----Main Page Scrollbar---- */
+.main-content::-webkit-scrollbar {
+    width: 8px; 
+    height: 5px; 
+}
+
+/* Track */
+.main-content::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+/* Handle */
+.main-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 157, 0.2); 
+    border-radius: 10px;
+}
+
+/* Handle on Hover */
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 157, 0.6); 
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar { left: -320px !important; transition: 0.3s; }
+    .sidebar.active { left: 0 !important; }
+}
+
+
+/* Date Picker Layout */
+
+/* Flatpickr Calendar Customization (Glass Effect) */
+.flatpickr-calendar {
+    background:rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 12px !important;
+}
+
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+    background: #00ff9d !important;
+    border-color: #00ff9d !important;
+    color: #000 !important;
+}
+
+.flatpickr-months .flatpickr-month, .flatpickr-weekdays, span.flatpickr-weekday {
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+.flatpickr-day {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(0, 255, 157, 0.2) !important;
+}
+
+/* --- FLAT PICKR CUSTOM SCROLLBAR FOR MONTH/YEAR DROPDOWN --- */
+
+/* 1. Target the dropdown container specifically */
+.flatpickr-monthDropdown-months::-webkit-scrollbar,
+.numInputWrapper::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* 2. Scrollbar Track (Background) */
+.flatpickr-monthDropdown-months::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* 3. Scrollbar Thumb (Normal State) */
+.flatpickr-monthDropdown-months::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 157, 0.2) !important;
+    border-radius: 10px;
+}
+
+/* 4. Scrollbar Thumb (Hover State) */
+.flatpickr-monthDropdown-months::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 157, 0.6) !important;
+}
+
+.flatpickr-monthDropdown-months option {
+    background-color: #091815;
+    color: #fff;
+}
+
+
+    /* =========================================
+   LANDING PAGE COMPACT FIX (NO SCROLL)
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+    
+    /* Body */
+    .lbody {
+        height: 100vh !important; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center;
+        padding: 10px !important; 
+        overflow: hidden; 
+    }
+
+    .main-container {
+        width: 100%;
+        margin-top: -20px !important; 
+        padding: 0 !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Logo Size */
+    .logo-placeholder img {
+        width: 90px !important; 
+        margin-top: 0 !important;
+        margin-bottom: 10px !important; 
+    }
+
+    /* Heading Compact */
+    .header-content {
+        margin-bottom: 20px !important; 
+    }
+
+    .gradient-text {
+        font-size: 24px !important; 
+        margin-bottom: 5px !important;
+    }
+
+    .subtitle {
+        font-size: 13px !important;
+    }
+
+    /*Cards Container Gap */
+    .cards-container {
+        flex-direction: column;
+        gap: 15px !important; 
+        margin-bottom: 0 !important;
+    }
+
+    /* Individual Card Compact */
+    .role-card {
+        width: 100%;
+        max-width: 280px !important; 
+        padding: 20px 15px !important;
+        height: auto !important;
+        min-height: auto !important;
+    }
+
+    .icon-box {
+        height: 50px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .card-icon {
+        height: 40px !important;
+    }
+
+    .role-card h3 {
+        font-size: 18px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .role-card p {
+        font-size: 12px !important;
+        line-height: 1.4;
+    }
+}
+
+
+       /* =========================================
+   LOGIN PAGE RESPONSIVE FIX
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+    
+    /* Body */
+    .lbody {
+        height: auto !important;
+        min-height: 100vh;
+        padding: 20px 15px !important;
+        align-items: center; 
+        overflow-y: auto !important; 
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Login Card Adjustment */
+    .login-card {
+        width: 100% !important;
+        max-width: 400px !important;
+        padding: 30px 20px !important;
+        margin: 20px 0; 
+    }
+
+    /* Title Font Size */
+    .form-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Input Fields Adjustment */
+    .input-wrapper input {
+        padding: 12px 35px 12px 15px !important;
+        font-size: 14px !important;
+    }
+
+    /* Logo Size */
+    .logo {
+        width: 80px !important;
+        margin-bottom: 5px !important;
+    }
+}
+

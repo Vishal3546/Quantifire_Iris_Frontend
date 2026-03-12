@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Type - Quantifyre Iris</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+</head>
+
+<body class="lbody">
+
+    <div class="main-container">
+
+        <div class="logo-section">
+            <div class="logo-placeholder">
+                <img src="Images/quantifirelogo.png" alt="Logo" class="logo-img">
+            </div>
+        </div>
+
+        <div class="header-content">
+            <h1 class="gradient-text">Choose Your Type</h1>
+            <p class="subtitle">Select your role to continue to the dashboard</p>
+        </div>
+
+        <div class="cards-container">
+
+            <div class="role-card" id="clientBtn">
+                <div class="icon-box">
+                    <img src="Images/Clientslogo.png" alt="Client Icon" class="card-icon">
+                </div>
+                <h3>Client</h3>
+                <p>Access analytics and<br>campaign performance easily</p>
+            </div>
+
+            <div class="role-card" id="agencyBtn">
+                <div class="icon-box">
+                    <img src="Images/agencylogo.png" alt="Agency Icon" class="card-icon">
+                </div>
+                <h3>Agency</h3>
+                <p>Manage Campaigns, Clients,<br>and performance insights.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#clientBtn").click(function () {
+                window.location.href = "ClientLoginPage.html";
+            });
+
+            $("#agencyBtn").click(function () {
+                window.location.href = "AgencyLoginPage.html";
+            });
+        });
+    </script>
+
+</body>
+
+</html>

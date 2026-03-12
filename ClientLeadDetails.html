@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Details | Quantifyre Iris</title>
+
+    <link rel="stylesheet" href="Css/client_style.css">
+    <link rel="stylesheet" href="Css/client_sidebar.css">
+
+     <link rel="stylesheet" href="Css/fontstyle.css">
+    <link rel="stylesheet" href="Css/all.css">
+   
+    <style>
+       
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="sidebar-overlay" id="sidebarOverlay"></div> -->
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-close-btn" id="sidebarClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="Images/ClientSlider.ico">
+                </div>
+                <p>Client Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="ClientDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="ClientCampaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li class="active"><a href="ClientLeads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Clientsetting.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle">
+                    <img src="Images/Slide.ico" alt="Toggle Menu">
+                </div>
+
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                </div>
+
+                <div class="top-profile-actions">
+
+                    <div class="notification-wrapper" onclick="toggleNavDropdown(event, 'notifDropdown')">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico" alt="Notifications">
+                            <span class="notif-count">3</span>
+                        </div>
+
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>registered in Ahmadabad.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-bullhorn"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign</strong></p><span>"Summer Sale Started"</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Payment</strong></p><span>received from Acme Corp.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+
+                    <div class="profile-info" onclick="toggleNavDropdown(event, 'profileDropdown')">
+                        <div class="avatar-small">
+                            <img src="Images/ClientHeader.ico" alt="Profile">
+                        </div>
+                        <div class="text-info">
+                            <h4>Adam Smith</h4>
+                            <p>Client</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron"></i>
+                    </div>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name">Adam Smith</p>
+                            <span class="d-email">adam@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="profile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                            <li><a href="Clientsetting.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li><a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" ><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="lead-header-row">
+                <div class="header-title-group">
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <div class="icon-square">
+                            <img src="Images/Leads50x50.ico">
+                        </div>
+                        <div>
+                            <h2>Lead Details</h2>
+                            <p>View and analyze key lead information</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <a href="ClientLeads.html" class="btn-action">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </a>
+                    <button class="btn-export">
+                        <i class="fa-solid fa-file-csv"></i> Export CSV
+                    </button>
+                    <button class="btn-export">
+                        <i class="fa-solid fa-file-pdf"></i> Export PDF
+                    </button>
+                </div>
+            </div>
+
+            <section class="profile-main-card">
+                <div class="profile-left">
+                    <h1>John Smith</h1>
+                    <p class="profile-details-line">LID-12345 • Mehsana • Summer Sales Campaign</p>
+
+                    <div class="status-indicator">
+                        <span class="status-dot"></span> Qualified
+                    </div>
+                </div>
+
+                <div class="date-box">
+                    <span>Lead Date</span>
+                    <h3>March 25, 2025</h3>
+                </div>
+            </section>
+
+            <section class="lead-stats-grid">
+                <div class="kpi-card-simple">
+                    <p>Conversion Rate</p>
+                    <h2>15.7%</h2>
+                </div>
+                <div class="kpi-card-simple">
+                    <p>Activities</p>
+                    <h2>10</h2>
+                </div>
+                <div class="kpi-card-simple">
+                    <p>Revenue</p>
+                    <h2>₹40,000</h2>
+                </div>
+                <div class="kpi-card-simple">
+                    <p>Lead Score</p>
+                    <h2>80</h2>
+                </div>
+            </section>
+
+            <section class="activities-section">
+                <h3 class="section-title">Activities Log</h3>
+
+                <div class="ac-table-wrap">
+                    <table class="ac-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>03/03/2025</td>
+                                <td>Phone call</td>
+                                <td><span class="badge qualified">Qualified</span></td>
+                                <td>Left Voicemail, no response</td>
+                            </tr>
+                            <tr>
+                                <td>12/03/2025</td>
+                                <td>Follow-up email</td>
+                                <td><span class="badge contacted">Contacted</span></td>
+                                <td>Re-sent product brochure</td>
+                            </tr>
+                            <tr>
+                                <td>25/03/2025</td>
+                                <td>Meeting</td>
+                                <td><span class="badge converted">Converted</span></td>
+                                <td>Discussed requirements</td>
+                            </tr>
+                            <tr>
+                                <td>31/03/2025</td>
+                                <td>Email</td>
+                                <td><span class="badge pending">Pending</span></td>
+                                <td>Awaiting feedback</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-content">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions">
+                <button class="btn-modal btn-modal-cancel" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal btn-modal-delete" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allclient.js"></script>
+
+</body>
+</html>

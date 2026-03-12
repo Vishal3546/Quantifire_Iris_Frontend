@@ -1,0 +1,989 @@
+/* --- GLOBAL RESET --- */
+@font-face {
+    font-family: popins-regular;
+    src: url(/Fonts/Poppins-Regular.ttf);
+}
+/* --- GLOBAL RESET --- */
+@font-face {
+    font-family: popins-semibold;
+    src: url(/Fonts/Poppins-SemiBold.ttf);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+    background: #050505;
+    height: 100%;
+}
+
+body {
+    height: 100vh;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    overflow: hidden;
+    color: white;
+    background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%),
+        radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%);
+    position: fixed;
+    inset: 0;
+}
+
+.lbody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%),
+        radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%);
+
+}
+
+
+/* ========================================= Sidebar Toggle Animation ========================================= */
+.sidebar { width: 260px; transition: all 0.3s ease-in-out; overflow: hidden; white-space: nowrap; }
+.sidebar.collapsed { width: 0px !important; padding: 0px !important; border: none !important; margin-left: 0px !important; opacity: 0; pointer-events: none; }
+.sidebar.collapsed .logo span { opacity: 0; pointer-events: none; display: none; }
+.sidebar.collapsed .user-info h3, .sidebar.collapsed .user-info p { display: none; }
+.sidebar.collapsed .nav-item span { display: none; }
+.sidebar.collapsed .nav-item { justify-content: center; padding: 15px; }
+.sidebar.collapsed .user-info .avatar { width: 40px; height: 40px; font-size: 1rem; margin: 0 auto; }
+
+
+/* ========================================= CLIENT LANDING PAGE CSS ========================================= */
+/* --- LAYOUT --- */
+.main-container { -border: 1px solid red; text-align: center; width: 100%; max-width: 900px; padding: 20px; animation: fadeIn 1s ease-in-out; }
+
+/* --- LOGO --- */
+.logo-section { display: flex; flex-direction: column; align-items: center; }
+.logo-placeholder img { width: 130px; margin-top: 50px; margin-bottom: 10px; }
+
+/* --- HEADINGS --- */
+.header-content { margin-bottom: 50px; }
+.gradient-text { font-size: 42px; font-weight: 700; font-family: popins-semibold; margin-bottom: 10px; background: linear-gradient(90deg, #3facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(0, 242, 254, 0.3); }
+.subtitle { color: #a0a0a0; font-size: 16px; font-weight: 300; }
+
+/* --- CARDS CONTAINER --- */
+.cards-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 50px; }
+
+/* --- INDIVIDUAL CARD STYLING --- */
+.role-card { background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%), radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%); backdrop-filter: blur(15px); border: 1px solid rgba(75, 110, 99, 0.3); border-radius: 20px; padding: 40px 30px; width: 250px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0, 255, 171, 0.1); display: flex; flex-direction: column; align-items: center; text-align: center; height: 220px; }
+.role-card:hover { transform: translateY(-10px); border-color: #00ffab; box-shadow: 0 0 30px rgba(0, 255, 171, 0.3); background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%), radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%); }
+
+/* --- ICON STYLES --- */
+.icon-box { margin-bottom: 10px; height: 80px; display: flex; justify-content: center; align-items: center; }
+.card-icon { width: auto; height: 50px; filter: drop-shadow(0 0 1px rgba(0, 255, 171, 0.5)); transition: transform 0.3s ease; }
+.role-card:hover .card-icon { transform: scale(1.1); }
+
+/* --- TEXT IN CARDS --- */
+.role-card h3 { font-size: 22px; margin-bottom: 10px; color: white; font-weight: 600; }
+.role-card p { font-size: 13px; color: #b0b0b0; line-height: 1.6; }
+
+/* Animation */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Mobile Responsive */
+@media (max-width: 600px) { .cards-container { flex-direction: column; align-items: center; } .gradient-text { font-size: 32px; } }
+
+
+/* ========================================= CLIENT LOGIN PAGE CSS ========================================= */
+
+/* Background Green Glow Effect */
+.glow-bg { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(20, 85, 50, 0.6) 0%, rgba(0, 0, 0, 0) 70%); top: -100px; left: 50%; transform: translateX(-50%); z-index: 0; pointer-events: none; }
+
+/* Glassmorphism Card */
+.login-card { position: relative; width: 100%; max-width: 500px; padding: 40px; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); z-index: 1; color: #fff; }
+
+/* Logo Section */
+.logo-section { text-align: center; margin-bottom: 20px; }
+.logo { width: 100px; margin-bottom: 10px; padding: 2px; }
+.logo-section h3 { font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.iris-text { font-weight: 300; opacity: 0.8; }
+.form-title { text-align: center; font-size: 1.8rem; margin-bottom: 30px; font-weight: 600; }
+
+/* Input Fields */
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-size: 0.9rem; margin-bottom: 8px; color: #cfcfcf; }
+.input-wrapper { position: relative; }
+.input-wrapper input { width: 100%; padding: 12px 40px 12px 15px; background-color: #0D2527; border: 1px solid transparent; border-radius: 6px; color: #cfcfcf; font-size: 0.95rem; outline: none; transition: 0.3s; }
+.input-wrapper input::placeholder { color: #5a6a6e; }
+.input-wrapper input:focus { border-color: #1a5c45; background-color: #11262a; }
+
+/* Icons inside input */
+.input-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #7a8a8e; font-size: 1rem; cursor: pointer; }
+
+/* Forgot Password Link */
+.forgot-pass { text-align: right; margin-bottom: 25px; }
+.forgot-pass a { color: #cfcfcf; font-size: 0.85rem; text-decoration: none; transition: 0.3s; }
+.forgot-pass a:hover { color: #fff; }
+
+/* Login Button */
+.login-btn { width: 100%; padding: 12px; background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%), radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%); border: 1px solid #1f3330; color: #fff; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+.login-btn:hover { background: #1a2e2b; border-color: #2a4d46; }
+#togglePassword { cursor: pointer; z-index: 10; }
+
+
+/* ========================================= CLIENT DASHBOARD PAGE CSS ========================================= */
+
+/* --- RESET & GLOBAL --- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { -background-color: #020504; color: #ffffff; height: 100vh; overflow: hidden; }
+body::before { content: ''; position: absolute; top: -10%; left: -10%; width: 50%; height: 50%; -background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, rgba(0, 0, 0, 0) 70%); z-index: -1; pointer-events: none; }
+.container { display: flex; height: 100vh; }
+
+/* --- SIDEBAR --- */
+.sidebar { width: 260px; -background: rgba(10, 20, 18, 0.4); backdrop-filter: blur(10px); border-right: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; padding: 20px 0; flex-shrink: 0; }
+.logo-icon { font-size: 2rem; color: #00ff9d; margin-bottom: 5px; }
+.user-mini-profile { text-align: center; margin-bottom: 30px; }
+.avatar-circle { width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
+.user-mini-profile p { font-size: 0.9rem; color: #ccc; }
+
+/* --- MAIN CONTENT --- */
+.main-content { flex-grow: 1; padding: 20px 30px; overflow-y: auto; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.search-bar { border: 1px solid #1f302e; padding: 10px 20px; border-radius: 30px; display: flex; align-items: center; width: 400px; }
+.search-bar i { color: #5a6a6e; margin-right: 10px; }
+.search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
+.top-profile-actions { display: flex; align-items: center; gap: 20px; position: relative; }
+.icon-btn { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #00ff9d; cursor: pointer; }
+.profile-info { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.avatar-small { width: 35px; height: 35px; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+.text-info h4 { font-size: 0.9rem; font-weight: 500; }
+.text-info p { font-size: 0.7rem; color: #8b9c9c; }
+
+/* Welcome Section */
+.welcome-section { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
+.welcome-text h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; }
+.welcome-text p { color: #8b9c9c; font-size: 0.9rem; margin-left: 40px; }
+.export-btn { background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%), radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%); color: #ccc; border: 1px solid #2a3a38; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+.export-btn:hover { background: #152523; color: #fff; }
+
+/* Stats Grid */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+.stat-card { background: linear-gradient(145deg, rgba(33, 77, 71, 0.7), rgba(8, 15, 12, 0.75)); padding: 20px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05); }
+.stat-card:hover { transform: translateY(-4px); box-shadow: 0 0 20px rgba(0, 255, 157, 0.25); }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+.icon-box { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; }
+.percent { font-size: 0.8rem; font-weight: 600; }
+.percent.up { color: #fff; }
+.stat-card h2 { font-size: 1.8rem; font-weight: 600; margin-bottom: 5px; }
+.stat-card p { font-size: 0.85rem; color: #8b9c9c; }
+
+/* Bottom Grid */
+.bottom-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+.glass-panel { background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45)); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 20px; }
+.glass-panel h3 { margin-bottom: 20px; font-size: 1.1rem; }
+
+/* Fake Map Styling */
+.map-placeholder { width: 100%; height: 250px; background-color: #0f201d; background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.map-overlay-text { background: rgba(0, 255, 157, 0.2); border: 1px solid #00ff9d; padding: 10px 20px; border-radius: 50px; color: #00ff9d; font-weight: 600; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(0, 255, 157, 0.2); }
+
+/* Locations List */
+.location-list { list-style: none; -background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45)); }
+.location-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.location-item:last-child { border-bottom: none; margin-bottom: 0; }
+.loc-icon { width: 35px; height: 35px; background: #e0e7ff; color: #4f46e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 0.9rem; }
+.loc-icon.color-2 { background: #dcfce7; color: #166534; }
+.loc-icon.color-3 { background: #dbeafe; color: #1e40af; }
+.loc-icon.color-4 { background: #fce7f3; color: #9d174d; }
+.loc-details { flex: 1; }
+.loc-details h4 { font-size: 0.9rem; font-weight: 500; }
+.loc-details p { font-size: 0.75rem; color: #8b9c9c; }
+.loc-count { text-align: right; font-weight: 600; font-size: 0.95rem; }
+.loc-count span { display: block; font-size: 0.7rem; font-weight: 400; color: #8b9c9c; }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .bottom-grid { grid-template-columns: 1fr; } }
+
+
+/* ============ FULL WIDTH ACTIVE CAMPAIGNS SECTION ============ */
+
+.active-campaigns-full { width: 100%; margin-top: 28px; }
+
+.active-campaigns-box { width: 100%; background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45)); border-radius: 14px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); color: #D7FCD2; }
+
+/* header */
+.ac-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.ac-header h3 { margin: 0; color: #D7FCD2; font-size: 18px; font-weight: 600; }
+.ac-view-all { background: rgba(12, 78, 56, 0.25); border: 1px solid rgba(215, 252, 210, 0.20); color: #D7FCD2; padding: 7px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+/* status badges */
+.badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.badge.active { background: rgba(32, 150, 115, 0.22); color: #9FF6C9; border: 1px solid rgba(32, 150, 115, 0.40); }
+.badge.paused { background: rgba(150, 150, 150, 0.15); color: #EAFEEA; border: 1px solid rgba(255, 255, 255, 0.10); }
+
+/* responsive */
+@media (max-width: 900px) { .ac-table { font-size: 12px; min-width: 720px; } }
+
+
+
+/* ========================================= CLIENT CAMPAIGNS MAIN PAGE CSS ========================================= */
+
+/* --- Global Variables & Reset --- */
+:root { --bg-dark: #05080a; --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.1); --primary-neon: #00ffaa; --secondary-neon: #00d4ff; --text-white: #ffffff; --text-gray: #a0a0a0; --font-main: 'Poppins', sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 10% 20%, rgba(0, 255, 170, 0.08) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 40%); color: var(--text-white); height: 100vh; overflow: hidden; }
+
+/* --- Layout Structure --- */
+.dashboard-container { display: flex; height: 100vh; }
+.ac-table a { text-decoration: none; }
+
+/* --- Sidebar Styling --- */
+.sidebar { width: 260px; -background: rgba(10, 20, 18, 0.4); backdrop-filter: blur(10px); border-right: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; padding: 20px 0; flex-shrink: 0; transition: 1s; }
+.sidebar.full { margin-left: -260px; }
+.logo-icon { font-size: 2rem; color: #00ff9d; margin-bottom: 5px; }
+.user-mini-profile { text-align: center; margin-bottom: 30px; }
+.avatar-circle { width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
+.user-mini-profile p { font-size: 0.9rem; color: #ccc; }
+
+/* --- MAIN CONTENT --- */
+.main-content { /* flex: 1; */ padding: 20px 30px; overflow-y: auto; flex-grow: 1; }
+
+/* Top Bar */
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; -border: 1px solid red; }
+.search-bar { border: 1px solid #1f302e; padding: 10px 20px; border-radius: 30px; display: flex; align-items: center; width: 400px; }
+.search-bar i { color: #5a6a6e; margin-right: 10px; }
+.search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
+.icon-btn { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #00ff9d; cursor: pointer; }
+.avatar-small { width: 35px; height: 35px; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+.text-info h4 { font-size: 0.9rem; font-weight: 500; }
+.text-info p { font-size: 0.7rem; color: #8b9c9c; }
+
+/* Page Header */
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.title-text { display: flex; align-items: center; gap: 15px; }
+.icon-square { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-neon); }
+.page-header h1 { font-size: 1.5rem; font-weight: 500; }
+.page-header p { color: var(--text-gray); font-size: 0.9rem; }
+.btn-export { background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%), radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%); border: 1px solid var(--glass-border); color: var(--text-white); padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+.btn-export:hover { box-shadow: 0 0 15px rgba(0, 255, 157, 0.3); border-color: #00ff9d; }
+
+/* Filters */
+.filters-container { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
+.filter-group { position: relative; }
+
+/* Common Input/Select Style */
+.custom-select, .date-input, .search-campaign input { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); color: var(--text-white); padding: 10px 15px; border-radius: 8px; outline: none; font-size: 0.9rem; }
+.custom-select { min-width: 200px; cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300ffaa%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 10px top 50%; background-size: 10px auto; }
+.custom-select option { background: #111; }
+.search-campaign { display: flex; align-items: center; background: rgba(0, 0, 0, 0.2); border-radius: 8px; margin-left: auto; border: 1px solid var(--primary-neon); }
+.search-campaign i { color: var(--text-gray); }
+.search-campaign input { background: transparent; border: none; width: 200px; }
+.campaign-name-cell { display: flex; align-items: center; gap: 15px; }
+.campaign-name-cell div { display: flex; flex-direction: column; }
+.campaign-name-cell span { font-size: 0.75rem; color: var(--text-gray); }
+
+/* Status Badges */
+.status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+.status-badge.active { background: rgba(0, 255, 170, 0.1); color: var(--primary-neon); border: 1px solid rgba(0, 255, 170, 0.2); }
+.status-badge.paused { background: rgba(255, 255, 255, 0.1); color: var(--text-white); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+/* Buttons and Icons in Table */
+.action-icon { cursor: pointer; font-size: 1rem; color: var(--text-white); transition: color 0.2s; }
+.action-icon:hover { color: var(--primary-neon); }
+.btn-report { background: transparent; border: 1px solid var(--primary-neon); color: var(--primary-neon); padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; }
+.btn-report:hover { background: var(--primary-neon); color: #000; box-shadow: 0 0 10px var(--primary-neon); }
+
+/* Utility */
+input[type="checkbox"] { accent-color: var(--primary-neon); cursor: pointer; width: 15px; height: 15px; }
+
+/* --- Pagination Styling --- */
+.pagination-wrapper { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 10px; }
+.pagination-info { color: var(--text-gray); font-size: 0.85rem; }
+.pagination-info span { color: var(--text-white); font-weight: 600; }
+.pagination-controls { display: flex; align-items: center; gap: 8px; }
+.page-btn { width: 35px; height: 35px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.05); color: var(--text-gray); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem; }
+.page-btn:hover:not(:disabled) { border-color: var(--primary-neon); color: var(--primary-neon); background: rgba(0, 255, 170, 0.1); box-shadow: 0 0 10px rgba(0, 255, 170, 0.2); }
+.page-btn.active { background: var(--primary-neon); color: #000; border-color: var(--primary-neon); font-weight: 600; box-shadow: 0 0 15px rgba(0, 255, 170, 0.4); }
+.page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.page-numbers { display: flex; gap: 5px; }
+
+/* ========================================= CLIENT ACTIVE CAMPAIGNS PAGE CSS ========================================= */
+
+.full-page-table th { padding: 18px 15px; font-size: 0.85rem; color: #00ffaa; font-weight: 500; }
+.full-page-table td { padding: 16px 15px; vertical-align: middle; }
+.date-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 10px 15px; border-radius: 8px; outline: none; font-family: 'Poppins', sans-serif; color-scheme: dark; }
+
+/* --- Pagination Styling --- */
+.pagination-wrapper { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 10px; }
+.pagination-info { color: var(--text-gray); font-size: 0.85rem; }
+.pagination-info span { color: var(--text-white); font-weight: 600; }
+.pagination-controls { display: flex; align-items: center; gap: 8px; }
+.page-btn { width: 35px; height: 35px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.05); color: var(--text-gray); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem; }
+.page-btn:hover:not(:disabled) { border-color: var(--primary-neon); color: var(--primary-neon); background: rgba(0, 255, 170, 0.1); box-shadow: 0 0 10px rgba(0, 255, 170, 0.2); }
+.page-btn.active { background: var(--primary-neon); color: #000; border-color: var(--primary-neon); font-weight: 600; box-shadow: 0 0 15px rgba(0, 255, 170, 0.4); }
+.page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.page-numbers { display: flex; gap: 5px; }
+
+
+/* ========================================= CLIENT CAMPAIGNS REPORT PAGE CSS ========================================= */
+
+/* Header Actions */
+.report-header-actions { display: flex; gap: 15px; }
+.btn-back { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; text-decoration: none; font-size: 0.9rem; }
+.btn-back:hover { border-color: #00ff9d; color: #00ff9d; }
+
+/* Campaign Meta Info Box (Top Section) */
+.campaign-meta-box { background: linear-gradient(180deg, rgba(14, 30, 28, 0.8), rgba(8, 15, 12, 0.8)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 25px; margin-bottom: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.meta-item h4 { font-size: 0.75rem; color: #8b9c9c; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.meta-item p { font-size: 1.1rem; font-weight: 600; color: #fff; }
+
+/* Main Grid: Chart vs KPIs */
+.report-grid { display: grid; grid-template-columns: 2.5fr 1fr; gap: 25px; height: 450px; }
+
+/* Chart Section */
+.chart-container { background: linear-gradient(180deg, rgba(9, 20, 18, 0.6), rgba(6, 12, 10, 0.5)); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 2px; position: relative; display: flex; flex-direction: column; }
+.chart-header { margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #cfcfcf; }
+.chart-wrapper { flex: 1; position: relative; width: 100%; }
+
+/* KPI Cards (Right Side) */
+.kpi-column { display: flex; flex-direction: column; gap: 20px; height: 100%; }
+.kpi-card { background: linear-gradient(180deg, rgba(9, 20, 18, 0.6), rgba(6, 12, 10, 0.5)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: transform 0.3s; border-color: #9ce4c8; }
+.kpi-card:hover { transform: translateY(-5px); background: rgba(3, 250, 188, 0.05); border-color: #00ff9d; }
+.kpi-value { font-size: 2.5rem; font-weight: 700; color: #fff; margin-bottom: 5px; text-shadow: 0 0 20px rgba(0, 255, 157, 0.1); }
+.kpi-label { color: #8b9c9c; font-size: 0.9rem; }
+
+/* Responsive */
+@media (max-width: 1024px) { .report-grid { grid-template-columns: 1fr; height: auto; } .kpi-column { flex-direction: row; height: 150px; } }
+
+
+/* ========================================= CLIENT CAMPAIGNS DETAILS PAGE CSS ========================================= */
+
+/* 1. Top Banner Styling */
+.campaign-banner { background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45)); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px 30px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+
+/* Green accent line on left */
+.campaign-banner::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #00ffaa; box-shadow: 0 0 10px #00ffaa; }
+
+.banner-info h2 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
+.banner-meta { font-size: 0.85rem; color: #8b9c9c; display: flex; align-items: center; gap: 10px; }
+.status-dot { height: 8px; width: 8px; background-color: #00ffaa; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px #00ffaa; }
+.banner-date { text-align: right; background: rgba(1, 177, 89, 0.05); padding: 10px 20px; border-radius: 8px; border: 1px solid rgba(10, 190, 214, 0.1); }
+.banner-date span { display: block; font-size: 0.75rem; color: #8b9c9c; }
+.banner-date strong { color: #fff; font-size: 0.95rem; }
+
+/* 2. Middle Grid (Map + KPIs) */
+.middle-section { display: grid; grid-template-columns: 1fr 1fr; /* 50% Map, 50% KPIs */ gap: 25px; margin-bottom: 25px; }
+
+@keyframes pulse { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* KPI Grid (2x2) */
+.kpi-grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; }
+
+/* KPI Card Specifics */
+.kpi-grid-2x2 .stat-card { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; }
+.kpi-grid-2x2 .stat-card h2 { font-size: 1.5rem; }
+
+/* Responsive */
+@media (max-width: 1024px) { .middle-section { grid-template-columns: 1fr; } .map-visual { min-height: 200px; } }
+
+
+
+/* ========================================= CLIENT LEAD MAIN PAGE CSS ========================================= */
+
+/* Align search to left in filters bar */
+.filters-left-align .search-campaign { margin-left: 0; margin-right: 15px; width: 300px; }
+
+/* Status Badge Colors */
+.status-badge.qualified { background: rgba(0, 255, 170, 0.15); color: #00ffaa; border: 1px solid rgba(0, 255, 170, 0.3); }
+.status-badge.contacted { background: rgba(63, 172, 254, 0.15); color: #3facfe; border: 1px solid rgba(63, 172, 254, 0.3); }
+.status-badge.converted { background: rgba(189, 0, 255, 0.15); color: #bd00ff; border: 1px solid rgba(189, 0, 255, 0.3); }
+.status-badge.new { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3); }
+
+/* Action Icon Eye Styling */
+.action-eye { -background: rgba(255, 255, 255, 0.1); width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.3s; color: #fff; }
+.action-eye:hover { -background: #fff; color: #000; }
+
+/* --- FILTERS FULL WIDTH FIX --- */
+.filters-container { display: flex; width: 100%; gap: 20px; margin-bottom: 20px; }
+.search-campaign, .filter-group { flex: 1; min-width: 0; }
+.search-campaign { display: flex; align-items: center; background: rgba(0, 0, 0, 0.2); border: 1px solid #00ffaa; border-radius: 8px; padding: 0 15px; }
+.search-campaign input { width: 100%; background: transparent; border: none; color: #fff; padding: 12px 0; outline: none; }
+
+.custom-select { width: 100%; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 12px 40px 12px 15px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.9rem; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-size: 16px; }
+.custom-select:hover { border-color: #00ffaa; }
+.custom-select:focus { background-color: rgba(255, 255, 255, 0.1); }
+
+
+/* ========================================= CLIENT LEAD DETAILS PAGE CSS ========================================= */
+
+/* 1. Page Header with Buttons */
+.lead-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.header-title-group h2 { font-size: 1.5rem; color: #fff; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+.header-title-group p { color: #8b9c9c; font-size: 0.9rem; }
+.header-actions { display: flex; gap: 15px; }
+.btn-action { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.9rem; transition: 0.3s; border: 1px solid rgb(150, 245, 193); }
+.btn-action:hover { border-color: #00ff9d; background: rgba(0, 255, 157, 0.05); color: #00ff9d; }
+
+/* 2. Main Profile Card */
+.profile-main-card { background: linear-gradient(180deg, rgba(9, 35, 30, 0.85), rgba(5, 15, 12, 0.95)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 30px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+.profile-left h1 { font-size: 2rem; font-weight: 600; color: #fff; margin-bottom: 10px; }
+.profile-details-line { color: #cfcfcf; font-size: 0.95rem; margin-bottom: 15px; }
+.status-indicator { display: inline-flex; align-items: center; gap: 8px; color: #00ff9d; font-weight: 500; }
+.status-dot { width: 10px; height: 10px; background-color: #00ff9d; border-radius: 50%; box-shadow: 0 0 8px #00ff9d; }
+
+/* Right side Date Box */
+.date-box { background: rgba(13, 80, 60, 0.4); border: 1px solid rgba(0, 255, 157, 0.2); padding: 15px 25px; border-radius: 12px; text-align: right; min-width: 200px; }
+.date-box span { display: block; font-size: 0.8rem; color: #8b9c9c; margin-bottom: 5px; }
+.date-box h3 { font-size: 1.2rem; color: #fff; font-weight: 600; }
+
+/* 3. KPI Grid (4 Cards) */
+.lead-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
+.kpi-card-simple { background: linear-gradient(145deg, rgba(33, 77, 71, 0.7), rgba(8, 15, 12, 0.75)); -background: linear-gradient(145deg, rgba(14, 30, 28, 0.7), rgba(8, 15, 12, 0.8)); padding: 25px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; justify-content: center; min-height: 140px; }
+.kpi-card-simple:hover { transform: translateY(-4px); box-shadow: 0 0 20px rgba(0, 255, 157, 0.25); }
+.kpi-card-simple p { color: #8b9c9c; font-size: 0.9rem; margin-bottom: 10px; }
+.kpi-card-simple h2 { font-size: 2.2rem; color: #fff; font-weight: 600; margin: 0; }
+
+/* 4. Activities Log Table */
+.activities-section { background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45)); border-radius: 14px; -padding: 10px; border: 1px solid rgba(255, 255, 255, 0.05); }
+.section-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; margin-top: 15px; margin-left: 15px; color: #fff; }
+
+/* Badge Colors */
+.badge.qualified { background: rgba(0, 255, 170, 0.15); color: #00ffaa; border: 1px solid rgba(0, 255, 170, 0.3); }
+.badge.contacted { background: rgba(63, 172, 254, 0.15); color: #3facfe; border: 1px solid rgba(63, 172, 254, 0.3); }
+.badge.converted { background: rgba(189, 0, 255, 0.15); color: #bd00ff; border: 1px solid rgba(189, 0, 255, 0.3); }
+.badge.pending { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3); }
+
+/* Responsive */
+@media (max-width: 1024px) { .lead-stats-grid { grid-template-columns: repeat(2, 1fr); } .profile-main-card { flex-direction: column; align-items: flex-start; gap: 20px; } .date-box { width: 100%; text-align: left; } }
+
+
+
+/* ========================================= CLIENT SETTING PAGE CSS ========================================= */
+
+
+/* 2. Settings Card Container */
+.settings-card { background: linear-gradient(180deg, rgba(9, 35, 30, 0.85), rgba(5, 15, 12, 0.95)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+.card-title { font-size: 1.1rem; color: #fff; margin-bottom: 20px; font-weight: 500; }
+
+/* 3. Form Layout */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px; }
+.form-group { display: flex; flex-direction: column; }
+.form-group.full-width { grid-column: span 2; }
+.form-group label { font-size: 0.85rem; color: #a0a0a0; margin-bottom: 8px; font-weight: 400; }
+
+/* Input Styling */
+.form-control { background: rgba(14, 40, 35, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px 15px; color: #fff; font-size: 0.95rem; outline: none; transition: 0.3s; font-family: 'Poppins', sans-serif; }
+.form-control:focus { border-color: #00ff9d; -background: rgba(14, 40, 35, 0.9); }
+
+/* Custom Select Arrow */
+select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; cursor: pointer; }
+
+/* Buttons */
+.btn-save { background-color: #105c48; color: #fff; border: 1px solid #1a7a60; padding: 12px 25px; border-radius: 8px; font-size: 0.95rem; cursor: pointer; transition: 0.3s; float: right; margin-top: 10px; }
+.btn-save:hover { background-color: #167a60; box-shadow: 0 0 15px rgba(0, 255, 157, 0.2); }
+
+/* Clearfix */
+.form-actions::after { content: ""; clear: both; display: table; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .form-group.full-width { grid-column: span 1; } }
+
+
+/* -------------------------- CUSTOM DROPDOWN STYLING ---------------------------------------- */
+
+/* Container for the dropdown */
+.custom-dropdown { position: relative; width: 100%; min-width: 200px; font-family: 'Poppins', sans-serif; }
+
+/* The box you click to open */
+.dropdown-selected { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 12px 15px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; transition: 0.3s; }
+.dropdown-selected:hover { border-color: #00ffaa; }
+
+/* The list of options (Hidden by default) */
+.dropdown-options { display: none; position: absolute; top: 110%; left: 0; width: 100%; background: #091815; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); z-index: 100; list-style: none; padding: 5px 0; margin: 0; }
+
+/* Individual Items */
+.dropdown-item { padding: 12px 15px; color: #b0b0b0; cursor: pointer; font-size: 0.9rem; transition: background 0.2s, color 0.2s; }
+
+/* --- THE HOVER EFFECT --- */
+.dropdown-item:hover { background: rgba(14, 78, 56, 0.8); color: #ffffff; border-left: 3px solid #00ffaa; }
+
+/* Active Class*/
+.custom-dropdown.active .dropdown-options { display: block; animation: fadeIn 0.2s ease-in-out; }
+
+/* Rotate arrow when open */
+.custom-dropdown.active .dropdown-selected i { transform: rotate(180deg); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* -------------------------------- CUSTOM DATE INPUT STYLING --------------------------------*/
+
+.date-wrapper { position: relative; width: 100%; min-width: 160px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; display: flex; align-items: center; padding: 0 15px; transition: 0.3s; }
+.date-wrapper:hover { border-color: #00ffaa; }
+.date-wrapper input { width: 100%; background: transparent; border: none; color: #fff; padding: 12px 0; font-size: 0.9rem; font-family: 'Poppins', sans-serif; outline: none; color-scheme: dark; }
+.date-wrapper input::placeholder { color: #b0b0b0; }
+
+/* Custom Calendar Icon Styling */
+.date-wrapper i { color: #a0a0a0; margin-left: 10px; pointer-events: none; font-size: 0.9rem; }
+.date-wrapper input::-webkit-calendar-picker-indicator { background: transparent; bottom: 0; color: transparent; cursor: pointer; height: auto; left: 0; position: absolute; right: 0; top: 0; width: auto; }
+
+
+/* --- Top Bar Styling --- */
+.top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; -padding: 10px 0px; background: transparent; }
+
+/* --- MAP CARD STYLE --- */
+.map-card { display: flex; flex-direction: column; padding: 15px; gap: 10px; border-radius: 12px; height: 450px !important; min-height: 450px !important; overflow: visible; /* Z-index fix */ }
+.map-card h3 { margin: 0; -font-size: 1rem; color: #fff; }
+
+
+
+/* --------------------------------- COMPACT LOCATIONS CARD ------------------------------------------------- */
+
+.locations-card { height: 450px !important; min-height: 450px; display: flex; flex-direction: column; overflow: hidden; padding: 25px !important; }
+.locations-card h3 { margin-bottom: 25px !important; margin-top: 0 !important; flex-shrink: 0; }
+.location-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+.location-item { padding: 8px 0 !important; margin-bottom: 0 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: space-between; }
+.location-item:last-child { border-bottom: none; }
+.loc-icon { width: 32px; height: 32px; font-size: 0.8rem; margin-right: 12px; }
+.loc-details h4 { font-size: 0.85rem; margin: 0; }
+.loc-details p { font-size: 0.7rem; margin: 0; }
+
+/* --- Mobile Adjustment --- */
+@media screen and (max-width: 768px) { .locations-card { height: auto !important; min-height: auto !important; } }
+
+
+
+/* --- TOOLBAR STYLING --- */
+.map-toolbar-inner { display: flex; align-items: center; gap: 15px; width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 12px 15px; border-radius: 12px; position: relative; z-index: 1002; }
+
+/* Inputs Style */
+.map-input { background: transparent; border: 1px solid #444; color: #fff; padding: 0 12px; border-radius: 8px; font-size: 0.9rem; outline: none; height: 40px; transition: 0.3s; }
+.map-input:focus { border-color: #00ffaa; background: rgba(0, 0, 0, 0.2); }
+#customSearchInput { flex-grow: 1; }
+#radiusInput { width: 95px; }
+
+/* Buttons Style */
+.btn-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; border: none; cursor: pointer; flex-shrink: 0; transition: 0.3s; }
+.btn-search { background: #00d4ff; color: #000; font-weight: 600; }
+.btn-search:hover { background: #00bce0; box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+.btn-check { background: rgba(0, 255, 170, 0.1); color: #00ffaa; border: 1px solid rgba(0, 255, 170, 0.3); }
+.btn-check:hover { background: #00ffaa; color: #000; }
+.btn-clear { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border: 1px solid rgba(255, 77, 77, 0.3); }
+.btn-clear:hover { background: #ff4d4d; color: #fff; }
+
+/* Dropdown Style */
+.custom-dropdown { position: relative; min-width: 140px; }
+.dropdown-trigger { background: transparent; border: 1px solid #444; color: #eee; padding: 0 15px; height: 40px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; transition: 0.3s; }
+.dropdown-trigger:hover { border-color: #666; }
+
+/* Dropdown Menu */
+.dropdown-menu { display: none; position: absolute; top: 110%; left: 0; width: 100%; background: #1a1a1a; border: 1px solid #444; border-radius: 8px; padding: 5px 0; list-style: none; z-index: 9999; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
+.custom-dropdown.active .dropdown-menu { display: block; }
+.dropdown-item { padding: 10px 15px; color: #ccc; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; transition: 0.2s; }
+.dropdown-item:hover { background: rgba(0, 255, 170, 0.1); color: #00ffaa; }
+
+
+
+
+/* --------------------------------------- MAP CONTAINER ------------------------------------------ */
+#geofenceMap { width: 100%; flex-grow: 1; border-radius: 8px; z-index: 1; min-height: 200px; }
+
+/* --- MAP GREEN THEME --- */
+.dark-theme-map .leaflet-tile-pane { filter: invert(100%) sepia(100%) hue-rotate(100deg) saturate(150%) brightness(0.9) contrast(1.1); }
+
+/* --- REMOVE LEAFLET TEXT --- */
+.leaflet-control-attribution { display: none !important; }
+
+
+
+/* --------------------------------- PROFILE DROPDOWN STYLING ------------------------------------------ */
+
+.profile-dropdown { display: none; position: absolute; top: 50px; left: 5.5px; -right: 38px; width: 220px; background: #091815; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); z-index: 1000; overflow: hidden; animation: slideUpFade 0.3s ease forwards; }
+
+/* Active State */
+.profile-dropdown.active { display: block; }
+
+/* Header inside Dropdown (Mini Profile info) */
+.dropdown-header-info { padding: 15px 20px; background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.d-name { color: #fff; font-weight: 600; font-size: 0.95rem; }
+.d-email { color: #8b9c9c; font-size: 0.75rem; }
+
+/* List Styling */
+.dropdown-list { list-style: none; padding: 8px 0; }
+.dropdown-list li a { display: flex; align-items: center; gap: 12px; padding: 10px 20px; color: #b0b0b0; text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease; border-left: 3px solid transparent; }
+
+/* Icon Color */
+.dropdown-list li a i { width: 20px; text-align: center; color: #8b9c9c; transition: color 0.2s; }
+
+/* --- HOVER EFFECT (Matching your filters) --- */
+.dropdown-list li a:hover { background: rgba(14, 78, 56, 0.8); color: #ffffff; border-left: 3px solid #00ffaa; }
+.dropdown-list li a:hover i { color: #00ffaa; }
+
+/* Divider Line */
+.dropdown-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 5px 0; }
+
+/* Animation */
+@keyframes slideUpFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media(max-width:767px) { .sidebar { margin-left: -260px; } .sidebar.full { margin-left: 0px; } }
+
+
+/* ====================================================== COMPLETE RESPONSIVE FIXES - MOBILE, TABLET & DESKTOP ====================================================== */
+
+/* --- SIDEBAR OVERLAY FOR MOBILE --- */
+.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); z-index: 9998; backdrop-filter: blur(5px); }
+.sidebar-overlay.active { display: block; }
+
+/* --- TOGGLE BUTTON STYLING --- */
+.menu-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; -background: rgba(255, 255, 255, 0.05); -border-radius: 8px; cursor: pointer; margin-right: 15px; -border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
+
+/* --- MOBILE VIEW (768px ) --- */
+@media screen and (max-width: 768px) {
+    /* Enable scrolling on mobile */
+    body, html { overflow-y: auto !important; height: auto !important; position: relative !important; }
+    /* Container adjustment */
+    .container { flex-direction: column !important; height: auto !important; min-height: 100vh; }
+    /* Sidebar mobile - hidden by default */
+    .sidebar { position: fixed !important; left: -320px !important; top: 0; bottom: 0; width: 280px !important; height: 100vh !important; z-index: 9999 !important; background: rgba(5, 5, 5, 0.98) !important; backdrop-filter: blur(15px) !important; transition: left 0.3s ease-in-out !important; box-shadow: 5px 0 25px rgba(0, 0, 0, 0.8) !important; border-right: 1px solid rgba(0, 255, 170, 0.1) !important; }
+    /* Show sidebar when active */
+    .sidebar.active { left: 0 !important; }
+    /* Override collapsed class on mobile */
+    .sidebar.collapsed { width: 280px !important; opacity: 1 !important; pointer-events: auto !important; }
+    /* Show content on mobile */
+    .sidebar.collapsed .logo span, .sidebar.collapsed .user-info, .sidebar.collapsed .nav-item span { display: block !important; opacity: 1 !important; }
+    /* Main content mobile */
+    .main-content { padding: 15px !important; width: 100% !important; overflow: visible !important; margin-left: 0 !important; }
+    /* Top bar mobile */
+    .top-bar { flex-direction: row !important; align-items: center !important; padding: 10px 0 !important; margin-bottom: 20px !important; flex-wrap: wrap !important; }
+    /* Search bar mobile */
+    .search-bar { width: 100% !important; margin-left: 0 !important; max-width: none !important; order: 3; margin-top: 15px; }
+    /* Stats grid - 1 column on mobile */
+    .stats-grid, .lead-stats-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+    /* Cards mobile */
+    .stat-card { padding: 20px !important; min-height: 120px !important; }
+    /* Bottom grid - stack vertically */
+    .bottom-grid, .middle-section, .report-grid { grid-template-columns: 1fr !important; gap: 20px !important; height: auto !important; }
+    /* Map and locations mobile */
+    .map-card, .locations-card { height: auto !important; min-height: 300px !important; max-height: 400px !important; }
+    /* Map toolbar mobile */
+    .map-toolbar-inner { flex-wrap: wrap !important; gap: 10px !important; padding: 10px !important; }
+    .custom-dropdown, #customSearchInput { min-width: 100px !important; flex: 1 !important; }
+    /* Table mobile scrolling */
+    .ac-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+    .ac-table { min-width: 700px !important; }
+    /* Welcome section mobile */
+    .welcome-section { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+    .welcome-text h1 { font-size: 1.3rem !important; line-height: 1.4; }
+    .welcome-text p { font-size: 0.9rem !important; }
+    /* Campaign meta box mobile */
+    .campaign-meta-box { grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; padding: 20px !important; }
+    /* Profile main card mobile */
+    .profile-main-card { flex-direction: column !important; text-align: center !important; gap: 20px !important; }
+    .date-box { width: 100% !important; text-align: center !important; }
+    /* Filters mobile */
+    .filters-container { flex-direction: column !important; gap: 15px !important; }
+    .search-campaign, .custom-select { width: 100% !important; margin-right: 0 !important; }
+    /* Page header mobile */
+    .page-header { flex-direction: column !important; align-items: flex-start !important; gap: 15px !important; }
+    .btn-export { align-self: flex-start !important; }
+    /* Profile dropdown mobile */
+    .profile-dropdown { position: absolute !important; top: 50px !important; left: -15px; -right: -605px !important; width: calc(100% - 30px) !important; max-width: 220px !important; min-width: 220px; }
+    /* Login page mobile */
+    .cards-container { flex-direction: column !important; align-items: center !important; gap: 20px !important; }
+    .role-card { width: 100% !important; max-width: 320px !important; height: auto !important; min-height: 200px !important; }
+    .gradient-text { font-size: 28px !important; line-height: 1.3 !important; text-align: center !important; }
+    .subtitle { text-align: center !important; padding: 0 20px !important; }
+}
+
+/* --- TABLET VIEW (769px to 1024px ) --- */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    /* Sidebar adjustments */
+    .sidebar { width: 70px !important; transition: 1s; }
+    .sidebar.collapsed { width: 70px !important; }
+    .sidebar:not(.collapsed) { width: 260px !important; }
+    /* Stats grid - 2 columns on tablet */
+    .stats-grid, .lead-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    /* Bottom grid - stack vertically on tablet */
+    .bottom-grid, .middle-section { grid-template-columns: 1fr !important; }
+    /* Map and locations cards tablet */
+    .map-card, .locations-card { height: 350px !important; min-height: 350px !important; }
+    /* Campaign meta box tablet */
+    .campaign-meta-box { grid-template-columns: repeat(2, 1fr) !important; }
+    /* Form grid tablet */
+    .form-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    /* Table adjustment for tablet */
+    .ac-table { min-width: 800px !important; }
+}
+
+/* --- DESKTOP VIEW (1025px ) --- */
+@media screen and (min-width: 1025px) {
+    /* Default sidebar behavior */
+    .sidebar { width: 260px !important; transition: 1s; }
+    .sidebar.collapsed { width: 0px !important; }
+    /* Hide overlay on desktop */
+    .sidebar-overlay { display: none !important; }
+}
+
+/* --- COMMON UTILITY STYLES --- */
+/* Ensure images are responsive */
+img { max-width: 100% !important; height: auto !important; }
+
+/* Fix for input fields on mobile */
+@media screen and (max-width: 768px) {
+    .input-wrapper input, .custom-select, .date-input, .search-campaign input { padding: 14px 15px !important; font-size: 16px !important; }
+}
+
+/* Smooth transitions */
+.sidebar, .main-content, .stat-card, .map-card, .locations-card { transition: all 0.3s ease-in-out; }
+
+/* Prevent horizontal overflow */
+body { overflow-x: hidden !important; max-width: 100% !important; }
+
+/* Mobile view specific fixes */
+@media screen and (max-width: 768px) {
+    .top-profile-actions { flex-wrap: nowrap !important; gap: 10px !important; }
+    .profile-info { min-width: auto !important; }
+    .text-info h4 { font-size: 0.8rem !important; }
+    .text-info p { font-size: 0.7rem !important; }
+}
+
+/* Active campaigns table mobile */
+@media screen and (max-width: 768px) {
+    .active-campaigns-full { margin-top: 20px !important; }
+    .ac-header { flex-direction: column !important; gap: 10px !important; align-items: flex-start !important; }
+    .ac-view-all { align-self: flex-start !important; }
+}
+
+/* Pagination mobile */
+@media screen and (max-width: 768px) {
+    .pagination-wrapper { flex-direction: column !important; gap: 15px !important; align-items: center !important; }
+    .pagination-info { order: 2; }
+    .pagination-controls { order: 1; }
+}
+
+
+/* ====================Responsive======================= */
+
+/* ========================================= 1. GLOBAL SCROLLBAR STYLING (Attractive) ========================================= */
+::-webkit-scrollbar { width: 8px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 170, 0.2); border-radius: 10px; cursor: pointer; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 157, 0.6); box-shadow: 0 0 10px #00ffaa; }
+
+/* --- 2. SIDEBAR CLOSE BUTTON (Hidden on Desktop) --- */
+.sidebar-close-btn { display: none; position: absolute; top: 20px; right: 20px; width: 35px; height: 35px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; align-items: center; justify-content: center; cursor: pointer; z-index: 1005; }
+
+/* --- 3. DESKTOP DEFAULTS (Do Not Change) --- */
+.map-card { height: 450px; min-height: 450px; display: flex; flex-direction: column; overflow: visible !important; }
+.locations-card { height: 450px !important; min-height: 450px; overflow: hidden; display: flex; flex-direction: column; }
+#geofenceMap { width: 100%; flex-grow: 1; border-radius: 8px; z-index: 1; min-height: 200px; }
+.map-toolbar-inner { display: flex; align-items: center; gap: 15px; width: 100%; padding: 12px 15px; position: relative; z-index: 1002; }
+#customSearchInput { flex-grow: 1; }
+#radiusInput { width: 80px; }
+.dark-theme-map .leaflet-tile-pane { filter: invert(100%) sepia(100%) hue-rotate(100deg) saturate(150%) brightness(0.9) contrast(1.1); }
+.leaflet-control-attribution { display: none !important; }
+
+
+/* ========================================================= MOBILE RESPONSIVE (MAX-WIDTH: 768px) ========================================================= */
+@media screen and (max-width: 768px) { /* 1. SIDEBAR STYLE (Transparent + Blur as requested) */ .sidebar { position: fixed !important; top: 0 !important; bottom: 0 !important; left: -100% !important; width: 280px !important; height: 100vh !important; margin: 0 !important; /* Requested Style */ z-index: 100 !important; background: transparent !important; backdrop-filter: blur(10px) !important; border-right: 1px solid rgba(0, 255, 170, 0.2) !important; box-shadow: 10px 0 50px rgba(0, 0, 0, 1) !important; transition: left 0.3s ease-in-out !important; display: flex !important; flex-direction: column !important; visibility: visible !important; opacity: 1 !important; padding-top: 20px !important; } .sidebar.active { left: 0 !important; } .sidebar-close-btn { display: flex !important; } /* 2. OVERLAY FIX (Higher Z-Index to cover Map) */ .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6) !important; z-index: 99 !important; /* Sidebar (100) ke neeche, Map se upar */ backdrop-filter: blur(2px) !important; } .sidebar-overlay.active { display: block !important; } .menu-toggle { z-index: 98 !important; position: relative; } /* 3. LAYOUT & MAP OVERLAP FIX (CRITICAL) */ .container { flex-direction: column !important; height: auto !important; position: relative !important; z-index: 1 !important; } .main-content { margin-left: 0 !important; width: 100% !important; padding: 15px !important; overflow-x: hidden !important; } /* --- Fix: Stack Map & Location vertically with Gap --- */ .bottom-grid { display: flex !important; flex-direction: column !important; height: auto !important; gap: 20px !important; /* Gap badhaya taaki overlap na ho */ margin-bottom: 30px !important; } /* Fix Map Card Height */ .map-card { height: auto !important; min-height: 400px !important; width: 100% !important; display: flex !important; flex-direction: column; overflow: hidden !important; /* Prevent Map Overflow */ } /* Fix Map Height specific for Mobile */ #geofenceMap { width: 100% !important; height: 150px !important; min-height: 30px !important; flex-grow: 0 !important; border-radius: 8px !important; -margin-top: 10px !important; } .locations-card { height: auto !important; min-height: 400px !important; width: 100% !important; } /* 4. MAP TOOLS FIX */ .map-toolbar-inner { flex-wrap: wrap !important; gap: 10px !important; height: auto !important; padding: 15px !important; } .custom-dropdown { flex: 1 1 100% !important; min-width: 100% !important; } #customSearchInput { flex: 1 1 auto !important; min-width: 120px !important; } .btn-search { flex: 0 0 40px !important; } #radiusInput { flex: 1 1 auto !important; min-width: 80px !important; } .btn-check, .btn-clear { flex: 0 0 40px !important; } /* 5. TABLE SCROLL FIX */ .ac-header { flex-direction: row !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 15px !important; } .ac-header h3 { margin: 0 !important; font-size: 1rem !important; } .ac-view-all { padding: 6px 12px !important; font-size: 0.8rem !important; } .ac-table-wrap { width: 100%; overflow-x: auto !important; margin-top: 10px; padding-bottom: 10px; -webkit-overflow-scrolling: touch; } .ac-table { min-width: 700px !important; /* Width force ki taaki scroll aaye */ } .ac-table th, .ac-table td { padding: 10px 8px !important; font-size: 0.8rem !important; white-space: nowrap !important; } /* Top Bar Adjustments */ .top-bar { flex-wrap: wrap !important; gap: 10px !important; } .search-bar { order: 3; width: 100% !important; margin-top: 10px !important; } }
+
+/* Desktop Sidebar Handling */
+@media screen and (min-width: 1025px) { .sidebar.collapsed { width: 0px !important; padding: 0 !important; border: none !important; margin-left: 0 !important; } .sidebar { width: 260px !important; } }
+
+
+/* ===========================================Active Campaign page Responsive================================== */
+
+/* --- 1. Custom Scrollbar for Table & Content --- */
+.ac-table-wrap::-webkit-scrollbar, .main-content::-webkit-scrollbar { width: 6px; height: 6px; }
+.ac-table-wrap::-webkit-scrollbar-track, .main-content::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+.ac-table-wrap::-webkit-scrollbar-thumb, .main-content::-webkit-scrollbar-thumb { background: rgba(0, 255, 170, 0.2); border-radius: 10px; cursor: pointer; }
+
+
+
+/* ========================================= MOBILE RESPONSIVE Max-Width: 768px ========================================= */
+@media screen and (max-width: 768px) { /* --- Page Header Layout --- */ .page-header { flex-direction: column !important; align-items: flex-start !important; gap: 15px !important; } .page-header>div:last-child { width: 100%; display: flex; justify-content: space-between; } /* --- Filters Section Stacking --- */ .filters-container { flex-direction: column !important; align-items: stretch !important; gap: 15px !important; height: auto !important; } .filter-group, .search-campaign { width: 100% !important; margin: 0 !important; flex: none !important; } .search-campaign input, .custom-select, .date-wrapper { width: 100% !important; } /* --- Table Horizontal Scroll Fix --- */ .ac-table-wrap { width: 100%; overflow-x: auto !important; margin-top: 15px; padding-bottom: 10px; } .ac-table { min-width: 800px !important; } /* Forces scroll on mobile */ .ac-table th, .ac-table td { padding: 10px 8px !important; font-size: 0.8rem !important; white-space: nowrap !important; } /* --- Pagination Layout --- */ .pagination-wrapper { flex-direction: column !important; gap: 15px !important; text-align: center; } }
+
+
+/* ========================================= LEAD DETAILS PAGE RESPONSIVE ========================================= */
+/* --- RESPONSIVE MEDIA QUERY (Max-Width: 900px) --- */
+@media screen and (max-width: 900px) { /* 1. Page Header: Stack Title and Buttons */ .lead-header-row { flex-direction: column; align-items: flex-start; gap: 15px; } .header-actions { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 10px; } .btn-action, .btn-export { flex: 1; /* Make buttons equal width on mobile */ justify-content: center; min-width: 120px; } /* 2. Profile Card: Stack Left Info and Right Date */ .profile-main-card { flex-direction: column; align-items: flex-start; gap: 20px; padding: 20px; } .date-box { width: 100%; text-align: left; /* Align text left on mobile */ border-left: 4px solid #00ffaa; /* Visual accent */ border: 1px solid rgba(0, 255, 157, 0.2); } /* 3. Stats Grid: 2 Columns on Tablet/Mobile instead of 4 */ .lead-stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 15px; } }
+
+/* --- EXTRA SMALL MOBILE (Max-Width: 480px) --- */
+@media screen and (max-width: 480px) { .lead-stats-grid { grid-template-columns: 1fr !important; /* 1 Column on very small screens */ } }
+
+
+
+/* ======================================= CAMPAIGN REPORT PAGE RESPONSIVE CSS ============================================================ */
+
+/* --- Tablet View (Between 769px and 1024px) --- */
+@media screen and (min-width: 769px) and (max-width: 1024px) { .report-grid { grid-template-columns: 1fr !important; height: auto !important; /* Remove fixed height */ gap: 20px; } .chart-container { min-height: 350px; } .kpi-column { flex-direction: row !important; width: 100%; gap: 20px; } .kpi-card { height: 120px; /* Fixed height for tablet cards */ } }
+
+/* --- Mobile View (Max-Width: 768px) --- */
+@media screen and (max-width: 768px) { /* 1. Header Adjustments */ .page-header { flex-direction: column !important; align-items: flex-start !important; gap: 15px; } .report-header-actions { width: 100%; display: flex; justify-content: space-between; gap: 10px; } /* Make buttons full width for easier tapping */ .btn-back, .btn-export { flex: 1; justify-content: center; text-align: center; white-space: nowrap; } /* 2. Meta Box (ID, Name, Date) - Turn 4 cols into 2x2 grid */ .campaign-meta-box { grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; padding: 20px !important; } .meta-item h4 { font-size: 0.7rem; /* Slightly smaller label */ } .meta-item p { font-size: 1rem; /* Readable value */ word-break: break-word; } /* 3. Main Grid Layout - Stack Vertically */ .report-grid { display: flex !important; flex-direction: column !important; height: auto !important; gap: 20px; } /* 4. Chart Container Mobile */ .chart-container { width: 100% !important; min-height: 300px; padding-bottom: 10px; } .chart-header { margin-left: 15px !important; font-size: 1rem !important; } /* 5. KPI Section Mobile - Stack Vertically or Grid */ .kpi-column { flex-direction: column !important; height: auto !important; gap: 15px !important; } .kpi-card { width: 100% !important; padding: 20px; min-height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; } .kpi-value { font-size: 2rem; } }
+
+/* --- Small Mobile (Max-Width: 480px) --- */
+@media screen and (max-width: 480px) { .campaign-meta-box { grid-template-columns: 1fr !important; } .report-header-actions { flex-direction: column; } .btn-back, .btn-export { width: 100%; } }
+
+
+/* --------------------------------- Campaign Details Page Responsive --------------------------- */
+
+/* 60% Map / 40% KPI Split */
+.middle-section { display: grid; grid-template-columns: 59% 39%; gap: 2%; margin-bottom: 30px; width: 100%; }
+
+/* Map Card Specifics */
+.map-card { display: flex; flex-direction: column; padding: 15px; gap: 10px; border-radius: 12px; height: 450px !important; background: #091815; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
+.map-card h3 { margin: 0; color: #fff; font-size: 1rem; }
+
+/* KPI Grid inside Middle Section */
+.kpi-grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 15px; height: 450px; /* Match map height */ }
+
+/* Stat Card - layout specifics only */
+.stat-card { display: flex; flex-direction: column; justify-content: center; padding: 20px; border-radius: 12px; }
+
+/* Map Toolbar */
+.map-toolbar-inner { display: flex; align-items: center; gap: 10px; width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 8px 12px; border-radius: 12px; position: relative; z-index: 1002; }
+
+/* Map Inputs & Buttons */
+.map-input { background: transparent; border: 1px solid #444; color: #fff; padding: 0 10px; border-radius: 6px; font-size: 0.85rem; outline: none; height: 35px; transition: 0.3s; }
+.map-input:focus { border-color: #00ffaa; background: rgba(0, 0, 0, 0.2); }
+#customSearchInput { flex-grow: 1; min-width: 130px; }
+#radiusInput { width: 95px; }
+
+.btn-icon { display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 6px; border: none; cursor: pointer; flex-shrink: 0; transition: 0.3s; font-size: 0.9rem; }
+.btn-check { background: rgba(0, 255, 170, 0.1); color: #00ffaa; border: 1px solid rgba(0, 255, 170, 0.3); }
+.btn-check:hover { background: #00ffaa; color: #000; }
+.btn-search { background: #00d4ff; color: #000; }
+.btn-clear { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border: 1px solid rgba(255, 77, 77, 0.3); }
+.btn-clear:hover { background: #ff4d4d; color: #fff; }
+
+/* Dropdown */
+.custom-dropdown { position: relative; min-width: 110px; }
+.dropdown-trigger { background: transparent; border: 1px solid #444; color: #eee; padding: 0 10px; height: 35px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+.dropdown-menu { display: none; position: absolute; top: 110%; left: 0; width: 100%; background: #1a1a1a; border: 1px solid #444; border-radius: 8px; padding: 5px 0; list-style: none; z-index: 9999; }
+.custom-dropdown.active .dropdown-menu { display: block; }
+.dropdown-item { padding: 8px 12px; color: #ccc; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+.dropdown-item:hover { background: rgba(0, 255, 170, 0.1); color: #00ffaa; }
+
+/* Map Container */
+#geofenceMap { width: 100%; flex-grow: 1; border-radius: 8px; z-index: 1; min-height: 250px; }
+.leaflet-control-attribution { display: none !important; }
+.dark-theme-map .leaflet-tile-pane { filter: invert(100%) sepia(100%) hue-rotate(100deg) saturate(150%) brightness(0.9) contrast(1.1); }
+
+
+
+/* ========================================= REPORT PAGE RESPONSIVE MEDIA QUERIES ========================================= */
+
+/* Tablet & Mobile (Max Width 1100px) */
+@media (max-width: 1100px) { .middle-section { grid-template-columns: 1fr; /* Stack vertically */ height: auto; } .map-card { height: auto; min-height: 450px; } .kpi-grid-2x2 { height: auto; min-height: 300px; } }
+
+/* Mobile Specific (Max Width 768px) */
+@media (max-width: 768px) { /* 1. Header & Buttons */ .page-header { flex-direction: column; align-items: flex-start; gap: 15px; } .report-header-actions { width: 100%; display: flex; gap: 10px; } .report-header-actions button, .report-header-actions a { flex: 1; justify-content: center; } /* 2. Banner Fix (Summer Sale Section) */ .campaign-banner { flex-direction: column; align-items: flex-start; padding: 20px; gap: 20px; height: auto; } .banner-info { width: 100%; } .banner-meta { flex-direction: column; align-items: flex-start; gap: 5px; margin-top: 5px; } .banner-meta span { margin-left: 0 !important; } /* Reset margin */ .banner-date { width: 100%; text-align: left; background: rgba(0, 255, 170, 0.05); padding: 15px; border: 1px solid rgba(0, 255, 170, 0.2); } /* 3. Map Toolbar Fix */ .map-toolbar-inner { flex-wrap: wrap; gap: 8px; padding: 10px; } .custom-dropdown { width: 100%; order: 1; } #customSearchInput { width: 100%; order: 2; margin: 5px 0; } #radiusInput { flex-grow: 1; order: 3; } .btn-icon { order: 4; } /* 4. Sidebar Overlay */ .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 999; } .sidebar-overlay.active { display: block; } .sidebar.active { left: 0 !important; } }
+
+
+/* ========================================= Setting Page RESPONSIVE CSS ========================================= */
+
+/* Sidebar Close Button (Hidden on Desktop) */
+.sidebar-close-btn { display: none; position: absolute; top: 20px; right: 20px; width: 35px; height: 35px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; align-items: center; justify-content: center; cursor: pointer; z-index: 1005; }
+
+/* --- MOBILE & TABLET OVERRIDES (Max-Width: 768px) --- */
+@media screen and (max-width: 768px) { .sidebar.active { left: 0 !important; } .sidebar-close-btn { display: flex !important; } /* Overlay */ .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6) !important; z-index: 99 !important; backdrop-filter: blur(2px); } .sidebar-overlay.active { display: block !important; } /* 2. Form Grid Stacking */ .form-grid { grid-template-columns: 1fr !important; gap: 15px; } .form-group.full-width { grid-column: span 1 !important; } /* 3. Layout Adjustments */ .dashboard-container { flex-direction: column !important; height: auto !important; } .main-content { margin-left: 0 !important; width: 100% !important; padding: 15px !important; overflow-x: hidden !important; } .page-header { flex-direction: column; align-items: flex-start; gap: 15px; } .btn-save { width: 100%; margin-top: 10px; float: none; } }
+
+
+/* ========================================= NOTIFICATION DROPDOWN & ANIMATION ========================================= */
+
+/* Wrapper for relative positioning */
+.notification-wrapper { position: relative; display: flex; align-items: center; justify-content: center; }
+
+/* Red Badge Count */
+.notif-count { position: absolute; top: -5px; right: -5px; background: #ff4d4d; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid #0b1615; pointer-events: none; /* Mouse shouldn't trigger on badge */ }
+
+/* Dropdown Container */
+.notif-dropdown { display: none; position: absolute; top: 50px; right: -185px; width: 300px; background: #091815; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); z-index: 1001; overflow: hidden; animation: slideUpFade 0.3s ease forwards; }
+.notif-dropdown.active { display: block; }
+
+/* Header */
+.notif-header { padding: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); }
+.notif-header h4 { font-size: 0.95rem; color: #fff; font-weight: 600; margin: 0; }
+.mark-read { font-size: 0.75rem; color: #00ffaa; cursor: pointer; }
+
+/* List Items */
+.notif-list { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
+.notif-item { padding: 12px 15px; display: flex; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: background 0.2s; cursor: pointer; }
+.notif-item:hover { background: rgba(255, 255, 255, 0.05); }
+.notif-item.unread { background: rgba(0, 255, 170, 0.05); border-left: 3px solid #00ffaa; }
+
+/* Notification Icons */
+.n-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
+.n-icon.success { background: rgba(0, 255, 170, 0.2); color: #00ffaa; }
+.n-icon.info { background: rgba(0, 184, 255, 0.2); color: #00b8ff; }
+.n-icon.warning { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+
+/* Text Styles */
+.n-text { flex-grow: 1; }
+.n-text p { font-size: 0.85rem; color: #fff; margin: 0 0 3px 0; }
+.n-text span { font-size: 0.75rem; color: #8b9c9c; display: block; line-height: 1.3; }
+.n-time { font-size: 0.7rem; color: #666; white-space: nowrap; }
+
+/* Footer */
+.notif-footer { padding: 10px; text-align: center; background: rgba(255, 255, 255, 0.02); border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.notif-footer a { font-size: 0.8rem; color: #00ffaa; text-decoration: none; font-weight: 500; }
+
+
+
+/* ========================================= MOBILE NOTIFICATION FIX & HOVER ANIMATION ========================================= */
+
+/* --- 1. Bell Icon Shake Animation (Hover Effect) --- */
+@keyframes bellShake { 0% { transform: rotate(0); } 15% { transform: rotate(5deg); } 30% { transform: rotate(-5deg); } 45% { transform: rotate(4deg); } 60% { transform: rotate(-4deg); } 75% { transform: rotate(2deg); } 85% { transform: rotate(-2deg); } 100% { transform: rotate(0); } }
+
+.icon-btn.notification:hover img { animation: bellShake 0.5s ease-in-out both; filter: drop-shadow(0 0 8px rgba(0, 255, 170, 0.6)); }
+
+/* --- 2. Mobile Responsive Fix (Center Dropdown) --- */
+@media screen and (max-width: 768px) { .notif-dropdown { position: absolute !important; top: 50px !important; left: 138% !important; transform: translateX(-50%) !important; width: 90% !important; max-width: 300px !important; min-width: 300px; right: auto !important; z-index: 10000 !important; box-shadow: 0 0 50px rgba(0, 0, 0, 0.8) !important; border: 1px solid rgba(0, 255, 170, 0.3) !important; animation: slideUpFade 0.3s ease forwards; } .notif-dropdown::before { display: none !important; } }
+
+
+/* =========================================  Logout MODAL CSS ========================================= */
+
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; backdrop-filter: blur(5px); z-index: 10000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+.modal-overlay.active { display: flex !important; opacity: 1; }
+.modal-content { background: #091815; border: 1px solid #00ff9d; width: 90%; max-width: 450px; padding: 20px 30px; height: auto; border-radius: 20px; text-align: center; box-shadow: 0 0 40px rgba(0, 255, 157, 0.15); transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.modal-overlay.active .modal-content { transform: scale(1); }
+.modal-icon-box { width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background: rgba(0, 255, 170, 0.1); border: 1px solid rgba(0, 255, 170, 0.3); box-shadow: 0 0 25px rgba(0, 255, 170, 0.15); }
+.modal-icon-box1 { width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background: rgba(0, 255, 170, 0.1); border: 1px solid rgba(0, 255, 170, 0.3); box-shadow: 0 0 25px rgba(0, 255, 170, 0.15); }
+.modal-icon-box2 { width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 1px solid rgba(0, 255, 170, 0.3); box-shadow: 0 0 25px rgba(0, 255, 170, 0.15); }
+.modal-icon-box i { font-size: 28px; color: #ffcc00; }
+.modal-icon-box1 i { font-size: 28px; color: #ff4d4d; }
+.modal-icon-box2 i { font-size: 28px; color: rgba(0, 255, 170, 0.5); }
+.modal-content h2 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; font-weight: 600; }
+.modal-content p { color: #8b9c9c; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+.modal-actions { display: flex; gap: 15px; justify-content: center; }
+.btn-modal { padding: 12px 0; width: 100%; border-radius: 10px; font-size: 1rem; cursor: pointer; border: none; font-weight: 500; transition: 0.3s; }
+.btn-modal-cancel { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2) !important; color: #cfcfcf; }
+.btn-modal-cancel:hover { background: rgba(255, 255, 255, 0.05); color: #fff; border-color: #fff; }
+.btn-modal-delete { background: linear-gradient(135deg, #004d40, #002b24); border: 1px solid #00ff9d !important; color: #fff; box-shadow: 0 5px 15px rgba(0, 255, 157, 0.2); }
+.btn-modal-delete:hover { background: #00ff9d; color: #000; box-shadow: 0 8px 20px rgba(0, 255, 157, 0.4); transform: translateY(-2px); }
+
+
+/* =========================================  DATE PICKER CSS ========================================= */
+.flatpickr-calendar.static {
+            left: -17px !important;
+        }
+        .date-wrapper {
+            width: 100%;
+        }
+
+        .flatpickr-input.datepicker-neon+.flatpickr-calendar {
+            margin-top: 10px;
+        }
+
+
+/* =========================================  Settings Page Dropdown CSS ========================================= */        
+        #securitySelectContainer {
+            width: 100%;
+        }
+        #securitySelectContainer .dropdown-selected {
+            height: 48px;
+            background: rgba(14, 40, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #securitySelectContainer.active .dropdown-selected {
+            border-color: #00ffaa;
+        }
+        #securitySelectContainer .dropdown-item:hover {
+            background: rgba(14, 78, 56, 0.8);
+            color: #ffffff;
+            border-left: 3px solid #00ffaa;
+        }

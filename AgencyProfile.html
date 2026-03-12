@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Quantifyre Iris</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link rel="stylesheet" href="Css/fontstyle.css">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="Images/ClientSlider.ico">
+                </div>
+                <p>Agency Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
+
+                    <div class="mobile-only-menu">
+                        <li class="active"><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>    
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                </div>
+                <div class="top-profile-actions" style="position: relative;">
+
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count">3</span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small">
+                            <img src="Images/ClientHeader.ico">
+                        </div>
+                        <div class="text-info">
+                            <h4>Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name">Agency Name</p><span class="d-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="AgencyProfile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" return false;><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Profile50x50.ico" alt="">
+                    </div>
+                    <div>
+                        <h1>My Profile</h1>
+                        <p>Manage your account settings and preferences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-layout-grid">
+
+                <div class="profile-left-col">
+                    <div class="glass-card profile-card-main">
+                        <div class="profile-banner-bg"></div>
+
+                        <div class="profile-avatar-wrapper">
+                            <img src="Images/Kaushalpic.jpeg" id="profileImagePreview" alt="Profile">
+                            <label for="profileUpload" class="camera-btn">
+                                <i class="fa-solid fa-camera"></i>
+                            </label>
+                            <input type="file" id="profileUpload" hidden accept="image/*">
+                        </div>
+
+                        <div class="profile-identity">
+                            <h2>Alex Morgan</h2>
+                            <p>Quantifyre Iris</p>
+                            <span class="status-badge"><i class="fa-solid fa-circle-check"></i> Active</span>
+                        </div>
+
+                        <div class="profile-contact-list">
+                            <div class="pc-divider"></div>
+
+                            <div class="pc-item">
+                                <div class="pc-icon"><i class="fa-regular fa-envelope"></i></div>
+                                <div class="pc-text">
+                                    <span>Email</span>
+                                    <p>alex@quantifyre.com</p>
+                                </div>
+                            </div>
+
+                            <div class="pc-item">
+                                <div class="pc-icon"><i class="fa-solid fa-phone"></i></div>
+                                <div class="pc-text">
+                                    <span>Phone</span>
+                                    <p>+91 98765 43210</p>
+                                </div>
+                            </div>
+
+                            <div class="pc-item">
+                                <div class="pc-icon"><i class="fa-solid fa-globe"></i></div>
+                                <div class="pc-text">
+                                    <span>Website</span>
+                                    <p>www.quantifyre.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-right-col">
+                    <div class="glass-card form-container">
+
+                        <div class="form-header-row"
+                            style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px;">
+                            <h3>Edit Personal Details</h3>
+                        </div>
+
+                        <form>
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" class="form-input" value="Alex"
+                                            placeholder="Enter first name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" class="form-input" value="Morgan"
+                                            placeholder="Enter last name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" class="form-input" value="alex@quantifyre.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" class="form-input" value="+91 98765 43210">
+                                </div>
+                            </div>
+
+                            <div class="form-divider"></div>
+
+                            <div class="form-section-title"><i class="fa-solid fa-location-dot"></i> Address & Location
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <div class="custom-dropdown" id="countryDropdown">
+                                        <div class="dropdown-selected"
+                                            onclick="toggleCustomDropdown('countryDropdown', event)">
+                                            <span id="selectedCountry">India</span>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                        <ul class="dropdown-options">
+                                            <li class="dropdown-item"
+                                                onclick="selectOption('countryDropdown', 'India', 'selectedCountry')">
+                                                India</li>
+                                            <li class="dropdown-item"
+                                                onclick="selectOption('countryDropdown', 'USA', 'selectedCountry')">USA
+                                            </li>
+                                            <li class="dropdown-item"
+                                                onclick="selectOption('countryDropdown', 'UK', 'selectedCountry')">UK
+                                            </li>
+                                            <li class="dropdown-item"
+                                                onclick="selectOption('countryDropdown', 'Canada', 'selectedCountry')">
+                                                Canada</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" class="form-input" value="Ahmedabad">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Street Address</label>
+                                <input type="text" class="form-input" value="1204, Quantifyre Tower, SG Highway">
+                            </div>
+                    </div>
+
+                    <div class="form-actions-bottom" style="border-top: none;">
+                        <button type="button" class="btn btn-cancel">Cancel</button>
+                        <button type="button" class="btn btn-update">Save Changes</button>
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+
+    </div>
+
+    </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script>
+        // --- Profile CUSTOM FORM DROPDOWN LOGIC ---
+        function toggleCustomDropdown(id, event) {
+            event.stopPropagation();
+
+            // Close other open dropdowns first
+            document.querySelectorAll('.custom-dropdown').forEach(d => {
+                if (d.id !== id) d.classList.remove('active');
+            });
+
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('active');
+        }
+
+        function selectOption(dropdownId, value, textId) {
+            document.getElementById(textId).innerText = value;
+            document.getElementById(dropdownId).classList.remove('active');
+        }
+
+        // --- GLOBAL CLICK OUTSIDE TO CLOSE ---
+        document.addEventListener('click', function (event) {
+
+            if (!event.target.closest('.custom-dropdown')) {
+                document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('active'));
+            }
+        });
+    </script>
+</body>
+
+</html>

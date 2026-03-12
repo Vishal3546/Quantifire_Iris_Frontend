@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Locations</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
+    <link rel="stylesheet" href="Css/bigsearchbtn.css">
+    <script src="Js/auth-guard.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn"><i class="fa-solid fa-xmark"></i></div>
+            <div class="logo-section">
+                <div class="logo-icon"><img src="Images/quantifirelogo.png" alt="Quantifyre"></div>
+            </div>
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li class="active"><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
+                
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="mainWrapper">
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square"><img src="Images/Locations50x50.ico"></div>
+                    <div>
+                        <h1>Location Analytics</h1>
+                        <p>Filter, Search, and export your leads</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="filter-bar">
+                <div class="filter-item filter-wide">
+                    <select id="clientSearchSelect" class="search-input-field">
+                        <option value=""></option>
+                    </select>
+                    <span id="clientError" class="error-msg">* Select Client</span>
+                </div>
+
+                <div class="filter-item filter-wide">
+                    <div class="custom-dropdown" id="activityDropdown">
+                        <div class="dropdown-selected" style="height: 40px;"
+                            onclick="toggleDropdown('activityDropdown')">
+                            <span class="selected-text">All Activity</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('activityDropdown', 'All Activity')">All
+                                Activity</li>
+                            <li class="dropdown-item" onclick="selectItem('activityDropdown', 'High')">High</li>
+                            <li class="dropdown-item" onclick="selectItem('activityDropdown', 'Medium')">Medium</li>
+                            <li class="dropdown-item" onclick="selectItem('activityDropdown', 'Low')">Low</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="filter-item filter-wide">
+                    <div class="custom-dropdown" style="flex: 1;">
+                        <select id="locationSearchSelect" class="search-input-field">
+                            <option value=""></option>
+                        </select>
+                        <span id="locationError" class="error-msg">* Select location</span>
+                    </div>
+                </div>
+
+                <button class="btn-search" id="mainSearchBtn" style="padding: 12px 15px; height: 46px;">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+            </div>
+
+            <div class="initial-search-container" id="largeSearchContainer">
+                <button class="btn-large-search" onclick="showResults()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search Locations
+                </button>
+            </div>
+
+            <div id="backBtnWrapper">
+                <button class="btn-action" onclick="resetPage()" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Search
+                </button>
+            </div>
+
+            <div class="glass-card">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Active Campaigns</th>
+                            <th>Leads</th>
+                            <th>Conversions</th>
+                            <th>Conv.Rate</th>
+                            <th>Activity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="locationTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination-wrapper">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="pagination-info">
+                        Showing <span id="start-row">0</span> to <span id="end-row">0</span> of
+                        <span id="total-rows">0</span> entries
+                    </div>
+
+                    <div class="custom-dropdown" id="rowsPerPageDropdown" style="width: 60px;min-width: 60px;">
+                        <div class="dropdown-selected" style="height: 32px; padding: 5px 10px; font-size: 0.8rem;"
+                            onclick="toggleDropdown('rowsPerPageDropdown')">
+                            <span class="selected-text">4</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+                        </div>
+                        <ul class="dropdown-options" style="bottom: 100%; top: auto; margin-bottom: 5px;">
+                            <li class="dropdown-item" onclick="changeRowsPerPage(4)">4</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(10)">10</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(25)">25</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(50)">50</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(100)">100</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pagination-controls">
+                    <button class="page-btn prev-btn" onclick="prevPage(event)"><i
+                            class="fa-solid fa-chevron-left"></i></button>
+                    <div id="page-numbers" class="page-numbers"></div>
+                    <button class="page-btn next-btn" onclick="nextPage(event)"><i
+                            class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        var allLocationsLocal = [];
+        var filteredLocations = [];
+        var currentPage = 1;
+        var rowsPerPage = 4;
+
+        $(document).ready(function () {
+            // 1. Initialize Select2
+            $('#clientSearchSelect').select2({
+                placeholder: "Select/Search Client",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $('#locationSearchSelect').select2({
+                placeholder: "Select/Search Location",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // 2. Load Data
+            loadLocations();
+            loadClientsForSearch();
+
+            // 3. Validation Clear on Change
+            $('#clientSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#clientError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+            });
+
+            $('#locationSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#locationError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+            });
+
+            // 4. MAIN SEARCH BUTTON CLICK
+            $("#mainSearchBtn, #largeSearchContainer button").on("click", function (e) {
+                e.preventDefault();
+
+                const selClient = $('#clientSearchSelect').val();
+                const selLoc = $('#locationSearchSelect').val();
+                let isValid = true;
+
+                // Validation Check
+                if (!selClient) {
+                    $("#clientError").fadeIn();
+                    $('#clientSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                    isValid = false;
+                }
+                if (!selLoc) {
+                    $("#locationError").fadeIn();
+                    $('#locationSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    $("#mainWrapper").addClass("table-visible");
+                    performSearch();
+                }
+            });
+        });
+
+        function loadLocations() {
+    const aid = localStorage.getItem("agencyId"); // Agency ID
+    
+    $.ajax({
+        url: "http://localhost:8080/api/agency/locations/all",
+        type: "GET",
+        headers: {
+            "X-Agency-Id": aid // HEADER YAHAN PASS KIYA
+        },
+        success: function (data) {
+            allLocationsLocal = data;
+            // Location dropdown bharna
+            let locSelect = $('#locationSearchSelect').empty().append('<option value=""></option>');
+            locSelect.append('<option value="all_locations">All Locations</option>');
+            let uniqueLocs = [...new Set(data.map(item => item.targetLocation))];
+            uniqueLocs.forEach(l => { if (l) locSelect.append(new Option(l, l)); });
+            
+            // Initial load pe sab dikhane ke liye (optional):
+            // displayLocations(data);
+        },
+        error: function(xhr) {
+            console.error("Error loading locations:", xhr.responseText);
+        }
+    });
+}
+
+function loadClientsForSearch() {
+    const aid = localStorage.getItem("agencyId");
+    
+    $.ajax({
+        // Yahan Query Param hatakar Header use kar rahe hain (best practice)
+        url: "http://localhost:8080/api/agency/clients/all",
+        type: "GET",
+        data: { agencyId: aid }, // Agar clients Controller ko query param chahiye
+        headers: { "X-Agency-Id": aid }, // Agar clients Controller ko header chahiye
+        success: function (data) {
+            let clientSelect = $('#clientSearchSelect').empty().append('<option value=""></option>');
+            clientSelect.append('<option value="all_clients">All Clients</option>');
+            data.forEach(client => {
+                let name = client.clientName || client.client_name || client.CLIENTNAME;
+                if (name) clientSelect.append(new Option(name, name));
+            });
+        }
+    });
+}
+
+        function performSearch() {
+            
+            const selClient = $('#clientSearchSelect').val();
+            const selLoc = $('#locationSearchSelect').val();
+            const selActivity = $('#activityDropdown .selected-text').text().trim();
+
+            // Filter Logic
+            let rawFiltered = allLocationsLocal.filter(item => {
+                const matchClient = (selClient === "all_clients") ? true : (item.clientName === selClient);
+                const matchLoc = (selLoc === "all_locations") ? true : (item.targetLocation === selLoc);
+                return matchClient && matchLoc;
+            });
+
+            // Aggregation (Group by City)
+            let citySummary = {};
+            rawFiltered.forEach(item => {
+                let city = item.targetLocation;
+                if (!citySummary[city]) {
+                    citySummary[city] = { targetLocation: city, activeCampaigns: 0, leads: 0, totalConversions: 0, conversionRate: 0, count: 0 };
+                }
+                citySummary[city].activeCampaigns += parseInt(item.activeCampaigns || 0);
+                citySummary[city].leads += parseInt(item.leads || 0);
+                citySummary[city].totalConversions += parseInt(item.totalConversions || 0);
+                citySummary[city].conversionRate += parseFloat(item.conversionRate || 0);
+                citySummary[city].count++;
+            });
+
+            filteredLocations = Object.values(citySummary).map(loc => {
+                loc.conversionRate = (loc.conversionRate / loc.count).toFixed(2);
+                if (loc.leads > 100) loc.activity = "High";
+                else if (loc.leads >= 50) loc.activity = "Medium";
+                else loc.activity = "Low";
+                return loc;
+            });
+
+            if (selActivity !== "All Activity") {
+                filteredLocations = filteredLocations.filter(l => l.activity === selActivity);
+            }
+
+            currentPage = 1;
+            displayLocations(filteredLocations);
+        }
+
+        function changeRowsPerPage(val) {
+    rowsPerPage = parseInt(val);
+    $('#rowsPerPageDropdown .selected-text').text(val);
+    $('#rowsPerPageDropdown').removeClass('active');
+    currentPage = 1; // Page 1 par reset karein
+    displayLocations(filteredLocations); // Table refresh karein
+}
+
+        function displayLocations(dataList) {
+            let tbody = $("#locationTableBody").empty();
+            if (dataList.length === 0) {
+                tbody.append("<tr><td colspan='7' style='text-align:center; padding:20px;'>No data found.</td></tr>");
+                return;
+            }
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const paginatedData = dataList.slice(start, start + rowsPerPage);
+
+            paginatedData.forEach(loc => {
+                let dotClass = loc.activity === "High" ? "ac-high" : (loc.activity === "Medium" ? "ac-med" : "ac-low");
+                tbody.append(`<tr>
+                <td><strong>${loc.targetLocation}</strong></td>
+                <td>${loc.activeCampaigns}</td>
+                <td>${loc.leads}</td>
+                <td>${loc.totalConversions}</td>
+                <td>${loc.conversionRate}%</td>
+                <td><div class="activity-wrapper"><span class="activity-dot ${dotClass}"></span> ${loc.activity}</div></td>
+                <td><a href="LocationDetails.html?location=${encodeURIComponent(loc.targetLocation)}" class="action-btn"><i class="fa-regular fa-eye"></i></a></td>
+            </tr>`);
+            });
+
+            updatePaginationInfo(start + 1, Math.min(start + rowsPerPage, dataList.length), dataList.length);
+            generatePageNumbers(Math.ceil(dataList.length / rowsPerPage));
+        }
+
+        // --- Pagination helpers ---
+        function updatePaginationInfo(start, end, total) {
+            $("#start-row").text(total === 0 ? 0 : start);
+            $("#end-row").text(end);
+            $("#total-rows").text(total);
+            $(".prev-btn").prop("disabled", currentPage === 1);
+            $(".next-btn").prop("disabled", currentPage === Math.ceil(total / rowsPerPage) || total === 0);
+        }
+
+        function generatePageNumbers(totalPages) {
+            let container = $("#page-numbers").empty();
+            for (let i = 1; i <= totalPages; i++) {
+                container.append(`<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`);
+            }
+        }
+
+        function goToPage(p) { currentPage = p; displayLocations(filteredLocations); }
+        function prevPage() { if (currentPage > 1) { currentPage--; displayLocations(filteredLocations); } }
+        function nextPage() { if (currentPage < Math.ceil(filteredLocations.length / rowsPerPage)) { currentPage++; displayLocations(filteredLocations); } }
+        // 1. Sirf ek dropdown khule rehne ka logic
+        function toggleDropdown(id) {
+            // Pehle baaki sabhi custom dropdowns se 'active' class hatao
+            $('.custom-dropdown').not('#' + id).removeClass('active');
+
+            // Ab current wale ko toggle karo
+            $('#' + id).toggleClass('active');
+        }
+
+        // 2. Outside click to close logic
+        $(document).on('click', function (e) {
+            // Agar click dropdown button ya uske options par nahi hua hai
+            if (!$(e.target).closest('.custom-dropdown').length) {
+                $('.custom-dropdown').removeClass('active');
+            }
+
+            // Select2 dropdowns click hone par custom dropdown band kar do
+            if ($(e.target).closest('.select2-container').length) {
+                $('.custom-dropdown').removeClass('active');
+            }
+        });
+
+        // 3. Select2 open hone par custom dropdown band karne ka logic
+        $('#clientSearchSelect, #locationSearchSelect').on('select2:open', function () {
+            $('.custom-dropdown').removeClass('active');
+        }); function selectItem(id, txt) { $(`#${id} .selected-text`).text(txt); $(`#${id}`).removeClass('active'); if ($("#mainWrapper").hasClass("table-visible")) performSearch(); }
+
+        function resetPage() {
+            $("#mainWrapper").removeClass("table-visible");
+            $('#clientSearchSelect, #locationSearchSelect').val(null).trigger('change');
+            $("#clientError, #locationError").hide();
+            $('.select2-selection').css('border-color', '');
+        }
+
+        function updatePaginationInfo(start, end, total) {
+            $("#start-row").text(total === 0 ? 0 : start);
+            $("#end-row").text(end);
+            $("#total-rows").text(total);
+            $(".prev-btn").prop("disabled", currentPage === 1);
+            $(".next-btn").prop("disabled", currentPage === Math.ceil(total / rowsPerPage) || total === 0);
+        }
+
+        function generatePageNumbers(totalPages) {
+            let container = $("#page-numbers").empty();
+            for (let i = 1; i <= totalPages; i++) {
+                container.append(`<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`);
+            }
+        }
+
+        function goToPage(p) { currentPage = p; displayLocations(filteredLocations); }
+        function prevPage() { if (currentPage > 1) { currentPage--; displayLocations(filteredLocations); } }
+        function nextPage() { if (currentPage < Math.ceil(filteredLocations.length / rowsPerPage)) { currentPage++; displayLocations(filteredLocations); } }
+        function toggleDropdown(id) { $('.custom-dropdown').not('#' + id).removeClass('active'); $('#' + id).toggleClass('active'); }
+        function selectItem(id, txt) { $(`#${id} .selected-text`).text(txt); $(`#${id}`).removeClass('active'); if ($("#mainWrapper").hasClass("table-visible")) performSearch(); }
+    </script>
+</body>
+
+</html>

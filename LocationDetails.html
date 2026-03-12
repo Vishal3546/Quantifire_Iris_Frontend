@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehsana Location Details</title>
+
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/auth-guard.js"></script>
+    <script src="Js/chart.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon"><img src="Images/quantifirelogo.png" alt="Quantifyre"></div>
+            </div>
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li class="active"><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Locations50x50.ico">
+                    </div>
+                    <div>
+                        <h1 style="color: #fff;">Mehsana</h1>
+                        <p>Mehsana , Gujarat</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <a href="Locations.html" class="btn-action" style="background: #031414;"><i
+                            class="fa-solid fa-arrow-left"></i> Back</a>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-bottom: 25px;">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Client Name</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campaignTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="details-grid">
+                <div class="chart-section">
+                    <div class="chart-title">Performance Overview</div>
+                    <div class="chart-wrapper"><canvas id="performanceChart"></canvas></div>
+                </div>
+                <div class="stats-sidebar">
+                    <div class="stat-card-small">
+                        <div class="stat-number"></div>
+                        <div class="stat-label">Visitors</div>
+                    </div>
+                    <div class="stat-card-small">
+                        <div class="stat-number"></div>
+                        <div class="stat-label">Leads</div>
+                    </div>
+                    <div class="stat-card-small">
+                        <div class="stat-number"></div>
+                        <div class="stat-label">Conversion Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demographics-section">
+                <div class="chart-title">Demographics</div>
+                <div class="demo-grid">
+                    <div class="demo-column">
+                        <div class="demo-group">
+                            <div class="demo-label"><span>18-24</span><span></span></div>
+                            <div class="progress-track">
+                                <div class="progress-fill" data-width="65%" style="width: 0;"></div>
+                            </div>
+                        </div>
+                        <div class="demo-group">
+                            <div class="demo-label"><span>25-34</span><span></span></div>
+                            <div class="progress-track">
+                                <div class="progress-fill" data-width="50%" style="width: 0;"></div>
+                            </div>
+                        </div>
+                        <div class="demo-group">
+                            <div class="demo-label"><span>35-44</span><span></span></div>
+                            <div class="progress-track">
+                                <div class="progress-fill" data-width="35%" style="width: 0;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-column">
+                        <div class="demo-group">
+                            <div class="demo-label"><span>Male</span><span></span></div>
+                            <div class="progress-track">
+                                <div class="progress-fill" data-width="80%" style="width: 0;"></div>
+                            </div>
+                        </div>
+                        <div class="demo-group">
+                            <div class="demo-label"><span>Female</span><span></span></div>
+                            <div class="progress-track">
+                                <div class="progress-fill" data-width="55%" style="width: 0;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationName = urlParams.get('location');
+
+        if (!locationName) {
+            alert("Location Name missing!");
+            window.location.href = "Locations.html";
+            return;
+        }
+
+        // Agency ID from storage
+        const agencyId = localStorage.getItem("agencyId");
+        
+        if(!agencyId) {
+            alert("Session expired. Please log in.");
+            window.location.href = "AgencyLogin.html";
+            return;
+        }
+
+        // AJAX: Fetch location details securely
+        $.ajax({
+            url: "http://localhost:8080/api/agency/locations/details?name=" + encodeURIComponent(locationName),
+            type: "GET",
+            headers: {
+                "X-Agency-Id": agencyId // <-- YAHAN HEADER ADD KIYA
+            },
+            success: function (data) {
+                console.log("Location details loaded:", data);
+
+                // 1. Title Update
+                $("h1").text(data.locationName);
+                $(".page-header p").text(data.locationName + " , India"); // Custom logic based on location
+
+                // 2. Summary Stats update (Handling null/undefined safely)
+                $(".stats-sidebar .stat-card-small:eq(0) .stat-number").text(data.visitors || '0'); 
+                $(".stats-sidebar .stat-card-small:eq(1) .stat-number").text(data.leads || 0); 
+                $(".stats-sidebar .stat-card-small:eq(2) .stat-number").text((data.conversionRate || 0) + "%"); 
+
+                // 3. Campaigns Table Render
+                let tableRows = "";
+                if (data.campaigns && data.campaigns.length > 0) {
+                    data.campaigns.forEach(camp => {
+                        let statusClass = camp.status === 'Active' ? 'st-active' : (camp.status === 'Completed' ? 'st-completed' : 'st-paused');
+                        tableRows += `
+                            <tr>
+                                <td><strong>${camp.campaignName}</strong><br><span style="font-size:0.75rem; color:#888;">Started ${camp.startDate || 'N/A'}</span></td>
+                                <td>${camp.clientName || 'N/A'}</td>
+                                <td>${camp.targetLocation}</td>
+                                <td><span class="status-pill ${statusClass}">${camp.status || 'Unknown'}</span></td>
+                            </tr>`;
+                    });
+                } else {
+                    tableRows = "<tr><td colspan='4' style='text-align:center;'>No campaigns found in this location.</td></tr>";
+                }
+                $("#campaignTableBody").html(tableRows);
+
+                // 4. Render Chart
+                renderChart(data.leads || 0); 
+                
+                // 5. Demographics Bar update
+                updateDemographics(data.campaigns);
+            },
+            error: function (xhr) {
+                if(xhr.status === 403) {
+                    alert("Unauthorized access. You don't have permission for this location.");
+                    window.location.href = "Locations.html";
+                } else if(xhr.status === 404) {
+                    // Yahan hum table ko khali kar rahe hain agar no data ho
+                    $("h1").text(locationName);
+                    $("#campaignTableBody").html("<tr><td colspan='4' style='text-align:center;'>No active data for this location.</td></tr>");
+                    renderChart(0);
+                } else {
+                    alert("Error loading location details.");
+                }
+            }
+        });
+
+        // Demographics Animation Logic (To be updated with real backend data in future)
+        function updateDemographics(campaigns) {
+            // Filhal sirf frontend bar animation, isko backend logic aane par change karein
+            setTimeout(function () {
+                $('.progress-fill').each(function () {
+                    var bar = $(this);
+                    var targetWidth = bar.attr('data-width');
+                    bar.css('width', targetWidth);
+                });
+            }, 300);
+        }
+
+        // Dynamic Chart Render
+        function renderChart(leadsCount) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(0, 212, 255, 0.4)');
+            gradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
+
+            // Handle if leads is 0 so graph isn't broken
+            let chartData = leadsCount > 0 
+                ? [leadsCount * 0.4, leadsCount * 0.7, leadsCount * 0.6, leadsCount] 
+                : [0, 0, 0, 0];
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Leads Performance',
+                        data: chartData, 
+                        borderColor: '#3facfe',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#8b9c9c' } },
+                        y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#8b9c9c' } }
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
+
+</html>

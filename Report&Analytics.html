@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Report & Analytics</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="Css/dateflatpickr.min.css">
+    <link rel="stylesheet" href="Css/datestyle.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
+    <link rel="stylesheet" href="Css/bigsearchbtn.css">
+    <script src="Js/auth-guard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn"><i class="fa-solid fa-xmark"></i></div>
+            <div class="logo-section">
+                <div class="logo-icon"><img src="Images/quantifirelogo.png" alt="Quantifyre"></div>
+            </div>
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li class="active"><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report &
+                            Analytics</a></li>
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="mainWrapper">
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square"><img src="Images/Report&Analytics50x50.ico"></div>
+                    <div>
+                        <h1>Reports & Analytics</h1>
+                        <p>View and analyze key marketing metrics</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-filter-bar" style="display: flex; gap: 15px; margin-bottom: 25px; align-items: center;">
+
+                <div class="custom-dropdown" style="flex: 1;">
+                    <select id="clientSearchSelect" class="search-input-field">
+                        <option value=""></option>
+                    </select>
+                    <span id="clientError" class="error-msg">* Select Client</span>
+                </div>
+
+                <div class="custom-dropdown">
+                    <div class="custom-dropdown" style="flex: 1;">
+                        <select id="locationSearchSelect" class="search-input-field">
+                            <option value=""></option>
+                        </select>
+                        <span id="locationError" class="error-msg">* Select Location</span>
+                    </div>
+                </div>
+
+                <div class="custom-dropdown">
+                    <div class="custom-dropdown" style="flex: 1;">
+                        <select id="campaignSearchSelect" class="search-input-field">
+                            <option value=""></option>
+                        </select>
+                        <span id="campaignError" class="error-msg">* Select Campaign</span>
+                    </div>
+                </div>
+
+                <button class="btn-search" id="smallSearchBtn" style="padding: 12px 15px; height: 46px;">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+            </div>
+
+            <div class="quick-filter-row" style="display: flex; gap: 10px; align-items: center; position: relative;">
+                <span id="selectedTimeText" style="display:none;">Last 30 Days</span>
+
+                <div style="position: relative; flex: 1;">
+                    <div class="qf-item" data-type="custom" style="width: 100%;" onclick="applyFilter(this, 'custom')">
+                        custom</div>
+
+                    <div class="custom-date-modal" id="customDateModal"
+                        style="top: 45px; left: 0; position: absolute; z-index: 1000;"
+                        onclick="event.stopPropagation()">
+                        <div class="date-inputs-row">
+                            <div class="date-box">
+                                <label>Start Date</label>
+                                <input type="text" id="customStartDate" placeholder="Select Date" readonly>
+                            </div>
+                            <div class="date-box">
+                                <label>End Date</label>
+                                <input type="text" id="customEndDate" placeholder="Select Date" readonly>
+                            </div>
+                        </div>
+                        <button class="btn-submit-date" onclick="submitCustomDate()">Submit Range</button>
+                    </div>
+                </div>
+
+                <div class="qf-item" style="flex: 1;" onclick="applyFilter(this, 'today')">Today</div>
+                <div class="qf-item active" style="flex: 1;" onclick="applyFilter(this, '1month')">Last 1 Month</div>
+                <div class="qf-item" style="flex: 1;" onclick="applyFilter(this, '3months')">Last 3 Months</div>
+                <div class="qf-item" style="flex: 1;" onclick="applyFilter(this, '7days')">Last 7 Days</div>
+            </div>
+
+            <div class="initial-search-container" id="largeSearchContainer">
+                <button class="btn-large-search" onclick="showResults()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Generate Reports & Analytics
+                </button>
+            </div>
+
+            <div id="backBtnWrapper">
+                <button class="btn-action" onclick="resetPage()"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 15px; border-radius: 8px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Search
+                </button>
+            </div>
+
+            <div class="analytics-content">
+                <div class="kpi-unified-card">
+                    <div class="kpi-stat"><span class="kpi-label">Total Leads</span><span class="kpi-value">2525</span>
+                    </div>
+                    <div class="kpi-stat"><span class="kpi-label">Conversion Rate</span><span
+                            class="kpi-value">20.4%</span></div>
+                    <div class="kpi-stat"><span class="kpi-label">Total Spend</span><span
+                            class="kpi-value">₹25,000</span></div>
+                    <div class="kpi-stat"><span class="kpi-label">ROI</span><span class="kpi-value">5.6</span></div>
+                </div>
+            </div>
+
+
+            <div class="analytics-content">
+                <div class="report-selection-container" style="margin-bottom: 30px;">
+                    <h3 style="color: #ccc; margin-bottom: 15px; font-size: 1rem;">Select Reports to Download</h3>
+                    <div class="report-selector-grid"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+
+                        <div class="report-select-card active" onclick="toggleReportSelection(this, 'campaign')"
+                            data-report="campaign">
+                            <div class="select-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <span>Campaign Performance</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+
+                        <div class="report-select-card" onclick="toggleReportSelection(this, 'location')"
+                            data-report="location">
+                            <div class="select-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <span>Location Analytics</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+
+                        <div class="report-select-card" onclick="toggleReportSelection(this, 'client')"
+                            data-report="client">
+                            <div class="select-icon"><i class="fa-solid fa-users"></i></div>
+                            <span>Client Insights</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+
+                        <div class="report-select-card" onclick="toggleReportSelection(this, 'monthly')"
+                            data-report="monthly">
+                            <div class="select-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                            <span>Monthly Summary</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="download-action-bar"
+                        style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; background: rgba(9, 35, 30, 0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                        <button class="btn-download-main pdf" onclick="downloadFullReport()">
+                            <i class="fa-regular fa-file-pdf"></i> Download Full Report (PDF)
+                        </button>
+                        <button class="btn-download-main csv" onclick="downloadSelected('csv')">
+                            <i class="fa-solid fa-file-csv"></i> Download Selected CSV
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/flatpickr.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <script>
+        var allReportsData = [];
+
+        $(document).ready(function () {
+            // 1. Initialize Select2 (EXACT ORIGINAL - Ab UI nahi bigdega)
+            $('#clientSearchSelect').select2({
+                placeholder: "Select/Search Client",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $('#locationSearchSelect').select2({
+                placeholder: "Select/Search Location",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $('#campaignSearchSelect').select2({
+                placeholder: "Select/Search Campaign",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // 2. Load Initial Data
+            loadReportsData();
+            initCustomPicker();
+
+            // 3. Validation Clear on Change
+            $('#clientSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#clientError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            });
+
+            $('#locationSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#locationError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            });
+
+            $('#campaignSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#campaignError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            });
+        });
+
+        // --- Data Loading & Populating Dropdowns ---
+        function loadReportsData() {
+            const aid = localStorage.getItem("agencyId");
+
+            if (!aid || aid === "null" || aid === "undefined") {
+                alert("Session Expired. Please login again.");
+                window.location.href = "AgencyLogin.html";
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8080/api/agency/reports/data",
+                type: "GET",
+                headers: { "X-Agency-Id": aid },
+                success: function (data) {
+                    allReportsData = data;
+                    populateDropdowns(data);
+                },
+                error: function(xhr) {
+                    console.error("Error fetching reports:", xhr.responseText);
+                    if(xhr.status === 400 || xhr.status === 403) {
+                        alert("Authentication error while fetching reports.");
+                    }
+                }
+            });
+        }
+
+        function populateDropdowns(data) {
+            let clients = [...new Set(data.map(item => item.clientName))];
+            let locations = [...new Set(data.map(item => item.targetLocation))];
+            let campaigns = [...new Set(data.map(item => item.campaignName))];
+
+            // Client Dropdown
+            let clientSelect = $('#clientSearchSelect').empty().append('<option value=""></option>');
+            clientSelect.append('<option value="all_clients">All Clients</option>');
+            clients.forEach(c => { if(c) clientSelect.append(new Option(c, c)) });
+
+            // Location Dropdown
+            let locSelect = $('#locationSearchSelect').empty().append('<option value=""></option>');
+            locSelect.append('<option value="all_locations">All Locations</option>');
+            locations.forEach(l => { if(l) locSelect.append(new Option(l, l)) });
+
+            // Campaign Dropdown
+            let campSelect = $('#campaignSearchSelect').empty().append('<option value=""></option>');
+            campSelect.append('<option value="all_campaigns">All Campaigns</option>');
+            campaigns.forEach(cp => { if(cp) campSelect.append(new Option(cp, cp)) });
+
+            // Default set to Null (Placeholder dikhega)
+            clientSelect.val(null).trigger('change.select2');
+            locSelect.val(null).trigger('change.select2');
+            campSelect.val(null).trigger('change.select2');
+        }
+
+        // --- Validation & Show Results ---
+        function showResults() {
+            const selClient = $('#clientSearchSelect').val();
+            const selLoc = $('#locationSearchSelect').val();
+            const selCamp = $('#campaignSearchSelect').val();
+            let isValid = true;
+
+            // Validation Checks
+            if (!selClient) {
+                $("#clientError").fadeIn();
+                $('#clientSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                isValid = false;
+            }
+            if (!selLoc) {
+                $("#locationError").fadeIn();
+                $('#locationSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                isValid = false;
+            }
+            if (!selCamp) {
+                $("#campaignError").fadeIn();
+                $('#campaignSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                isValid = false;
+            }
+
+            if (isValid) {
+                $("#mainWrapper").addClass("table-visible");
+                applyFilters();
+            }
+        }
+
+        function updateKPIs(data) {
+            let leads = 0, spend = 0, conversions = 0;
+            data.forEach(item => {
+                leads += (Number(item.leads) || 0);
+                spend += (Number(item.budget) || 0);
+                conversions += (Number(item.totalConversions) || 0);
+            });
+            let convRate = leads > 0 ? ((conversions / leads) * 100).toFixed(1) : "0.0";
+            let roi = spend > 0 ? (conversions / (spend / 1000)).toFixed(1) : "0.0";
+
+            $(".kpi-value:eq(0)").text(leads.toLocaleString());
+            $(".kpi-value:eq(1)").text(convRate + "%");
+            $(".kpi-value:eq(2)").text("₹" + spend.toLocaleString());
+            $(".kpi-value:eq(3)").text(roi);
+        }
+
+        function resetPage() {
+            $("#mainWrapper").removeClass("table-visible");
+            $('#clientSearchSelect, #locationSearchSelect, #campaignSearchSelect').val(null).trigger('change');
+            $(".error-msg").hide();
+            $('.select2-selection').css('border-color', '');
+            $("#selectedTimeText").text("Last 30 Days");
+            $('.qf-item').removeClass('active');
+            $('.qf-item:contains("Last 1 Month")').addClass('active');
+        }
+
+        function initCustomPicker() {
+            flatpickr("#customStartDate", { dateFormat: "d M, Y", theme: "dark" });
+            flatpickr("#customEndDate", { dateFormat: "d M, Y", theme: "dark" });
+        }
+
+        function applyFilter(element, range) {
+            $('.qf-item').removeClass('active');
+            $(element).addClass('active');
+
+            if (range === 'custom') {
+                $('#customDateModal').toggleClass('active');
+                return;
+            } else {
+                $('#customDateModal').removeClass('active');
+                $('[data-type="custom"]').text('custom');
+            }
+
+            let filterMap = { 'today': 'Today', '1month': 'Last 30 Days', '3months': 'Last 90 Days', '7days': 'Last 7 Days' };
+            $('#selectedTimeText').text(filterMap[range]);
+
+            if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+        }
+
+        function applyFilters() {
+            const dataToExport = getFilteredDataForExport();
+            updateKPIs(dataToExport);
+        }
+
+        function submitCustomDate() {
+            const start = $('#customStartDate').val();
+            const end = $('#customEndDate').val();
+            if (start && end) {
+                const rangeText = start + " - " + end;
+                $('#selectedTimeText').text(rangeText);
+                $('.qf-item').removeClass('active');
+                $('[data-type="custom"]').text(rangeText).addClass('active');
+                $('#customDateModal').removeClass('active');
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            } else {
+                alert("Please select both dates.");
+            }
+        }
+
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.qf-item').length && !$(e.target).closest('#customDateModal').length) {
+                $('#customDateModal').removeClass('active');
+            }
+        });
+
+        function getFilteredDataForExport() {
+            const selClient = $('#clientSearchSelect').val();
+            const selLoc = $('#locationSearchSelect').val();
+            const selCamp = $('#campaignSearchSelect').val();
+            const selTime = $('#selectedTimeText').text().trim();
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (!allReportsData || allReportsData.length === 0) return [];
+
+            return allReportsData.filter(item => {
+                const matchClient = (!selClient || selClient === "all_clients") ? true : (item.clientName === selClient);
+                const matchLoc = (!selLoc || selLoc === "all_locations") ? true : (item.targetLocation === selLoc);
+                const matchCamp = (!selCamp || selCamp === "all_campaigns") ? true : (item.campaignName === selCamp);
+
+                let matchDate = true;
+                if (item.startDate) {
+                    const campDate = new Date(item.startDate);
+                    campDate.setHours(0, 0, 0, 0);
+
+                    if (selTime === "Today") {
+                        matchDate = (campDate.getTime() === today.getTime());
+                    } else if (selTime === "Last 7 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 7);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime === "Last 30 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 30);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime === "Last 90 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 90);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime.includes("-")) {
+                        const range = selTime.split(" - ");
+                        matchDate = (campDate >= new Date(range[0]) && campDate <= new Date(range[1]));
+                    }
+                }
+                return matchClient && matchLoc && matchCamp && matchDate;
+            });
+        }
+
+        // ==========================================================
+        // --- TRACKING & DOWNLOAD LOGIC (Ek Click = Ek Count) ---
+        // ==========================================================
+
+        function trackReportDownload() {
+            const aid = localStorage.getItem("agencyId");
+            if (!aid) return;
+
+            $.ajax({
+                url: "http://localhost:8080/api/agency/reports/track-download",
+                type: "POST",
+                headers: { "X-Agency-Id": aid },
+                success: function() { console.log("✅ Report download count tracked successfully!"); },
+                error: function(xhr) { console.error("❌ Failed to track download:", xhr.responseText); }
+            });
+        }
+
+        function toggleReportSelection(element, type) {
+            $(element).toggleClass('active');
+        }
+
+        // 1. PDF Download
+        async function downloadFullReport() {
+            try {
+                const selectedSections = [];
+                $('.report-select-card.active').each(function() {
+                    selectedSections.push({ title: $(this).find('span').text(), type: $(this).data('report') });
+                });
+
+                if (selectedSections.length === 0) {
+                    alert("Please select at least one report to download!");
+                    return;
+                }
+
+                const dataToExport = getFilteredDataForExport();
+                if (dataToExport.length === 0) {
+                    alert("No data available! Please search first.");
+                    return;
+                }
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const agencyName = $('.user-mini-profile p').text() || "Agency Name";
+
+                doc.setFillColor(10, 104, 110);
+                doc.roundedRect(10, 10, 190, 45, 8, 8, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(14);
+                doc.text(agencyName, 105, 22, { align: "center" });
+                doc.setFontSize(28);
+                doc.setFont("helvetica", "bold");
+                doc.text("Market Analysis", 105, 35, { align: "center" });
+                doc.setFontSize(22);
+                doc.setFont("helvetica", "italic");
+                doc.text("Report", 105, 48, { align: "center" });
+
+                let currentY = 65;
+
+                selectedSections.forEach((sec) => {
+                    if (currentY > 230) { doc.addPage(); currentY = 20; }
+
+                    doc.setFillColor(10, 104, 110);
+                    doc.roundedRect(10, currentY, 190, 10, 5, 5, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(12);
+                    doc.text(sec.title, 105, currentY + 6.5, { align: "center" });
+                    
+                    currentY += 15;
+
+                    let head = [], body = [];
+
+                    if (sec.type === 'campaign') {
+                        head = [['Campaign Name', 'Location', 'Leads', 'Status']];
+                        body = dataToExport.map(i => [i.campaignName || "N/A", i.targetLocation || "N/A", i.leads || 0, i.status || "N/A"]);
+                    } else if (sec.type === 'location') {
+                        head = [['Location', 'Total Leads', 'Conversions']];
+                        let locMap = {};
+                        dataToExport.forEach(i => {
+                            if(!locMap[i.targetLocation]) locMap[i.targetLocation] = {l:0, c:0};
+                            locMap[i.targetLocation].l += (Number(i.leads) || 0);
+                            locMap[i.targetLocation].c += (Number(i.totalConversions) || 0);
+                        });
+                        body = Object.keys(locMap).map(loc => [loc, locMap[loc].l, locMap[loc].c]);
+                    } else if (sec.type === 'client') {
+                        head = [['Client Name', 'Campaign', 'Budget']];
+                        body = dataToExport.map(i => [i.clientName || "N/A", i.campaignName || "N/A", "Rs. " + (i.budget || 0)]);
+                    } else if (sec.type === 'monthly') {
+                        head = [['Start Date', 'Campaign', 'Leads']];
+                        body = dataToExport.map(i => [i.startDate || "N/A", i.campaignName || "N/A", i.leads || 0]);
+                    }
+
+                    doc.autoTable({
+                        head: head, body: body, startY: currentY, theme: 'grid',
+                        headStyles: { fillColor: [10, 104, 110] }, styles: { fontSize: 9 }, margin: { left: 10, right: 10 },
+                        didDrawPage: (d) => { currentY = d.cursor.y + 15; }
+                    });
+                });
+
+                // PDF Save
+                doc.save(`${agencyName}_Report.pdf`);
+
+                // ✨ Sirf PDF banne ke baad ek baar count badhega
+                trackReportDownload();
+
+            } catch (e) {
+                console.error("PDF Logic Error:", e);
+                alert("Error generating PDF.");
+            }
+        }
+
+        // 2. CSV Bulk Download
+        function downloadSelected(format) {
+            if (format !== 'csv') return;
+
+            const selectedReports = [];
+            $('.report-select-card.active').each(function () {
+                selectedReports.push($(this).data('report'));
+            });
+
+            if (selectedReports.length === 0) {
+                alert("Please select at least one report to download!");
+                return;
+            }
+
+            const dataToExport = getFilteredDataForExport();
+            if (dataToExport.length === 0) {
+                alert("No data available to export!"); 
+                return; 
+            }
+
+            // CSV generation loop
+            selectedReports.forEach(reportType => {
+                let csvContent = "data:text/csv;charset=utf-8,";
+                let headers = "";
+                let rows = [];
+
+                if (reportType === 'campaign') {
+                    headers = "Campaign Name,Location,Leads,Status\n";
+                    rows = dataToExport.map(i => `"${i.campaignName}","${i.targetLocation}",${i.leads || 0},"${i.status}"`);
+                } else if (reportType === 'location') {
+                    headers = "Location,Total Leads,Conversions\n";
+                    let locMap = {};
+                    dataToExport.forEach(i => {
+                        if(!locMap[i.targetLocation]) locMap[i.targetLocation] = {l:0, c:0};
+                        locMap[i.targetLocation].l += (Number(i.leads) || 0);
+                        locMap[i.targetLocation].c += (Number(i.totalConversions) || 0);
+                    });
+                    rows = Object.keys(locMap).map(loc => `"${loc}",${locMap[loc].l},${locMap[loc].c}`);
+                } else if (reportType === 'client') {
+                    headers = "Client Name,Campaign,Budget\n";
+                    rows = dataToExport.map(i => `"${i.clientName}","${i.campaignName}",${i.budget || 0}`);
+                } else if (reportType === 'monthly') {
+                    headers = "Start Date,Campaign,Leads\n";
+                    rows = dataToExport.map(i => `"${i.startDate}","${i.campaignName}",${i.leads || 0}`);
+                }
+
+                csvContent += headers + rows.join("\n");
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `Quantifyre_${reportType}_Analytics.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            // ✨ Saari CSVs download hone ke baad loop ke bahar sirf ek baar count badhega
+            trackReportDownload();
+        }
+    </script>
+</body>
+
+</html>

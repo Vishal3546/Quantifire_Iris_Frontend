@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Edit Location</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/auth-guard.js"></script>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="Quantifyre">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li class="active"><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
+                
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Locations50x50.ico">
+                    </div>
+                    <div>
+                        <h1>Edit Location</h1>
+                        <p>Update location details to improve targeting and performance</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card form-container" style="padding: 25px;">
+                <form id="editLocationForm" action="#" method="POST">
+
+                    <div class="form-group">
+                        <label for="targetLocation">Target Location</label>
+                        <textarea id="targetLocation" class="form-input" rows="3" placeholder="Describe your Location."
+                            style="resize: none; height: 80px;"></textarea>
+                        <span class="error-message" id="targetLocationError">This field is required.</span>
+                    </div>
+
+                    <div class="form-grid-2">
+
+                        <div class="form-group">
+                            <label>Activity</label>
+                            <div class="custom-dropdown" id="activityDropdown">
+                                <div class="dropdown-selected" onclick="toggleDropdown('activityDropdown')">
+                                    <span class="selected-text" style="color:#757575;">Select Activity</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                                </div>
+                                <ul class="dropdown-options">
+                                    <li class="dropdown-item" onclick="selectItem('activityDropdown', 'High')">High</li>
+                                    <li class="dropdown-item" onclick="selectItem('activityDropdown', 'Medium')">Medium</li>
+                                    <li class="dropdown-item" onclick="selectItem('activityDropdown', 'Low')">Low</li>
+                                </ul>
+                                <input type="hidden" name="activity" id="selectedActivityValue">
+                            </div>
+                            <span class="error-message" id="activityError">Please select an activity level.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="activeCampaigns">Active Campaigns</label>
+                            <input type="number" id="activeCampaigns" class="form-input"
+                                placeholder="Enter Active Campaigns">
+                            <span class="error-message" id="activeCampaignsError">This field is required.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label for="leads">Leads</label>
+                            <input type="number" id="leads" class="form-input" placeholder="Enter Leads">
+                            <span class="error-message" id="leadsError">This field is required.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="conversions">Total Conversions</label>
+                            <input type="number" id="conversions" class="form-input" placeholder="e.g. 150">
+                            <span class="error-message" id="conversionsError">This field is required.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="margin-top: 10px;">
+                        <button type="button" class="btn btn-add" id="btnUpdateLocation"
+                            style="text-decoration: none; text-align: center; border: none;">Update Location</button>
+                        <a href="Locations.html" class="btn btn-cancel"
+                            style="text-decoration: none; display:inline-block; text-align:center;">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout?</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script>
+        $(document).ready(function () {
+            // URL se ID nikalna
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationId = urlParams.get('id');
+
+            if (!locationId) {
+                alert("No Location ID found!");
+                window.location.href = "Locations.html";
+                return;
+            }
+
+            // Real-time Text restriction (Only Letters)
+            $('#targetLocation').on('input', function() {
+                this.value = this.value.replace(/[0-9]/g, '');
+                $(this).removeClass('error-border');
+                $(this).next('.error-message').fadeOut();
+            });
+
+            // Remove error message on change
+            $('input[type="number"]').on('input', function() {
+                $(this).removeClass('error-border');
+                $(this).next('.error-message').fadeOut();
+            });
+
+            // Load Existing Data
+            $.ajax({
+                url: "http://localhost:8080/api/agency/locations/" + locationId,
+                type: "GET",
+                success: function (data) {
+                    $("#targetLocation").val(data.targetLocation);
+                    $("#activeCampaigns").val(data.activeCampaigns);
+                    $("#leads").val(data.leads);
+                    $("#conversions").val(data.totalConversions);
+                    
+                    if(data.activity) {
+                        selectItem('activityDropdown', data.activity);
+                    }
+                },
+                error: function () {
+                    alert("Error fetching location details!");
+                }
+            });
+
+            // Update Click Logic
+            $("#btnUpdateLocation").on("click", function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+                const textOnlyRegex = /^[a-zA-Z\s,.]+$/;
+
+                // Validation Logic
+                const targetLoc = $("#targetLocation").val().trim();
+                if (!targetLoc || !textOnlyRegex.test(targetLoc)) {
+                    $("#targetLocation").addClass('error-border');
+                    $("#targetLocationError").fadeIn();
+                    isValid = false;
+                }
+
+                if (!$("#selectedActivityValue").val()) {
+                    $("#activityDropdown").addClass('error-border');
+                    $("#activityError").fadeIn();
+                    isValid = false;
+                }
+
+                // Number fields validation
+                const numFields = ["#activeCampaigns", "#leads", "#conversions"];
+                numFields.forEach(id => {
+                    if ($(id).val() === "") {
+                        $(id).addClass('error-border');
+                        $(id).next('.error-message').fadeIn();
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) return false;
+
+                const updatedData = {
+                    targetLocation: targetLoc,
+                    activity: $("#selectedActivityValue").val(),
+                    activeCampaigns: parseInt($("#activeCampaigns").val()) || 0,
+                    leads: parseInt($("#leads").val()) || 0,
+                    totalConversions: parseInt($("#conversions").val()) || 0
+                };
+
+                $.ajax({
+                    url: "http://localhost:8080/api/agency/locations/update/" + locationId,
+                    type: "PUT",
+                    contentType: "application/json",
+                    data: JSON.stringify(updatedData),
+                    success: function (response) {
+                        alert("Location Updated Successfully!");
+                        window.location.href = "Locations.html";
+                    },
+                    error: function (xhr) {
+                        alert("Update failed: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        function toggleDropdown(id) {
+            $('.custom-dropdown').not('#'+id).removeClass('active');
+            $('#'+id).toggleClass('active');
+            $('#'+id).removeClass('error-border');
+            $('#activityError').fadeOut();
+        }
+
+        function selectItem(dropdownId, text) {
+            const dropdown = $('#' + dropdownId);
+            dropdown.find('.selected-text').text(text).css('color', '#fff');
+            dropdown.removeClass('active');
+            if (dropdownId === 'activityDropdown') {
+                $('#selectedActivityValue').val(text);
+            }
+        }
+    </script>
+</body>
+</html>

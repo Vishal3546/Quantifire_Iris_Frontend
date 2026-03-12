@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Details | Quantifyre Iris</title>
+
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/auth-guard.js"></script>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="Quantifyre">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li class="active"><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="client-header-container">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Customer50x50.ico" alt="Clients Icon">
+                    </div>
+                    <div>
+                        <h1>Client Details</h1>
+                        <span>John Smith</span>
+                    </div>
+
+                </div>
+
+                <div class="header-actions">
+                    <a href="Clients.html" class="btn-action" style="background: #031414;">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </a>
+                    <a href="EditClient.html" class="btn-export" style="text-decoration: none;">Edit Details</a>
+                </div>
+            </div>
+
+            <div class="stats-grid-4">
+                <div class="stat-card-custom">
+                    <span class="stat-label">Total spent</span>
+                    <h2 class="stat-value" id="detailSpent">₹0</h2>
+                </div>
+                <div class="stat-card-custom">
+                    <span class="stat-label">Leads</span>
+                    <h2 class="stat-value" id="detailLeads">0</h2>
+                </div>
+                <div class="stat-card-custom">
+                    <span class="stat-label">Conv. Rate</span>
+                    <h2 class="stat-value" id="detailRate">0%</h2>
+                </div>
+                <div class="stat-card-custom">
+                    <span class="stat-label">Total Campaigns</span>
+                    <h2 class="stat-value" id="detailCamps">0</h2>
+                </div>
+            </div>
+
+            <div class="glass-table-container">
+                <table class="simple-table">
+                    <h3 class="section-heading" style="margin-left: 10px;">Associated Campaigns</h3>
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Leads</th>
+                            <th>Total Spent</th>
+                            <th>Conv. Rate</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="associatedCampaignsBody">
+                        <tr>
+                            <td colspan="5" style="text-align:center;">Loading campaigns...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script>
+$(document).ready(function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const clientId = urlParams.get('id');
+
+    // 1. Storage Se IDs nikalna
+    const rawData = localStorage.getItem('agencyData');
+    let agencyData = rawData ? JSON.parse(rawData) : null;
+    
+    let agencyId = localStorage.getItem('agencyId');
+    if (!agencyId && agencyData) {
+        agencyId = agencyData.id || agencyData.agencyId;
+    }
+
+    // Console debugging
+    console.log("Client:", clientId, "Agency:", agencyId);
+
+    // Agar ID nahi hai toh turant bahar bhej do
+    if (!clientId) {
+        window.location.href = "Clients.html";
+        return;
+    }
+
+    if (!agencyId) {
+        alert("Session expired. Please login again.");
+        window.location.href = "AgencyLogin.html";
+        return;
+    }
+
+    // 2. Edit Details Link ko fix karna (TAAKI CAMPAIGN NA KHULE)
+    // Ensure button has class 'btn-export' or change this selector to your button's ID
+    $(".btn-export").attr("href", `EditClient.html?id=${clientId}`);
+
+    // 3. Client Profile Fetch Karein
+    $.ajax({
+        url: `http://localhost:8080/api/agency/clients/${clientId}`,
+        type: "GET",
+        headers: { "X-Agency-Id": agencyId },
+        success: function (client) {
+            if (!client) {
+                alert("Client details not found.");
+                return;
+            }
+
+            let name = client.clientName || client.client_name || "N/A";
+
+            // UI Updates (Heading and Title)
+            $(".client-header-container h1").next("span").text(name);
+            document.title = name + " | Details";
+
+            // Sidebar/Header Logos
+            if (agencyData && agencyData.logoPath) {
+                const logoUrl = `http://localhost:8080/uploads/${agencyData.logoPath}`;
+                $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", logoUrl);
+            }
+
+            // Client milne ke baad uski campaigns fetch karein
+            loadClientCampaigns(name, agencyId);
+        },
+        error: function (xhr) {
+            console.error("Fetch Error:", xhr.status);
+            if (xhr.status === 403 || xhr.status === 401) {
+                window.location.href = "AgencyLogin.html";
+            }
+        }
+    });
+
+    // 4. Campaigns Fetch & Table Update
+    function loadClientCampaigns(clientName, aId) {
+        $.ajax({
+            url: `http://localhost:8080/api/agency/campaigns/client/${encodeURIComponent(clientName)}?agencyId=${aId}`,
+            type: "GET",
+            success: function (campaigns) {
+                let rows = "";
+                let totalLeads = 0;
+                let totalSpent = 0;
+                let totalConversions = 0;
+
+                // Pehle check karein data aaya ya nahi
+                if (!campaigns || campaigns.length === 0) {
+                    rows = "<tr><td colspan='5' style='text-align:center;'>No campaigns found for this client.</td></tr>";
+                } else {
+                    campaigns.forEach(camp => {
+                        totalLeads += (camp.leads || 0);
+                        totalSpent += (camp.budget || 0);
+                        totalConversions += (camp.conversions || camp.totalConversions || 0);
+
+                        let cRate = camp.conversionRate || 0;
+                        let statusClass = camp.status === 'Active' ? 'badge-active' : 'badge-completed';
+
+                        rows += `
+                        <tr>
+                            <td>${camp.campaignName}</td>
+                            <td>${camp.leads || 0}</td>
+                            <td>₹${Number(camp.budget || 0).toLocaleString()}</td>
+                            <td>${parseFloat(cRate).toFixed(1)}%</td>
+                            <td><span class="${statusClass}">${camp.status}</span></td>
+                        </tr>`;
+                    });
+                }
+
+                // SABSE IMPORTANT: Purana data saaf karke naya data dalna
+                $("#associatedCampaignsBody").empty().append(rows);
+
+                // KPI Cards Update
+                $("#detailSpent").text(`₹${Number(totalSpent).toLocaleString()}`);
+                $("#detailLeads").text(totalLeads);
+                $("#detailCamps").text(campaigns ? campaigns.length : 0);
+
+                let avgRate = (totalLeads > 0) ? ((totalConversions / totalLeads) * 100).toFixed(1) : "0.0";
+                $("#detailRate").text(avgRate + "%");
+            },
+            error: function() {
+                $("#associatedCampaignsBody").html("<tr><td colspan='5' style='text-align:center; color:red;'>Error loading campaigns.</td></tr>");
+            }
+        });
+    }
+});
+</script>
+
+</body>
+
+</html>

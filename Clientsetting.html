@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Quantifyre Iris</title>
+
+    <link rel="stylesheet" href="Css/client_style.css">
+    <link rel="stylesheet" href="Css/client_sidebar.css">
+
+    <link rel="stylesheet" href="Css/fontstyle.css">
+    <link rel="stylesheet" href="Css/all.css">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="sidebar-overlay" id="sidebarOverlay"></div> -->
+
+    <div class="container dashboard-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-close-btn" id="sidebarClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="Images/ClientSlider.ico">
+                </div>
+                <p>Client Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="ClientDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="ClientCampaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="ClientLeads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li class="active"><a href="Clientsetting.html"><img src="Images/Setting30x30.ico"> Settings</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                </div>
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count">3</span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="Images/ClientHeader.ico"></div>
+                        <div class="text-info">
+                            <h4>Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name">Agency Name</p><span class="d-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Setting50x50.ico">
+                    </div>
+                    <div>
+                        <h1>Settings</h1>
+                        <p>Manage your account settings and preferences</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <form>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" value="Adam" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" value="Smith" placeholder="Last Name">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" value="Adam.smith@gmail.com"
+                                placeholder="Email Address">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" value="+91 9924623605" placeholder="Phone Number">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Security Question / Options</label>
+                            <div class="custom-dropdown" id="securitySelectContainer">
+                                <div class="dropdown-selected" onclick="toggleSettingsDropdown()">
+                                    <span class="selected-text">Forgot Password</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                                </div>
+                                <ul class="dropdown-options">
+                                    <li class="dropdown-item" data-value="forgot"
+                                        onclick="selectSettingsItem('Forgot Password', 'forgot')">Forgot Password</li>
+                                    <li class="dropdown-item" data-value="resetkey"
+                                        onclick="selectSettingsItem('Reset Security Key', 'resetkey')">Reset Security
+                                        Key</li>
+                                </ul>
+                            </div>
+                            <input type="hidden" id="securitySelectValue" value="forgot">
+                        </div>
+
+                        <div class="form-group" id="resetKeyContent" style="display: none;">
+                            <label>Enter New Security Key</label>
+                            <input type="text" class="form-control" placeholder="Enter your new key here">
+                        </div>
+
+                        <div class="form-group" id="forgotPassContent">
+                            <label>Recovery Email</label>
+                            <input type="text" class="form-control" value="Adam.smith@gmail.com" disabled>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-save" id="btn-savechanges">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="settings-card" id="passwordCardSection">
+                <h3 class="card-title">Password</h3>
+                <form>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" class="form-control" value="********" placeholder="Current Password">
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" class="form-control" placeholder="New Password">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" placeholder="Confirm Password">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-save" id="btn-changepass">Change Password</button>
+                    </div>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-content">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions">
+                <button class="btn-modal btn-modal-cancel" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal btn-modal-delete" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allclient.js"></script>
+
+    <script>
+        // Settings Dropdown Toggle
+        function toggleSettingsDropdown() {
+            $('#securitySelectContainer').toggleClass('active');
+        }
+
+        // Select Item Logic
+        function selectSettingsItem(text, value) {
+            const container = $('#securitySelectContainer');
+            container.find('.selected-text').text(text);
+            $('#securitySelectValue').val(value); // Value update
+            container.removeClass('active');
+
+            // Show/Hide content based on selection
+            if (value === 'resetkey') {
+                $('#forgotPassContent').hide();
+                $('#resetKeyContent').show();
+                $('#passwordCardSection').hide();
+            } else {
+                $('#resetKeyContent').hide();
+                $('#forgotPassContent').show();
+                $('#passwordCardSection').show();
+            }
+        }
+
+        // Close dropdown when clicking outside
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('#securitySelectContainer').length) {
+                $('#securitySelectContainer').removeClass('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

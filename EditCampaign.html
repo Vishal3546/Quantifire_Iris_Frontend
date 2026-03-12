@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Edit Campaign</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="Css/dateflatpickr.min.css">
+    <link rel="stylesheet" href="Css/datestyle.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css" />
+    <script src="Js/auth-guard.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="Quantifyre">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li class="active"><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
+                    <div class="mobile-only-menu">
+                        <li class="active"><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Campaign50x50.ico"
+                            onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-pen-to-square\'></i>'">
+                    </div>
+                    <div>
+                        <h1>Edit Campaign</h1>
+                        <p>Edit the campaign details to update information</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card form-container">
+                <form id="editCampaignForm">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Campaign Name</label>
+                            <input type="text" id="campaignName" class="form-input" placeholder="Loading...">
+                            <span id="campaignNameErr" class="error-msg">* This field is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientName">Client Name</label>
+                            <select id="clientName" class="form-input select2-dropdown-search">
+                                <option value="" disabled selected></option>
+                            </select>
+                            <span id="clientNameErr" class="error-msg">* Please select a valid client</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Target Location</label>
+                        <input type="text" id="targetLocation" class="form-input" style="line-height: 2;"
+                            placeholder="Search city..." autocomplete="off">
+                        <span id="targetLocationErr" class="error-msg">* This field is required</span>
+                    </div>
+
+                    <div class="form-grid-4">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <div class="date-wrapper">
+                                <input type="text" id="startDate" class="form-input">
+                                <i class="fa-regular fa-calendar"></i>
+                            </div>
+                            <span id="startDateErr" class="error-msg">* Required</span>
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <div class="date-wrapper">
+                                <input type="text" id="endDate" class="form-input">
+                                <i class="fa-regular fa-calendar"></i>
+                            </div>
+                            <span id="endDateErr" class="error-msg">* Required</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Campaign Budget (₹)</label>
+                            <input type="number" id="budget" class="form-input">
+                            <span id="budgetErr" class="error-msg">* Required</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Leads</label>
+                            <input type="number" id="leads" class="form-input">
+                            <span id="leadsErr" class="error-msg">* Required</span>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-4">
+                        <div class="form-group">
+                            <label>Gender Filter</label>
+                            <div class="custom-dropdown" id="editGenderDropdown">
+                                <div class="dropdown-selected" onclick="toggleDropdown('editGenderDropdown')">
+                                    <span class="selected-text">All</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                                </div>
+                                <ul class="dropdown-options">
+                                    <li class="dropdown-item" onclick="selectItem('editGenderDropdown', 'All')">All</li>
+                                    <li class="dropdown-item" onclick="selectItem('editGenderDropdown', 'Male')">Male
+                                    </li>
+                                    <li class="dropdown-item" onclick="selectItem('editGenderDropdown', 'Female')">
+                                        Female</li>
+                                </ul>
+                                <input type="hidden" name="gender" id="selectedGenderValue">
+                            </div>
+                            <span id="genderErr" class="error-msg">* Please select gender</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Age Range</label>
+                            <input type="text" id="ageRange" class="form-input">
+                            <span id="ageRangeErr" class="error-msg">* Required</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Campaign Status</label>
+                            <div class="custom-dropdown" id="statusDropdown">
+                                <div class="dropdown-selected" onclick="toggleDropdown('statusDropdown')">
+                                    <span class="selected-text">Active</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                                </div>
+                                <ul class="dropdown-options">
+                                    <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Active')">Active
+                                    </li>
+                                    <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Paused')">Paused
+                                    </li>
+                                    <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Completed')">
+                                        Completed</li>
+                                </ul>
+                                <input type="hidden" name="status" id="selectedStatusValue">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Total Conversions</label>
+                            <input type="number" id="totalConversions" class="form-input">
+                            <span id="totalConversionsErr" class="error-msg">* Required</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Geo-Fence & Platform</label>
+                        <div class="map-platform-container" style="display: flex; gap: 20px;">
+                            <div>
+
+                                <div style="margin-bottom: 10px; width: 650px;">
+                                    <div class="map-toolbar-overlay"
+                                        style="left: 0; position: static; display: flex; gap: 8px; background: rgba(11, 22, 21, 0.6); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                                        <div class="map-dropdown" id="shapeDropdown">
+                                            <div class="map-dd-trigger" onclick="toggleMapDropdown(event)">
+                                                <span id="selectedToolText"><i class="far fa-circle"></i> Circle</span>
+                                                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                                            </div>
+                                            <ul class="map-dd-menu">
+                                                <li class="map-dd-item" onclick="selectTool('circle', 'Circle')"><i
+                                                        class="far fa-circle"></i> Circle</li>
+                                                <!-- <li class="map-dd-item" onclick="selectTool('rectangle', 'Rectangle')">
+                                                    <i class="far fa-square"></i> Rectangle
+                                                </li>
+                                                <li class="map-dd-item" onclick="selectTool('polygon', 'Polygon')"><i
+                                                        class="fas fa-draw-polygon"></i> Polygon</li> -->
+                                            </ul>
+                                        </div>
+                                        <input type="text" id="customSearchInput" class="map-input"
+                                            placeholder="City name..." onkeypress="handleEnter(event)">
+
+                                        <input type="number" id="radiusInput" class="map-input" placeholder="Rad(Km)"
+                                            oninput="handleRadiusInput()">
+                                        <button type="button" class="btn-icon btn-check"
+                                            onclick="handleRadiusInput()"><i class="fas fa-check"></i></button>
+                                        <button type="button" class="btn-icon btn-clear" onclick="clearMap()"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="map-input-wrapper" id="mapWrapper"
+                                    style="  border-radius: 12px;  border: 1px solid rgba(255,255,255,0.1);">
+
+                                    <div id="editCampaignMap" style="height: 100%; width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="platform-selection-box" id="platformBox"
+                                style="flex: 1; background: rgba(11, 22, 21, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+                                <h4
+                                    style="color: #00ff9d; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">
+                                    Ad Platform</h4>
+
+                                <label class="platform-option">
+                                    <input type="checkbox" name="adPlatform" value="Google Ads" id="adPlatformGoogle">
+                                    <div class="platform-card">
+                                        <i class="fa-brands fa-google"></i>
+                                        <span>Google Ads</span>
+                                        <i class="fa-solid fa-circle-check check-mark"></i>
+                                    </div>
+                                </label>
+
+                                <label class="platform-option">
+                                    <input type="checkbox" name="adPlatform" value="Facebook" id="adPlatformMeta">
+                                    <div class="platform-card">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                        <span>Facebook Meta</span>
+                                        <i class="fa-solid fa-circle-check check-mark"></i>
+                                    </div>
+                                </label>
+                                <span id="platformErr" class="error-msg">* Select at least one platform</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Creatives</label>
+                        <div class="upload-zone" id="uploadZone"
+                            style="height: 160px; display: flex; align-items: center; justify-content: center;">
+                            <div class="upload-content"
+                                style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+                                <img id="existingImagePreview" src="" alt="Creative Preview"
+                                    style="display:none; max-height: 110px; max-width: 90%; border-radius: 5px; margin-bottom: 5px; object-fit: contain;">
+                                <img id="placeholderIcon"
+                                    src="https://placehold.co/200x100/00ff9d/000000?text=Upload+New" alt="Placeholder"
+                                    style="max-height: 110px; max-width: 90%; border-radius: 5px; margin-bottom: 5px; object-fit: contain;">
+                                <p style="font-size: 0.8rem; color: #8b9c9c; margin: 0;">Click to replace Banner</p>
+                            </div>
+                            <input type="file" id="campaignImage" class="drop-zone-input">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-update" onclick="updateCampaignData()">Update
+                            Campaign</button>
+                        <a href="Campaigns.html" style="text-decoration: none;" type="button"
+                            class="btn btn-cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="custom-alert-overlay" id="customAlertOverlay">
+        <div class="custom-alert-box">
+            <div class="alert-icon-box" id="alertIconBox">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="alertTitle">Alert Title</h3>
+            <p id="alertMessage">Alert Message goes here.</p>
+            <button class="btn-alert-ok" onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/flatpickr.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script src="Js/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        // 1. Global Variables
+        var map, drawingManager, currentMarker;
+        var overlays = [];
+        var campaignId = null;
+        var startPicker, endPicker;
+
+        // Map radius calculations ke liye helper function
+        function computeOffset(position, distanceMeters, headingDegrees) {
+            var R = 6378137;
+            var lat1 = position.lat() * Math.PI / 180;
+            var lon1 = position.lng() * Math.PI / 180;
+            var brng = headingDegrees * Math.PI / 180;
+            var lat2 = Math.asin(Math.sin(lat1) * Math.cos(distanceMeters / R) +
+                Math.cos(lat1) * Math.sin(distanceMeters / R) * Math.cos(brng));
+            var lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(distanceMeters / R) * Math.cos(lat1),
+                Math.cos(distanceMeters / R) - Math.sin(lat1) * Math.sin(lat2));
+            return new google.maps.LatLng(lat2 * 180 / Math.PI, lon2 * 180 / Math.PI);
+        }
+
+        // Auto draw radius function
+        function handleRadiusInput() {
+            let radiusVal = parseFloat($('#radiusInput').val());
+
+            if (isNaN(radiusVal) || radiusVal <= 0) {
+                clearOverlays();
+                return;
+            }
+
+            let radiusInMeters = radiusVal * 1000;
+            clearOverlays();
+
+            let centerLoc = currentMarker ? currentMarker.getPosition() : map.getCenter();
+            let currentTool = $('#selectedToolText').text().trim().toLowerCase();
+            let newShape;
+
+            let shapeOptions = {
+                strokeColor: "#00ffaa", strokeOpacity: 0.8, strokeWeight: 2,
+                fillColor: "#00ffaa", fillOpacity: 0.2, map: map,
+                editable: true, draggable: true
+            };
+
+            if (currentTool.includes('circle')) {
+                shapeOptions.center = centerLoc;
+                shapeOptions.radius = radiusInMeters;
+                newShape = new google.maps.Circle(shapeOptions);
+            } else if (currentTool.includes('rectangle')) {
+                let ne = computeOffset(centerLoc, radiusInMeters, 45);
+                let sw = computeOffset(centerLoc, radiusInMeters, 225);
+                shapeOptions.bounds = new google.maps.LatLngBounds(sw, ne);
+                newShape = new google.maps.Rectangle(shapeOptions);
+            } else if (currentTool.includes('polygon')) {
+                let path = [];
+                for (let i = 0; i < 6; i++) {
+                    let heading = i * 60;
+                    path.push(computeOffset(centerLoc, radiusInMeters, heading));
+                }
+                shapeOptions.path = path;
+                newShape = new google.maps.Polygon(shapeOptions);
+            }
+
+            overlays.push(newShape);
+
+            let bounds = new google.maps.LatLngBounds();
+            if (currentTool.includes('circle') || currentTool.includes('rectangle')) {
+                bounds = newShape.getBounds();
+            } else if (currentTool.includes('polygon')) {
+                newShape.getPath().forEach(function (latLng) { bounds.extend(latLng); });
+            }
+
+            if (bounds) { map.fitBounds(bounds); }
+        }
+
+
+        $(document).ready(function () {
+            initMap();
+
+            $('#clientName').select2({
+                placeholder: "Search & Select Client",
+                allowClear: true,
+                width: '100%'
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            campaignId = urlParams.get('id');
+
+            if (campaignId) {
+                loadClientsThenCampaign();
+            } else {
+                alert("No Campaign ID found!");
+            }
+
+            startPicker = flatpickr("#startDate", {
+                dateFormat: "d M, Y",
+                theme: "dark",
+                minDate: "today", // Ye past dates ko block kar dega
+                onChange: function (selectedDates, dateStr) {
+                    endPicker.set("minDate", dateStr);
+                }
+            });
+
+            endPicker = flatpickr("#endDate", {
+                dateFormat: "d M, Y",
+                theme: "dark",
+                minDate: "today" // Ye past dates ko block kar dega
+            });
+
+            // Validation cleanup logic
+            $(".form-input").on("input", function () {
+                $(this).css("border", "1px solid rgba(255, 255, 255, 0.1)");
+                $(this).next(".error-msg").hide();
+            });
+
+            $('#clientName').on('select2:select', function () {
+                $("#clientNameErr").hide();
+                $(this).next(".select2-container").find(".select2-selection").css("border", "1px solid rgba(255, 255, 255, 0.1)");
+            });
+        });
+
+        function initMap() {
+            if (typeof google === 'undefined') return;
+            map = new google.maps.Map(document.getElementById("editCampaignMap"), {
+                center: { lat: 20.5937, lng: 78.9629 },
+                zoom: 5,
+                styles: [
+                    { elementType: "geometry", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.stroke", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                    { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] },
+                    { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] }
+                ]
+            });
+
+            const locInput = document.getElementById("targetLocation");
+            const locAutocomplete = new google.maps.places.Autocomplete(locInput, {
+                types: ['(cities)']
+            });
+
+            locAutocomplete.addListener("place_changed", () => {
+                const place = locAutocomplete.getPlace();
+                if (!place.geometry) {
+                    locInput.value = "";
+                    return;
+                }
+
+                if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
+                else { map.setCenter(place.geometry.location); map.setZoom(12); }
+            });
+
+            const input = document.getElementById("customSearchInput");
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo("bounds", map);
+
+            autocomplete.addListener("place_changed", () => {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) return;
+                if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
+                else { map.setCenter(place.geometry.location); map.setZoom(15); }
+                if (currentMarker) currentMarker.setMap(null);
+                currentMarker = new google.maps.Marker({ position: place.geometry.location, map: map });
+            });
+
+
+            drawingManager = new google.maps.drawing.DrawingManager({
+                drawingMode: null,
+                drawingControl: false,
+                circleOptions: { fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true },
+                rectangleOptions: { fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true },
+                polygonOptions: { fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true }
+            });
+            drawingManager.setMap(map);
+
+            google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+                clearOverlays();
+                overlays.push(event.overlay);
+                $("#mapErr").hide();
+                $("#mapWrapper").css("border", "1px solid rgba(255, 255, 255, 0.1)");
+            });
+        }
+
+        const agencyId = localStorage.getItem("agencyId");
+        function loadClientsThenCampaign() {
+            $.ajax({
+                url: "http://localhost:8080/api/agency/clients/all",
+                type: "GET",
+                data: {
+                    agencyId: agencyId
+                },
+                success: function (clients) {
+                    let dropdown = $('#clientName');
+                    dropdown.empty().append('<option value="" disabled selected>Select Client</option>');
+                    clients.forEach(client => {
+                        let name = client.clientName || client.client_name;
+                        // MUKHYA BADLAV: Value mein ID aur Text mein Name rakhein
+                        if (name && client.id) {
+                            dropdown.append(new Option(name, client.id));
+                        }
+                    });
+                    dropdown.trigger('change');
+                    fetchCampaignData(campaignId);
+                }
+            });
+        }
+
+        function fetchCampaignData(id) {
+            const agencyId = localStorage.getItem("agencyId");
+            $.ajax({
+                url: "http://localhost:8080/api/agency/campaigns/" + id,
+                type: "GET",
+                headers: {
+                    "X-Agency-Id": agencyId // YEH LINE ADD KARNA ZAROORI HAI
+                },
+                success: function (data) {
+                    console.log("Received Campaign Data:", data);
+                    if (!data) {
+                        alert("API returned empty data!");
+                        return;
+                    }
+                    $('#campaignName').val(data.campaignName);
+                    if (data.clientId) {
+                        $('#clientName').val(data.clientId).trigger('change');
+                    } else if (data.clientName) {
+                        $('#clientName').val(data.clientName).trigger('change');
+                    }
+                    $('#targetLocation').val(data.targetLocation);
+                    $('#budget').val(data.budget);
+                    $('#leads').val(data.leads);
+                    $('#totalConversions').val(data.totalConversions);
+                    $('#ageRange').val(data.ageRange);
+                    $('#customSearchInput').val(data.targetLocation);
+
+                    if (data.startDate) startPicker.setDate(data.startDate);
+                    if (data.endDate) endPicker.setDate(data.endDate);
+
+                    setDropdownView('editGenderDropdown', data.gender, 'selectedGenderValue');
+                    setDropdownView('statusDropdown', data.status, 'selectedStatusValue');
+
+                    if (data.adPlatform) {
+                        let platforms = data.adPlatform.toLowerCase();
+                        if (platforms.includes("google")) {
+                            $('#adPlatformGoogle').prop('checked', true);
+                        }
+                        if (platforms.includes("facebook") || platforms.includes("meta")) {
+                            $('#adPlatformMeta').prop('checked', true);
+                        }
+                    }
+
+                    if (data.creativePath) {
+                        $('#placeholderIcon').hide();
+                        var imageUrl = "http://localhost:8080/uploads/" + data.creativePath;
+                        $('#existingImagePreview').attr('src', imageUrl).show();
+                    }
+
+                    if (data.geoData) {
+                        try {
+                            var geoInfo = (typeof data.geoData === 'string') ? JSON.parse(data.geoData) : data.geoData;
+                            renderMapShape(geoInfo);
+
+                            if (geoInfo.lat && geoInfo.lng && !geoInfo.radius) {
+                                const pos = { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) };
+                                if (currentMarker) currentMarker.setMap(null);
+                                currentMarker = new google.maps.Marker({
+                                    position: pos,
+                                    map: map,
+                                    title: data.targetLocation
+                                });
+                                map.setCenter(pos);
+                                map.setZoom(12);
+                            }
+
+                            if (geoInfo.type === "Circle") {
+                                const circlePos = { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) };
+                                let shape = new google.maps.Circle({
+                                    center: circlePos,
+                                    radius: parseFloat(geoInfo.radius),
+                                    map: map,
+                                    fillColor: "#00ffaa",
+                                    fillOpacity: 0.2,
+                                    strokeColor: "#00ffaa",
+                                    editable: true
+                                });
+                                map.setCenter(circlePos);
+                                map.fitBounds(shape.getBounds());
+                                overlays.push(shape);
+                            }
+
+                            // 3. Agar Rectangle tha
+                            else if (geoInfo.type === "Rectangle") {
+                                let shape = new google.maps.Rectangle({
+                                    bounds: geoInfo.bounds,
+                                    map: map,
+                                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                                });
+                                map.fitBounds(shape.getBounds());
+                                overlays.push(shape);
+                            }
+                        } catch (e) {
+                            console.error("GeoData render error:", e);
+                        }
+                    }
+                }
+            });
+        }
+
+        function drawSavedGoogleShape(geoInfo) {
+            clearOverlays();
+            let shape;
+            if (geoInfo.type === "Circle") {
+                shape = new google.maps.Circle({
+                    center: { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) },
+                    radius: parseFloat(geoInfo.radius),
+                    map: map,
+                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                });
+                map.setCenter(shape.getCenter()); map.setZoom(10);
+                selectTool('circle', 'Circle');
+            } else if (geoInfo.type === "Rectangle") {
+                shape = new google.maps.Rectangle({
+                    bounds: geoInfo.bounds,
+                    map: map,
+                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                });
+                map.fitBounds(shape.getBounds());
+                selectTool('rectangle', 'Rectangle');
+            } else if (geoInfo.type === "Polygon") {
+                shape = new google.maps.Polygon({
+                    path: geoInfo.path,
+                    map: map,
+                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                });
+                let bounds = new google.maps.LatLngBounds();
+                shape.getPath().forEach(p => bounds.extend(p));
+                map.fitBounds(bounds);
+                selectTool('polygon', 'Polygon');
+            }
+            if (shape) overlays.push(shape);
+        }
+
+        // --- UPDATED VALIDATION LOGIC (MATCHES ADD PAGE) ---
+        function updateCampaignData() {
+            $(".error-msg").hide();
+            $(".form-input, #mapWrapper, #platformBox, .upload-zone").css("border", "1px solid rgba(255, 255, 255, 0.1)");
+
+            let selectedClient = $('#clientName').select2('data')[0];
+            let clientId = selectedClient ? selectedClient.id : null;
+            let clientName = selectedClient ? selectedClient.text : "";
+            let isValid = true;
+
+            // --- Basic Validations ---
+            if ($("#campaignName").val().trim() === "") { $("#campaignNameErr").show(); $("#campaignName").css("border", "1px solid red"); isValid = false; }
+            if ($("#targetLocation").val().trim() === "") { $("#targetLocationErr").show(); $("#targetLocation").css("border", "1px solid red"); isValid = false; }
+            if ($("#budget").val() === "") { $("#budgetErr").show(); $("#budget").css("border", "1px solid red"); isValid = false; }
+            if ($("#startDate").val() === "") { $("#startDateErr").show(); $("#startDate").parent().css("border", "1px solid red"); isValid = false; }
+            if ($("#endDate").val() === "") { $("#endDateErr").show(); $("#endDate").parent().css("border", "1px solid red"); isValid = false; }
+
+            // Yaha IDs check karein, Add page me inka id "leads" aur "conversions" tha, edit me "totalConversions" kar diya aapne
+            if ($("#leads").val() === "") { $("#leadsErr").show(); $("#leads").css("border", "1px solid red"); isValid = false; }
+            if ($("#totalConversions").val() === "") { $("#totalConversionsErr").show(); $("#totalConversions").css("border", "1px solid red"); isValid = false; }
+
+            if (!clientId) {
+                $("#clientNameErr").show();
+                $("#clientName").next(".select2-container").find(".select2-selection").css("border", "1px solid red");
+                isValid = false;
+            }
+
+            if ($("#selectedGenderValue").val() === "") { $("#genderErr").show(); $("#editGenderDropdown").css("border", "1px solid red"); isValid = false; }
+
+            var mapData = getGeoFenceData();
+            if (!mapData) { $("#mapErr").show(); $("#mapWrapper").css("border", "1px solid red"); isValid = false; }
+
+            if ($('input[name="adPlatform"]:checked').length === 0) { $("#platformErr").show(); $("#platformBox").css("border", "1px solid red"); isValid = false; }
+
+            // Agar koi field invalid hai toh form aage nahi jayega
+            if (!isValid) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return false;
+            }
+
+            var selectedPlatforms = [];
+            $('input[name="adPlatform"]:checked').each(function () { selectedPlatforms.push($(this).val()); });
+
+            // --- Campaign Object Creation ---
+            var campaignObj = {
+                id: parseInt(campaignId), // Number format me bhejein, string me nahi
+                agencyId: parseInt(agencyId),
+                clientId: parseInt(clientId),
+                clientName: clientName,
+                campaignName: $('#campaignName').val().trim(),
+                targetLocation: $('#targetLocation').val().trim(),
+                startDate: $('#startDate').val(),
+                endDate: $('#endDate').val(),
+                budget: parseInt($('#budget').val()),
+                leads: parseInt($('#leads').val()),
+                totalConversions: parseInt($('#totalConversions').val()), // Idhar dhyan dein HTML aur JS match hona chahiye
+                gender: $('#selectedGenderValue').val(),
+                ageRange: $('#ageRange').val(),
+                status: $('#selectedStatusValue').val(),
+                geoData: JSON.stringify(mapData),
+                adPlatform: selectedPlatforms.join(",")
+            };
+
+            var formData = new FormData();
+            formData.append("campaignData", JSON.stringify(campaignObj));
+
+            var fileInput = document.getElementById('campaignImage');
+            if (fileInput.files.length > 0) {
+                formData.append("image", fileInput.files[0]);
+            }
+
+            var $btn = $(".btn-update");
+            $btn.text("Updating...").prop("disabled", true);
+
+            // --- AJAX PUT Call ---
+            $.ajax({
+                url: "http://localhost:8080/api/agency/campaigns/update/" + campaignId,
+                type: "PUT",
+                headers: {
+                    "X-Agency-Id": agencyId
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    showCustomAlert("Success!", "Campaign Updated Successfully!", "success", "Campaigns.html");
+                },
+                error: function (xhr) {
+                    showCustomAlert("Error!", "Error updating campaign: " + (xhr.responseText || "Server Error"), "error");
+                    $btn.text("Update Campaign").prop("disabled", false);
+                }
+            });
+        }
+
+        function toggleMapDropdown(e) { e.stopPropagation(); $('#shapeDropdown').toggleClass('active'); }
+        function selectTool(type, name) {
+            $('#selectedToolText').html(`<i class="far fa-${type === 'circle' ? 'circle' : (type === 'rectangle' ? 'square' : 'draw-polygon')}"></i> ${name}`);
+            $('#shapeDropdown').removeClass('active');
+            if (type === 'circle') drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
+            else if (type === 'rectangle') drawingManager.setDrawingMode(google.maps.drawing.OverlayType.RECTANGLE);
+            else if (type === 'polygon') drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+        }
+
+        function getGeoFenceData() {
+            if (overlays.length === 0) return null;
+            let shape = overlays[0];
+            if (shape instanceof google.maps.Circle) return { type: "Circle", lat: shape.getCenter().lat(), lng: shape.getCenter().lng(), radius: shape.getRadius() };
+            if (shape instanceof google.maps.Rectangle) return { type: "Rectangle", bounds: shape.getBounds().toJSON() };
+            if (shape instanceof google.maps.Polygon) return { type: "Polygon", path: shape.getPath().getArray() };
+            return null;
+        }
+
+        function clearOverlays() { overlays.forEach(o => o.setMap(null)); overlays = []; }
+        function clearMap() { clearOverlays(); if (currentMarker) currentMarker.setMap(null); $('#customSearchInput').val(''); }
+        function setDropdownView(id, val, hiddenId) { if (val) { $('#' + id + ' .selected-text').text(val); $('#' + hiddenId).val(val); } }
+        function toggleDropdown(id) { $('.custom-dropdown').not('#' + id).removeClass('active'); $('#' + id).toggleClass('active'); }
+        function selectItem(id, txt) {
+            $('#' + id + ' .selected-text').text(txt); $('#' + id).removeClass('active');
+            if (id === 'editGenderDropdown') { $('#selectedGenderValue').val(txt); $("#genderErr").hide(); }
+            if (id === 'statusDropdown') $('#selectedStatusValue').val(txt);
+        }
+
+        $(document).on('change', '#campaignImage', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => { $('#existingImagePreview').attr('src', e.target.result).show(); $('#placeholderIcon').hide(); };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        $(document).on('click', function (e) {
+
+            if (!$(e.target).closest('#shapeDropdown').length) {
+                $('#shapeDropdown').removeClass('active');
+            }
+
+            if (!$(e.target).closest('.custom-dropdown').length) {
+                $('.custom-dropdown').removeClass('active');
+            }
+        });
+
+        function toggleMapDropdown(event) {
+            event.stopPropagation();
+            $('#shapeDropdown').toggleClass('active');
+            $('.custom-dropdown').removeClass('active');
+        }
+
+        function toggleDropdown(id) {
+            event.stopPropagation();
+            $('.custom-dropdown').not('#' + id).removeClass('active');
+            $('#shapeDropdown').removeClass('active');
+            $('#' + id).toggleClass('active');
+        }
+
+        function renderMapShape(geoInfo) {
+            console.log("Rendering data for:", geoInfo); // Debug line
+            clearOverlays();
+            let shape;
+
+            if (geoInfo.type === "Circle") {
+                const center = { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) };
+                if (isNaN(center.lat) || isNaN(center.lng)) {
+                    console.error("Invalid coordinates for Circle");
+                    return;
+                }
+                shape = new google.maps.Circle({
+                    center: center,
+                    radius: parseFloat(geoInfo.radius),
+                    map: map,
+                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                });
+                if (geoInfo.radius) {
+                    let radiusInKm = parseFloat(geoInfo.radius) / 1000;
+                    $('#radiusInput').val(radiusInKm);
+
+                    // Dropdown tool text ko bhi Circle par set kar dein
+                    $('#selectedToolText').html('<i class="far fa-circle"></i> Circle');
+                }
+                map.setCenter(shape.getCenter());
+                map.setZoom(14);
+            }
+            else if (geoInfo.type === "Rectangle") {
+                // Agar bounds string hain, toh parse karein ya format check karein
+                shape = new google.maps.Rectangle({
+                    bounds: geoInfo.bounds,
+                    map: map,
+                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                });
+                map.fitBounds(geoInfo.bounds);
+            }
+            else if (geoInfo.lat && geoInfo.lng) {
+                const pos = { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) };
+                currentMarker = new google.maps.Marker({ position: pos, map: map });
+                map.setCenter(pos);
+                map.setZoom(12);
+            }
+
+            if (shape) {
+                overlays.push(shape);
+                console.log("Shape added successfully");
+            } else {
+                console.warn("No shape was created. Check geoInfo.type");
+            }
+        }
+
+
+        // Modal show karne ka function (Redirect URL ke sath)
+        function showCustomAlert(title, message, type, redirectUrl = null) {
+            $('#alertTitle').text(title);
+            $('#alertMessage').text(message);
+
+            // Type check karega: success hai ya error
+            if (type === 'success') {
+                $('#alertIconBox').html('<i class="fa-solid fa-check"></i>');
+                $('#alertIconBox').removeClass('alert-icon-error').addClass('alert-icon-success');
+            } else {
+                $('#alertIconBox').html('<i class="fa-solid fa-triangle-exclamation"></i>');
+                $('#alertIconBox').removeClass('alert-icon-success').addClass('alert-icon-error');
+            }
+
+            $('#customAlertOverlay').addClass('active');
+
+            // OK Button par click karne ka logic
+            $('.btn-alert-ok').off('click').on('click', function () {
+                closeCustomAlert();
+                // Agar redirect URL diya hai toh page change karo
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            });
+        }
+
+        // Modal band karne ka function
+        function closeCustomAlert() {
+            $('#customAlertOverlay').removeClass('active');
+        }
+
+    </script>
+
+</body>
+
+</html>

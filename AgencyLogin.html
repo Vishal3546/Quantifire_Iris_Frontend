@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Agency Login</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/auth-guard.js"></script>
+
+</head>
+
+<body class="lbody">
+    <div class="login-card">
+        <div class="logo-section">
+            <img src="Images/quantifirelogo.png" alt="Quantifyre Iris Logo" class="logo">
+        </div>
+
+        <h2 class="form-title">Agency Login</h2>
+
+        <form action="#">
+            <div class="input-group">
+                <label for="email">Email Id</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="Enter Your Email" required>
+                    <i class="fa-regular fa-envelope input-icon"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Enter Your Password" autocomplete="off" required>
+                    <i class="fa-regular fa-eye input-icon" id="toggleEye" style="cursor: pointer; z-index: 10;"></i>
+                </div>
+
+                <p id="loginError" class="error-text"></p>
+            </div>
+
+            <!-- <div class="forgot-pass">
+                <a href="#">Forgot password?</a>
+            </div> -->
+
+            <button type="submit" class="login-btn" id="loginbtn">Login</button>
+        </form>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // --- PASSWORD SHOW/HIDE ---
+            $('#toggleEye').click(function () {
+                var passwordField = $('#password');
+                var icon = $(this);
+                var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                if (type === 'text') {
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+
+            // --- LOGIN LOGIC ---
+            $("#loginbtn").click(function (e) {
+                e.preventDefault();
+
+                // 1. Pehle input se value lein
+                var userEmail = $("#email").val().trim();
+                var userPassword = $("#password").val().trim();
+
+                $.ajax({
+                    url: "http://localhost:8080/api/agency/login",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ email: userEmail, password: userPassword }),
+                    success: function (response) {
+                        if (response.status === "success") {
+
+                            localStorage.setItem("isAgencyLoggedIn", "true");
+                            localStorage.setItem("agencyId", response.agencyId);
+                            localStorage.setItem("agencyName", response.agencyName);
+                            localStorage.setItem("agencyEmail", userEmail);
+
+                            let now = new Date();
+                            now.setTime(now.getTime() + (24 * 60 * 60 * 1000));
+                            document.cookie = "isAgencyLoggedIn=true; expires=" + now.toUTCString() + "; path=/; SameSite=Lax";
+
+                            window.location.href = "AgencyDashboard.html";
+                        }
+                    },
+                    error: function (xhr) {
+                        $("#loginError").text("Invalid Credentials").show();
+                    }
+                });
+            });
+
+            $("input").on("input", function () {
+                $(this).removeClass("input-error");
+                $("#loginError").hide();
+            });
+
+        });
+    </script>
+</body>
+
+</html>

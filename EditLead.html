@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Edit Lead</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/auth-guard.js"></script>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="Quantifyre">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li class="active"><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
+                
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count">3</span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Leads50x50.ico" alt=""
+                            onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-user-pen\'></i>'">
+                    </div>
+                    <div>
+                        <h1>Edit Lead</h1>
+                        <p>Modify lead information and save updated details here</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card form-container">
+                <form action="#" method="POST">
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="leadName">Lead Name</label>
+                            <input type="text" id="leadName" class="form-input" readonly
+                                placeholder="Enter your lead name" value="Jonh Smith">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-input" readonly placeholder="Enter your email"
+                                value="jonh.smith@email.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="targetLocation">Target Location</label>
+                        <textarea id="targetLocation" class="form-input" rows="4" readonly
+                            placeholder="Describe your Location..">Mehsana</textarea>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="campaignName">Campaign Name</label>
+                            <input type="text" id="campaignName" class="form-input" readonly
+                                placeholder="Enter Campaign Name" value="Summer Sale 2025">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div class="custom-dropdown" id="editLeadStatusDropdown">
+                                <div class="dropdown-selected" onclick="toggleDropdown('editLeadStatusDropdown')">
+                                    <span class="selected-text">Active</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                                </div>
+                                <ul class="dropdown-options">
+                                    <li class="dropdown-item" onclick="selectItem('editLeadStatusDropdown', 'New')">New
+                                    </li>
+                                    <li class="dropdown-item"
+                                        onclick="selectItem('editLeadStatusDropdown', 'Qualified')">Qualified</li>
+                                    <li class="dropdown-item"
+                                        onclick="selectItem('editLeadStatusDropdown', 'Contacted')">Contacted</li>
+                                    <li class="dropdown-item"
+                                        onclick="selectItem('editLeadStatusDropdown', 'Converted')">Converted</li>
+                                </ul>
+                                <input type="hidden" name="status" id="selectedStatusValue" value="Active">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="Leads.html" type="submit" class="btn btn-update" style="text-decoration: none;">Update
+                            Lead</a>
+                        <a href="Leads.html" class="btn btn-cancel"
+                            style="text-decoration: none; display:inline-block; text-align:center;">Cancle</a>
+                    </div>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+
+    <script>
+        // --- JS FOR CUSTOM DROPDOWNS ---
+        function toggleDropdown(id) {
+            // Close other dropdowns first
+            document.querySelectorAll('.custom-dropdown').forEach(d => {
+                if (d.id !== id) d.classList.remove('active');
+            });
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('active');
+        }
+
+        function selectItem(dropdownId, text) {
+            const dropdown = document.getElementById(dropdownId);
+            const textSpan = dropdown.querySelector('.selected-text');
+            textSpan.innerText = text;
+            dropdown.classList.remove('active');
+
+            if (dropdownId === 'editLeadStatusDropdown') {
+                document.getElementById('selectedStatusValue').value = text;
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.custom-dropdown')) {
+                document.querySelectorAll('.custom-dropdown').forEach(d => {
+                    d.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

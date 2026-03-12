@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads Management | Quantifyre</title>
+
+    <link rel="stylesheet" href="Css/client_style.css">
+    <link rel="stylesheet" href="Css/client_sidebar.css">
+
+    <link rel="stylesheet" href="Css/fontstyle.css">
+    <link rel="stylesheet" href="Css/all.css">
+    
+</head>
+
+<body>
+
+    <!-- <div class="sidebar-overlay" id="sidebarOverlay"></div> -->
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-close-btn" id="sidebarClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="Images/ClientSlider.ico">
+                </div>
+                <p>Client Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="ClientDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="ClientCampaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li class="active"><a href="ClientLeads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Clientsetting.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle">
+                    <img src="Images/Slide.ico" alt="Toggle Menu">
+                </div>
+
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                </div>
+
+                <div class="top-profile-actions">
+
+                    <div class="notification-wrapper" onclick="toggleNavDropdown(event, 'notifDropdown')">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico" alt="Notifications">
+                            <span class="notif-count">3</span>
+                        </div>
+
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>registered in Ahmadabad.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-bullhorn"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign</strong></p><span>"Summer Sale Started"</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Payment</strong></p><span>received from Acme Corp.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+
+                    <div class="profile-info" onclick="toggleNavDropdown(event, 'profileDropdown')">
+                        <div class="avatar-small">
+                            <img src="Images/ClientHeader.ico" alt="Profile">
+                        </div>
+                        <div class="text-info">
+                            <h4>Adam Smith</h4>
+                            <p>Client</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron"></i>
+                    </div>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name">Adam Smith</p>
+                            <span class="d-email">adam@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="profile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                            <li><a href="Clientsetting.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li><a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" ><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Leads50x50.ico">
+                    </div>
+                    <div>
+                        <h1>Leads Management</h1>
+                        <p>Filter, Search, and export your leads</p>
+                    </div>
+                </div>
+
+                <div class="report-header-actions" style="display:flex; gap:15px;">
+                    <button class="btn-export">
+                        <i class="fas fa-download"></i> Export CSV
+                    </button>
+                    <button class="btn-export">
+                        <i class="fas fa-file-pdf"></i> Export PDF
+                    </button>
+                </div>
+            </div>
+
+            <div class="filters-container glass-panel">
+
+                <div class="search-campaign">
+                    <i class="fas fa-search" style="color: #a0a0a0; margin-right: 10px;"></i>
+                    <input type="text" placeholder="Search Leads....">
+                </div>
+
+                <div class="filter-group">
+                    <div class="custom-dropdown" id="locationDropdown">
+                        <div class="dropdown-selected" onclick="toggleDropdown('locationDropdown')">
+                            <span class="selected-text">All Locations</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('locationDropdown', 'All Locations')">All Locations</li>
+                            <li class="dropdown-item" onclick="selectItem('locationDropdown', 'Mehsana')">Mehsana</li>
+                            <li class="dropdown-item" onclick="selectItem('locationDropdown', 'Gandhinagar')">Gandhinagar</li>
+                            <li class="dropdown-item" onclick="selectItem('locationDropdown', 'Patan')">Patan</li>
+                            <li class="dropdown-item" onclick="selectItem('locationDropdown', 'Ahmedabad')">Ahmedabad</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="custom-dropdown" id="statusDropdown">
+                        <div class="dropdown-selected" onclick="toggleDropdown('statusDropdown')">
+                            <span class="selected-text">Filter by Date</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Filter by Date')">Filter by Date</li>
+                            <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Last 3 Months')">Last 3 Months</li>
+                            <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Last Month')">Last Month</li>
+                            <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Last 7 Days')">Last 7 Days</li>
+                            <li class="dropdown-item" onclick="selectItem('statusDropdown', 'Last 3 Days')">Last 3 Days</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="custom-dropdown" id="campaignDropdown">
+                        <div class="dropdown-selected" onclick="toggleDropdown('campaignDropdown')">
+                            <span class="selected-text">All Campaigns</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('campaignDropdown', 'All Campaigns')">All Campaigns</li>
+                            <li class="dropdown-item" onclick="selectItem('campaignDropdown', 'Summer Sale')">Summer Sales 2025</li>
+                            <li class="dropdown-item" onclick="selectItem('campaignDropdown', 'Eco-Friendly')">Eco-Friendly Int</li>
+                            <li class="dropdown-item" onclick="selectItem('campaignDropdown', 'Flash Deals')">Flash Deals</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="active-campaigns-box" style="margin-top: 20px;">
+                <div class="ac-table-wrap">
+                    <table class="ac-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 5px;"><input type="checkbox" id="selectAll"></th>
+                                <th>Lead Name</th>
+                                <th>Email</th>
+                                <th>Location</th>
+                                <th>Campaign</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>John Smith</td>
+                                <td>jonh.smith@email.com</td>
+                                <td>Mehsana</td>
+                                <td>Summer Sale 2024</td>
+                                <td><span class="status-badge qualified">Qualified</span></td>
+                                <td>
+                                    <a href="ClientLeadDetails.html"><div class="action-eye"><i class="fa-solid fa-eye action-icon"></i></div></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>Emily Martinez</td>
+                                <td>emily.m@email.com</td>
+                                <td>Gandhinagar</td>
+                                <td>Eco-Friendly Initiative</td>
+                                <td><span class="status-badge contacted">Contacted</span></td>
+                                <td>
+                                    <a href="ClientLeadDetails.html"><div class="action-eye"><i class="fa-solid fa-eye action-icon"></i></div></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>Michael Johnson</td>
+                                <td>m.johnson@email.com</td>
+                                <td>Patan</td>
+                                <td>Flash Weekend Deals</td>
+                                <td><span class="status-badge converted">Converted</span></td>
+                                <td>
+                                    <a href="ClientLeadDetails.html"><div class="action-eye"><i class="fa-solid fa-eye action-icon"></i></div></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>Sarah Davis</td>
+                                <td>sarah.d@email.com</td>
+                                <td>Ahmedabad</td>
+                                <td>Loyalty Rewards Program</td>
+                                <td><span class="status-badge new">New</span></td>
+                                <td>
+                                    <a href="ClientLeadDetails.html"><div class="action-eye"><i class="fa-solid fa-eye action-icon"></i></div></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>Michael Johnson</td>
+                                <td>m.johnson@email.com</td>
+                                <td>Patan</td>
+                                <td>Flash Weekend Deals</td>
+                                <td><span class="status-badge converted">Converted</span></td>
+                                <td>
+                                    <a href="ClientLeadDetails.html"><div class="action-eye"><i class="fa-solid fa-eye action-icon"></i></div></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pagination-wrapper">
+                <div class="pagination-info">
+                    Showing <span id="start-row">1</span> to <span id="end-row">5</span> of <span id="total-rows">0</span> entries
+                </div>
+                <div class="pagination-controls">
+                    <button class="page-btn prev-btn" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div id="page-numbers" class="page-numbers"></div>
+                    <button class="page-btn next-btn" onclick="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-content">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions">
+                <button class="btn-modal btn-modal-cancel" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal btn-modal-delete" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allclient.js"></script>
+
+    <script>
+            // --- 2. Checkbox Logic ---
+            $('#selectAll').on('change', function () {
+                var isChecked = $(this).is(':checked');
+                $('.ac-table tbody input[type="checkbox"]').prop('checked', isChecked);
+            });
+
+            $('.ac-table tbody input[type="checkbox"]').on('change', function () {
+                if (!$(this).is(':checked')) {
+                    $('#selectAll').prop('checked', false);
+                }
+                var totalCheckboxes = $('.ac-table tbody input[type="checkbox"]').length;
+                var checkedCheckboxes = $('.ac-table tbody input[type="checkbox"]:checked').length;
+                if (totalCheckboxes === checkedCheckboxes) {
+                    $('#selectAll').prop('checked', true);
+                }
+            });
+    
+        // --- 3. Dropdown Logic ---
+        function toggleDropdown(id) {
+            // Close other dropdowns
+            document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
+                if (dropdown.id !== id) dropdown.classList.remove('active');
+            });
+            // Toggle current
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('active');
+        }
+
+        function selectItem(dropdownId, text) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.querySelector('.selected-text').innerText = text;
+            dropdown.classList.remove('active');
+        }
+
+        // Close Dropdowns on Click Outside
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.custom-dropdown')) {
+                document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('active'));
+            }
+        });
+
+        // --- 5. Pagination Logic ---
+        const rowsPerPage = 4;
+        const tableBody = document.querySelector('tbody');
+        const rows = tableBody.querySelectorAll('tr');
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+        let currentPage = 1;
+
+        const pageNumbersContainer = document.getElementById('page-numbers');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const startRowSpan = document.getElementById('start-row');
+        const endRowSpan = document.getElementById('end-row');
+        const totalRowsSpan = document.getElementById('total-rows');
+
+        function initPagination() {
+            if(totalRowsSpan) totalRowsSpan.innerText = totalRows;
+            updateTable();
+            generatePageNumbers();
+            updateButtons();
+        }
+
+        function updateTable() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            rows.forEach((row, index) => {
+                row.style.display = (index >= start && index < end) ? '' : 'none';
+            });
+            if(startRowSpan) startRowSpan.innerText = totalRows === 0 ? 0 : start + 1;
+            if(endRowSpan) endRowSpan.innerText = end > totalRows ? totalRows : end;
+        }
+
+        function generatePageNumbers() {
+            pageNumbersContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.classList.add('page-btn');
+                btn.innerText = i;
+                if (i === currentPage) btn.classList.add('active');
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    updateTable();
+                    generatePageNumbers();
+                    updateButtons();
+                });
+                pageNumbersContainer.appendChild(btn);
+            }
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+                generatePageNumbers();
+                updateButtons();
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateTable();
+                generatePageNumbers();
+                updateButtons();
+            }
+        }
+
+        window.onload = initPagination;
+    </script>
+
+</body>
+</html>

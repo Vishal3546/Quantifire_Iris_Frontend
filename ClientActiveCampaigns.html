@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Campaigns - Quantifyre Iris</title>
+
+    <link rel="stylesheet" href="Css/client_style.css">
+    <link rel="stylesheet" href="Css/client_sidebar.css">
+
+    <link rel="stylesheet" href="Css/fontstyle.css">
+    <link rel="stylesheet" href="Css/all.css">
+
+    <link rel="stylesheet" href="Css/dateflatpickr.min.css">
+    <link rel="stylesheet" href="Css/datestyle.css">
+
+</head>
+
+<body>
+    <!-- <div class="sidebar-overlay" id="sidebarOverlay"></div> -->
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-close-btn" id="sidebarClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="Logo">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="Images/ClientSlider.ico" alt="User">
+                </div>
+                <p>Adam Smith</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="ClientDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li class="active"><a href="ClientCampaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="ClientLeads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Clientsetting.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle">
+                    <img src="Images/Slide.ico" alt="Toggle Menu">
+                </div>
+
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                </div>
+
+                <div class="top-profile-actions">
+
+                    <div class="notification-wrapper" onclick="toggleNavDropdown(event, 'notifDropdown')">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico" alt="Notifications">
+                            <span class="notif-count">3</span>
+                        </div>
+
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>registered in Ahmadabad.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-bullhorn"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign</strong></p><span>"Summer Sale Started"</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Payment</strong></p><span>received from Acme Corp.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+
+                    <div class="profile-info" onclick="toggleNavDropdown(event, 'profileDropdown')">
+                        <div class="avatar-small">
+                            <img src="Images/ClientHeader.ico" alt="Profile">
+                        </div>
+                        <div class="text-info">
+                            <h4>Adam Smith</h4>
+                            <p>Client</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron"></i>
+                    </div>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name">Adam Smith</p>
+                            <span class="d-email">adam@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="profile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                            <li><a href="Clientsetting.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li><a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" ><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square"><img src="Images/Campaign50x50.ico"></div>
+                    <div>
+                        <h1>Active Campaigns</h1>
+                        <p>Marketing Campaigns and their performance</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <a href="ClientDashboard.html" class="btn-back" style="background: #031414; text-decoration: none;">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </a>
+                    <button class="btn-export"><i class="fa-solid fa-download"></i> Export PDF</button>
+                </div>
+            </div>
+
+              <div class="filters-container glass-panel">
+                <div class="filter-group">
+                    <div class="custom-dropdown" id="campaignStatusDropdown">
+                        <div class="dropdown-selected" onclick="toggleDropdown('campaignStatusDropdown')">
+                            <span class="selected-text">All Campaigns</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'All Campaigns')">
+                                All Campaigns</li>
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'Active')">Active
+                            </li>
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'Paused')">Paused
+                            </li>
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'Ended')">Ended</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="date-wrapper" style="position: relative; display: flex; align-items: center;">
+                        <input type="text" id="startDate" placeholder="Start Date" class="datepicker-neon"
+                            style="width: 100%; cursor: pointer;">
+                        <i class="fa-regular fa-calendar"
+                            style="position: absolute; right: 12px; color: #00ff9d; pointer-events: none;"></i>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="date-wrapper" style="position: relative; display: flex; align-items: center;">
+                        <input type="text" id="endDate" placeholder="End Date" class="datepicker-neon"
+                            style="width: 100%; cursor: pointer;">
+                        <i class="fa-regular fa-calendar"
+                            style="position: absolute; right: 12px; color: #00ff9d; pointer-events: none;"></i>
+                    </div>
+                </div>
+
+                <div class="filter-group search-campaign">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search Campaign">
+                </div>
+            </div>
+
+            <section class="active-campaigns-box">
+                <div class="ac-table-wrap">
+                    <table class="ac-table full-page-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;"><input type="checkbox"></th>
+                                <th>Campaign Name</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Leads</th>
+                                <th>Conv.Rate</th>
+                                <th>Budget</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>
+                                    <div class="campaign-name-cell">
+                                        <div><strong style="color: #fff;">Summer Sale 2025</strong><span
+                                                style="font-size: 11px; color: #888;">Started May 16, 2025</span></div>
+                                    </div>
+                                </td>
+                                <td>Mehsana</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>1150</td>
+                                <td>30.7%</td>
+                                <td>₹ 10,000</td>
+                                <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>
+                                    <div class="campaign-name-cell">
+                                        <div><strong style="color: #fff;">Eco-Friendly Initiative</strong><span
+                                                style="font-size: 11px; color: #888;">Started Jan 5, 2025</span></div>
+                                    </div>
+                                </td>
+                                <td>Gandhinagar</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>2050</td>
+                                <td>43.7%</td>
+                                <td>₹ 7,000</td>
+                                <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>
+                                    <div class="campaign-name-cell">
+                                        <div><strong style="color: #fff;">Loyalty Rewards Program</strong><span
+                                                style="font-size: 11px; color: #888;">Started March 01, 2025</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Ahmadabad</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>1550</td>
+                                <td>48.5%</td>
+                                <td>₹ 15,000</td>
+                                <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>
+                                    <div class="campaign-name-cell">
+                                        <div><strong style="color: #fff;">Flash Weekend Deals</strong><span
+                                                style="font-size: 11px; color: #888;">Started Feb 20, 2025</span></div>
+                                    </div>
+                                </td>
+                                <td>Palanpur</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>1040</td>
+                                <td>60.5%</td>
+                                <td>₹ 30,000</td>
+                                <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>
+                                    <div class="campaign-name-cell">
+                                        <div><strong style="color: #fff;">Eco-Friendly Initiative</strong><span
+                                                style="font-size: 11px; color: #888;">Started Jan 5, 2025</span></div>
+                                    </div>
+                                </td>
+                                <td>Anand</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>3004</td>
+                                <td>75.3%</td>
+                                <td>₹ 65,000</td>
+                                <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="pagination-wrapper">
+                <div class="pagination-info">Showing <span id="start-row">1</span> to <span id="end-row">5</span> of
+                    <span id="total-rows">0</span> entries
+                </div>
+                <div class="pagination-controls">
+                    <button class="page-btn prev-btn" onclick="prevPage()"><i
+                            class="fa-solid fa-chevron-left"></i></button>
+                    <div id="page-numbers" class="page-numbers"></div>
+                    <button class="page-btn next-btn" onclick="nextPage()"><i
+                            class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-content">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions">
+                <button class="btn-modal btn-modal-cancel" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal btn-modal-delete" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allclient.js" ></script>
+
+    <script>
+        // Dropdown Logic
+        const dropdown = document.getElementById('campaignStatusDropdown');
+        const selectedText = document.getElementById('selected-text');
+        dropdown.querySelector('.dropdown-selected').addEventListener('click', function (e) {
+            e.stopPropagation(); dropdown.classList.toggle('active');
+        });
+        function selectOption(text) {
+            selectedText.innerText = text; dropdown.classList.remove('active');
+        }
+        document.addEventListener('click', function (e) {
+            if (!dropdown.contains(e.target)) dropdown.classList.remove('active');
+        });
+
+
+        // Pagination Logic
+        const rowsPerPage = 5;
+        const tableBody = document.querySelector('tbody');
+        const rows = tableBody.querySelectorAll('tr');
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+        let currentPage = 1;
+        const pageNumbersContainer = document.getElementById('page-numbers');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        function initPagination() {
+            document.getElementById('total-rows').innerText = totalRows;
+            updateTable(); generatePageNumbers(); updateButtons();
+        }
+        function updateTable() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            rows.forEach((row, index) => {
+                row.style.display = (index >= start && index < end) ? '' : 'none';
+            });
+            document.getElementById('start-row').innerText = totalRows === 0 ? 0 : start + 1;
+            document.getElementById('end-row').innerText = end > totalRows ? totalRows : end;
+        }
+        function generatePageNumbers() {
+            pageNumbersContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.classList.add('page-btn');
+                btn.innerText = i;
+                if (i === currentPage) btn.classList.add('active');
+                btn.addEventListener('click', () => { currentPage = i; updateTable(); generatePageNumbers(); updateButtons(); });
+                pageNumbersContainer.appendChild(btn);
+            }
+        }
+        function updateButtons() {
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+        window.onload = initPagination;
+
+        $('thead input[type="checkbox"]').on('change', function () {
+            var isChecked = $(this).prop('checked');
+
+            $('tbody tr:visible input[type="checkbox"]').prop('checked', isChecked);
+        });
+    </script>
+
+    <script src="Js/flatpickr.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Start Date Picker
+            const startPicker = flatpickr("#startDate", {
+                dateFormat: "d M, Y",
+                altInput: true,
+                altFormat: "d M, Y",
+                allowInput: true,
+                theme: "dark",
+                static: true, 
+                onChange: function (selectedDates, dateStr, instance) {
+                    endPicker.set('minDate', dateStr);
+                }
+            });
+
+            // End Date Picker
+            const endPicker = flatpickr("#endDate", {
+                dateFormat: "d M, Y",
+                altInput: true,
+                altFormat: "d M, Y",
+                allowInput: true,
+                theme: "dark",
+                static: true
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Details - Quantifyre Iris</title>
+
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <script src="Js/auth-guard.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="Images/quantifirelogo.png" alt="Logo">
+                </div>
+            </div>
+
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <p>Agency Name</p>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li class="active"><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                   <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square">
+                        <img src="Images/Campaign50x50.ico">
+                    </div>
+                    <div>
+                        <h1>Campaign Details</h1>
+                        <p>Analytics & Performance Overview</p>
+                    </div>
+                </div>
+                <div class="report-header-actions">
+                    <a href="Campaigns.html" class="btn-action"
+                        style="background: #031414; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </a>
+                    <a href="#" id="editCampaignLink" class="btn-export" style="text-decoration: none;">Edit Details</a>
+                </div>
+            </div>
+
+            <div class="campaign-banner">
+                <div class="banner-info">
+                    <h2 id="d-name">Loading...</h2>
+                    <div class="banner-meta">
+                        <span id="d-meta">Loading details...</span>
+                        <span style="margin-left: 10px; font-weight: 500;" id="d-status-wrapper">
+                            <span class="status-dot" style="background-color: currentColor;"></span>
+                            <span id="d-status">Active</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="banner-date">
+                    <span>Duration</span>
+                    <strong id="d-duration">... - ...</strong>
+                </div>
+            </div>
+
+            <div class="middle-section">
+
+                <div class="map-card">
+                    <h3>Geofence Map</h3>
+                    <div id="geofenceMap" class="dark-theme-map"
+                        style="height: 300px; border-radius: 12px; margin-top: 10px;"></div>
+                </div>
+
+                <div class="kpi-grid-2x2">
+                    <div class="stat-card">
+                        <p style="text-align: center;">Conversion Rate</p>
+                        <h2 style="text-align: center;" id="d-conv">0%</h2>
+                    </div>
+                    <div class="stat-card">
+                        <p style="text-align: center;">Total Leads</p>
+                        <h2 style="text-align: center;" id="d-leads">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <p style="text-align: center;">Budget</p>
+                        <h2 style="text-align: center;" id="d-budget">₹ 0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <p style="text-align: center;">Total Conversions</p>
+                        <h2 style="text-align: center;" id="d-totalConv">0</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="chart-container" style="height: 400px;">
+                <div class="chart-header" style="margin-left:20px;margin-top: 15px;">Leads & Performance</div>
+                <div class="chart-wrapper">
+                    <canvas id="detailsChart"></canvas>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Logut Model Logic -->
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script src="Js/chart.js"></script>
+
+    <script>
+        // ===========================================
+        // 1. GLOBAL VARIABLES & INIT
+        // ===========================================
+        var map;
+        var detailsChart = null;
+        var currentOverlay = null;
+
+        $(document).ready(function () {
+            // Initialize Google Map first
+            initMap();
+
+            // Fetch Data
+            const urlParams = new URLSearchParams(window.location.search);
+            const campaignId = urlParams.get('id');
+
+            if (campaignId) {
+                loadCampaignDetails(campaignId);
+            } else {
+                alert("No Campaign ID Provided!");
+            }
+        });
+
+        // ===========================================
+        // 2. FETCH DATA FUNCTION
+        // ===========================================
+        function loadCampaignDetails(id) {
+            const agencyId = localStorage.getItem("agencyId");
+
+            $('#editCampaignLink').css('pointer-events', 'none');
+
+            $.ajax({
+                url: "http://localhost:8080/api/agency/campaigns/" + id,
+                type: "GET",
+                headers: {
+                    "X-Agency-Id": agencyId // Header bhejna zaroori hai
+                },
+                success: function (data) {
+                    // A. Populate Text
+                    $('#d-name').text(data.campaignName);
+                    $('#d-meta').text(`Client: ${data.clientName} • Location: ${data.targetLocation}`);
+                    $('#d-status').text(data.status);
+
+                    var statusColor = '#00ffaa';
+                    if (data.status === 'Paused') {
+                        statusColor = '#ffaa00';
+                    } else if (data.status === 'Completed') {
+                        statusColor = '#60a5fa';
+                    }
+                    $('#d-status-wrapper').css('color', statusColor);
+
+                    // Duration
+                    var sDate = data.startDate || "N/A";
+                    var eDate = data.endDate || "N/A";
+                    $('#d-duration').text(`${sDate} - ${eDate}`);
+
+                    // B. Populate KPIs
+                    $('#d-conv').text((data.conversionRate || 0) + "%");
+                    $('#d-leads').text(data.leads || 0);
+                    $('#d-budget').text("₹ " + (data.budget || 0));
+                    $('#d-totalConv').text(data.totalConversions || 0);
+
+                    // C. Edit Link
+                    $('#editCampaignLink').attr('href', 'EditCampaign.html?id=' + data.id);
+
+                    // D.  GOOGLE MAP RENDER (Dynamic)
+                    if (data.geoData) {
+                        try {
+                            var geoInfo = JSON.parse(data.geoData);
+                            drawReadonlyGoogleShape(geoInfo);
+                        } catch (e) { console.error("Map parse error", e); }
+                    }
+
+                    // E. Render Chart
+                    renderDynamicChart(data.leads || 0, data.conversionRate || 0);
+
+                    $('#editCampaignLink')
+                .attr('href', 'EditCampaign.html?id=' + data.id)
+                .css('pointer-events', 'auto')
+                .css('opacity', '1');
+
+                },
+                error: function (xhr) {
+                    if (xhr.status === 403) {
+                        alert("Unauthorized! You don't have access to this campaign.");
+                        window.location.href = "Campaigns.html";
+                    } else {
+                        alert("Error fetching campaign details.");
+                    }
+                }
+            });
+        }
+
+        // ===========================================
+        // 3. GOOGLE MAP LOGIC 
+        // ===========================================
+        function initMap() {
+            // Google Map Initialization with Dark Theme
+            map = new google.maps.Map(document.getElementById("geofenceMap"), {
+                center: { lat: 20.5937, lng: 78.9629 },
+                zoom: 5,
+                disableDefaultUI: false,
+                styles: [
+                    { elementType: "geometry", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.stroke", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                    { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] },
+                    { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] }
+                ]
+            });
+        }
+
+        function drawReadonlyGoogleShape(geoInfo) {
+            if (!geoInfo) return;
+
+            if (geoInfo.type === "Circle") {
+                currentOverlay = new google.maps.Circle({
+                    strokeColor: "#00ffaa",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#00ffaa",
+                    fillOpacity: 0.2,
+                    map: map,
+                    center: { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) },
+                    radius: parseFloat(geoInfo.radius)
+                });
+                map.setCenter(currentOverlay.getCenter());
+                map.setZoom(10);
+            }
+            else if (geoInfo.type === "Rectangle") {
+                currentOverlay = new google.maps.Rectangle({
+                    strokeColor: "#00ffaa",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#00ffaa",
+                    fillOpacity: 0.2,
+                    map: map,
+                    bounds: geoInfo.bounds
+                });
+                map.fitBounds(currentOverlay.getBounds());
+            }
+            else if (geoInfo.type === "Polygon") {
+                currentOverlay = new google.maps.Polygon({
+                    strokeColor: "#00ffaa",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#00ffaa",
+                    fillOpacity: 0.2,
+                    map: map,
+                    paths: geoInfo.path
+                });
+
+                // Set zoom to polygon
+                let bounds = new google.maps.LatLngBounds();
+                currentOverlay.getPath().forEach(function (path) {
+                    bounds.extend(path);
+                });
+                map.fitBounds(bounds);
+            }
+        }
+
+        // ===========================================
+        // 4. CHART LOGIC 
+        // ===========================================
+        function renderDynamicChart(actualLeads, actualRate) {
+            const ctx = document.getElementById('detailsChart').getContext('2d');
+
+            let gradientGreen = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientGreen.addColorStop(0, 'rgba(0, 255, 170, 0.4)');
+            gradientGreen.addColorStop(1, 'rgba(0, 255, 170, 0)');
+
+            let gradientBlue = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientBlue.addColorStop(0, 'rgba(0, 212, 255, 0.4)');
+            gradientBlue.addColorStop(1, 'rgba(0, 212, 255, 0)');
+
+            var leadsData = [actualLeads * 0.2, actualLeads * 0.5, actualLeads * 0.4, actualLeads * 0.8, actualLeads];
+            var rateData = [actualRate * 0.3, actualRate * 0.6, actualRate * 0.5, actualRate * 0.9, actualRate];
+
+            if (detailsChart) { detailsChart.destroy(); }
+
+            detailsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Current'],
+                    datasets: [
+                        {
+                            label: 'Total Leads',
+                            data: leadsData,
+                            borderColor: '#00d4ff',
+                            backgroundColor: gradientBlue,
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBackgroundColor: '#0b1219',
+                            pointBorderColor: '#00d4ff',
+                            pointBorderWidth: 2
+                        },
+                        {
+                            label: 'Conversion Rate (%)',
+                            data: rateData,
+                            borderColor: '#00ffaa',
+                            backgroundColor: gradientGreen,
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBackgroundColor: '#0b1219',
+                            pointBorderColor: '#00ffaa',
+                            pointBorderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { color: '#a0a0a0', usePointStyle: true, boxWidth: 8 } } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#8b9c9c' } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#8b9c9c' }, beginAtZero: true }
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
