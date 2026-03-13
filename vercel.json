@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/AgencyDashboard.html" }
+    { "source": "/", "destination": "/AgencyDashboard.html" },
+    { "source": "/index", "destination": "/AgencyDashboard.html" }
   ]
 }
