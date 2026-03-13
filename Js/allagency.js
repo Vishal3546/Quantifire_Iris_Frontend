@@ -2,6 +2,25 @@
 // 1. GLOBAL FUNCTIONS (Ready ke bahar taaki HTML onclick kaam karein)
 // ==========================================
 
+
+$.ajaxPrefilter(function(options) {
+    // 1. Woh purana address jo aapne 50 jagah likha hai
+    var oldBase = "http://localhost:8080";
+
+    // 2. Aapka naya Render wala backend URL
+    var liveBase = "https://quantifire-iris-backend.onrender.com"; 
+
+    // Ye line har AJAX request ko intercept karegi
+    if (options.url.indexOf(oldBase) !== -1) {
+        // Purane localhost ko naye live URL se replace kar do
+        options.url = options.url.replace(oldBase, liveBase);
+        console.log("Redirecting AJAX to Live Backend: ", options.url);
+    }
+});
+
+
+
+
 function openLogoutModal() {
     console.log("Opening Logout Modal...");
     // jQuery use karke modal ko 'flex' display dein aur active class lagayein
