@@ -254,7 +254,7 @@ document.getElementById('checkStatusBtn').addEventListener('click', async () => 
 
     try {
         // Yahan apna Render wala actual URL daalna mat bhoolna
-        const response = await fetch('https://YOUR_BACKEND_URL.onrender.com/api/health');
+        const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
         
         if (response.ok) {
             const data = await response.text();
