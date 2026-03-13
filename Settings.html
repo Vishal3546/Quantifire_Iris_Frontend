@@ -1263,7 +1263,7 @@
             $('#googleBtn, #fbBtn').text('Checking status...').css('pointer-events', 'none');
 
             $.ajax({
-                url: `https://quantifire-iris-backend.onrender.com/api/integration/status?email=${agencyEmailForInt}`,
+                url: `http://localhost:8080/api/integration/status?email=${agencyEmailForInt}`,
                 type: "GET",
                 success: function (status) {
                     updateButtonUI('google', status.google);
@@ -1283,7 +1283,7 @@
             if (!confirm(`Are you sure you want to disconnect ${platform}?`)) return;
 
             $.ajax({
-                url: `https://quantifire-iris-backend.onrender.com/api/integration/disconnect`,
+                url: `http://localhost:8080/api/integration/disconnect`,
                 type: "GET",
                 data: { email: agencyEmailForInt, platform: platform },
                 success: function (res) {
@@ -1318,14 +1318,14 @@
         // --- Auth Redirects ---
         function connectGoogleAds() {
             if (!agencyEmailForInt) return alert("Agency Email not found!");
-            $.get(`https://quantifire-iris-backend.onrender.com/api/integration/google/connect?email=${agencyEmailForInt}`, function (res) {
+            $.get(`http://localhost:8080/api/integration/google/connect?email=${agencyEmailForInt}`, function (res) {
                 window.location.href = res.url;
             });
         }
 
         function connectFacebookAds() {
             if (!agencyEmailForInt) return alert("Agency Email not found!");
-            $.get(`https://quantifire-iris-backend.onrender.com/connect?email=${agencyEmailForInt}`, function (res) {
+            $.get(`http://localhost:8080/api/integration/facebook/connect?email=${agencyEmailForInt}`, function (res) {
                 window.location.href = res.url;
             });
         }
@@ -1372,7 +1372,7 @@
             if (!email) return;
 
             $.ajax({
-                url: `https://quantifire-iris-backend.onrender.com/api/agency/notifications?email=${email}`,
+                url: `http://localhost:8080/api/agency/notifications?email=${email}`,
                 type: "GET",
                 success: function (data) {
                     if(!data) return;
