@@ -974,17 +974,17 @@
             const newPassword = $('input[placeholder="New Password"]').val();
             const confirmPassword = $('input[placeholder="Confirm Password"]').val();
 
-            // Basic Validation
+            // Basic Validation using Custom Alert Modal
             if (!currentPassword || !newPassword || !confirmPassword) {
-                alert("Please fill all password fields.");
+                showCustomAlert("Error", "Please fill all password fields.", "error");
                 return;
             }
             if (newPassword !== confirmPassword) {
-                alert("New Password and Confirm Password do not match!");
+                showCustomAlert("Error", "New Password and Confirm Password do not match!", "error");
                 return;
             }
             if (newPassword.length < 8) {
-                alert("Password must be at least 8 characters long.");
+                showCustomAlert("Error", "Password must be at least 8 characters long.", "error");
                 return;
             }
 
@@ -1001,17 +1001,22 @@
                     newPassword: newPassword
                 }),
                 success: function (response) {
-                    alert("Password updated successfully! Please login again with your new password.");
-
-                    // 1. Password fields clear karein
+                    // 1. Password fields clear karein aur button reset karein
                     $('input[type="password"]').val('');
                     btn.text('Update Password').prop('disabled', false);
 
+                    // 2. Session data clear karein (logout backend prep)
                     document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     document.cookie = "agencyEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     localStorage.removeItem("agencyEmail");
 
-                    window.location.replace("AgencyLogin.html");
+                    // 3. Custom Alert Show karein with Redirect URL
+                    showCustomAlert(
+                        "Password Updated", 
+                        "Password updated successfully! Please login again with your new password.", 
+                        "success", 
+                        "AgencyLogin.html"
+                    );
                 },
                 error: function (xhr) {
                     let errorMsg = "Invalid current password.";
@@ -1020,12 +1025,14 @@
                     } else if (xhr.responseText) {
                         errorMsg = xhr.responseText;
                     }
-                    showCustomAlert("Error", "Error: " + errorMsg, "error");
+                    
+                    // Custom Alert for backend errors
+                    showCustomAlert("Update Failed", "Error: " + errorMsg, "error");
                     btn.text('Update Password').prop('disabled', false);
                 }
             });
         });
-
+        
         // --- LOAD SECURITY DATA ---
         function loadSecurityData() {
             const email = localStorage.getItem("agencyEmail");
