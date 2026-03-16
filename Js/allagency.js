@@ -1,12 +1,24 @@
 // ==========================================
-// 1. GLOBAL UI SYNC (Logos & Names)
+// 1. AJAX PREFILTER (Localhost Fix)
+// ==========================================
+$.ajaxPrefilter(function (options) {
+    var oldBase = "http://localhost:8080";
+    var liveBase = "https://quantifire-iris-backend.onrender.com";
+
+    if (options.url.indexOf(oldBase) !== -1) {
+        options.url = options.url.replace(oldBase, liveBase);
+        console.log("Redirecting AJAX: ", options.url);
+    }
+});
+
+// ==========================================
+// 2. GLOBAL UI SYNC (Logos & Names)
 // ==========================================
 function syncGlobalAgencyUI() {
     const agencyEmail = localStorage.getItem("agencyEmail");
     if (!agencyEmail) return;
 
     $.ajax({
-        // Direct live URL use ho raha hai jaisa aapne code mein diya tha
         url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
         type: "GET",
         data: { email: agencyEmail },
@@ -37,7 +49,7 @@ function syncGlobalAgencyUI() {
 }
 
 // ==========================================
-// 2. LOGOUT LOGIC
+// 3. LOGOUT LOGIC
 // ==========================================
 function openLogoutModal() {
     $("#logoutModal").fadeIn(200).css("display", "flex").addClass('active');
@@ -55,7 +67,7 @@ function confirmLogout() {
 }
 
 // ==========================================
-// 3. DOCUMENT READY
+// 4. DOCUMENT READY (Sidebar Fix included)
 // ==========================================
 $(document).ready(function () {
     const $sidebar = $('.sidebar');
@@ -66,16 +78,19 @@ $(document).ready(function () {
     syncGlobalAgencyUI();
     loadTopBarNotifications();
 
+    // SIDEBAR TOGGLE
     $('#sidebarToggle').on('click', function (e) {
         e.stopPropagation();
         $sidebar.toggleClass('collapsed');
     });
 
+    // CLOSE SIDEBAR BUTTON (Mobile Fix)
     $('#closeSidebarBtn').on('click', function (e) {
         e.stopPropagation();
         $sidebar.removeClass('collapsed');
     });
 
+    // DROPDOWN TOGGLES
     window.toggleNotification = function (event) {
         event.stopPropagation();
         $('.sidebar').removeClass('collapsed');
@@ -91,15 +106,21 @@ $(document).ready(function () {
         $notifDropdown.removeClass('active');
     };
 
+    // GLOBAL CLICK (Outside Click to close everything)
     $(document).on('click', function (event) {
+        // Sidebar close logic
         if (!$(event.target).closest('.sidebar, #sidebarToggle').length) {
             $sidebar.removeClass('collapsed');
         }
+
+        // Dropdowns close logic
         if (!$(event.target).closest('.notification-wrapper, .profile-info, .notif-dropdown, .profile-dropdown').length) {
             $notifDropdown.removeClass('active');
             $profileDropdown.removeClass('active');
             $profileChevron.css("transform", "rotate(0deg)");
         }
+
+        // Modal close
         if ($(event.target).is('#logoutModal')) closeLogoutModal();
     });
 
@@ -110,18 +131,15 @@ $(document).ready(function () {
 });
 
 // ==========================================
-// 4. NOTIFICATIONS & TIMEAGO FIX
+// 5. NOTIFICATIONS & HELPERS
 // ==========================================
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     
     const date = new Date(dateString);
     const now = new Date();
-    
-    // Difference in seconds (Timezone adjusted by browser automatically)
     const seconds = Math.floor((now - date) / 1000);
     
-    // Agar server time aage piche ho toh 30 sec ka buffer
     if (seconds < 60) return "Just now";
     
     const minutes = Math.floor(seconds / 60);
@@ -135,7 +153,6 @@ function timeAgo(dateString) {
     
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
-
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
