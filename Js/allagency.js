@@ -136,15 +136,10 @@ $(document).ready(function () {
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     
-    // Server se aane wali date (UTC parse)
-    const date = new Date(dateString); 
+    const date = new Date(dateString);
     const now = new Date();
-
-    // Timezone difference adjustment (Convert both to UTC milliseconds)
-    const diffInMs = now.getTime() - date.getTime();
-    const seconds = Math.floor(diffInMs / 1000);
-
-    // Agar server/client time sync issue ho toh limit set karein
+    const seconds = Math.floor((now - date) / 1000);
+    
     if (seconds < 60) return "Just now";
     
     const minutes = Math.floor(seconds / 60);
@@ -158,11 +153,10 @@ function timeAgo(dateString) {
     
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
-
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
-    $.get(`http://localhost:8080/api/top-notifications/get?email=${email}`, function (res) {
+    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
         $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
         const list = $('.notif-list').empty();
         if (res.notifications.length === 0) {
