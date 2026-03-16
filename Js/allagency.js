@@ -1,13 +1,59 @@
 // ==========================================
-// 1. GLOBAL FUNCTIONS (Ready ke bahar taaki HTML onclick kaam karein)
+// 1. AJAX PREFILTER (Localhost Fix)
 // ==========================================
+$.ajaxPrefilter(function (options) {
+    var oldBase = "http://localhost:8080";
+    var liveBase = "https://quantifire-iris-backend.onrender.com";
 
+    if (options.url.indexOf(oldBase) !== -1) {
+        options.url = options.url.replace(oldBase, liveBase);
+        console.log("Redirecting AJAX: ", options.url);
+    }
+});
+
+// ==========================================
+// 2. GLOBAL UI SYNC (Logos & Names)
+// ==========================================
+function syncGlobalAgencyUI() {
+    const agencyEmail = localStorage.getItem("agencyEmail");
+    if (!agencyEmail) return;
+
+    $.ajax({
+        url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
+        type: "GET",
+        data: { email: agencyEmail },
+        success: function (data) {
+            if (data.agencyLogo) {
+                let finalPath = data.agencyLogo;
+
+                // Supabase Cleaning Logic
+                if (finalPath.includes("https://egkhvxnutuiivybwibqx.supabase.co")) {
+                    if (finalPath.includes("localhost:8080")) {
+                        finalPath = finalPath.substring(finalPath.indexOf("https://"));
+                        finalPath = decodeURIComponent(finalPath);
+                    }
+                }
+                else if (!finalPath.startsWith('http')) {
+                    finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + finalPath;
+                }
+
+                $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
+                console.log("✅ Global Logo Fixed:", finalPath);
+            }
+
+            const aName = data.agencyName || "Agency User";
+            $(".display-agency-name, .user-mini-profile p, .d-name").text(aName);
+            $("#display-agency-email").text(data.email);
+        }
+    });
+}
+
+// ==========================================
+// 3. LOGOUT LOGIC
+// ==========================================
 function openLogoutModal() {
-    console.log("Opening Logout Modal...");
-    // jQuery use karke modal ko 'flex' display dein aur active class lagayein
     $("#logoutModal").fadeIn(200).css("display", "flex").addClass('active');
     $("#profileDropdown").removeClass('active');
-    $("#profileChevron").css("transform", "rotate(0deg)");
 }
 
 function closeLogoutModal() {
@@ -15,105 +61,78 @@ function closeLogoutModal() {
 }
 
 function confirmLogout() {
-    console.log("Cleaning session and redirecting...");
-    // 1. LocalStorage saaf karein
     localStorage.clear();
-
-    // 2. Cookie ko expire karein (Security ke liye)
     document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-    // 3. Login page par bhejein
     window.location.href = "AgencyLogin.html";
 }
 
 // ==========================================
-// 2. DOCUMENT READY LOGIC
+// 4. DOCUMENT READY (Sidebar Fix included)
 // ==========================================
-
 $(document).ready(function () {
-    const agencyEmail = localStorage.getItem("agencyEmail");
     const $sidebar = $('.sidebar');
     const $notifDropdown = $('#notifDropdown');
     const $profileDropdown = $('#profileDropdown');
     const $profileChevron = $('#profileChevron');
 
-    // --- A. Profile Loading ---
-    function loadGlobalProfile() {
-        if (!agencyEmail) return;
-        $.ajax({
-            url: "http://localhost:8080/api/agency/profile",
-            type: "GET",
-            data: { email: agencyEmail },
-            success: function (data) {
-                if (data.agencyLogo) {
-                    let finalPath = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
-                    $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", finalPath);
-                }
-                const aName = data.agencyName || "Agency User";
-                $(".display-agency-name, .user-mini-profile p, .d-name").text(aName);
-                $("#display-agency-email").text(data.email);
-            }
-        });
-    }
-    loadGlobalProfile();
+    syncGlobalAgencyUI();
+    loadTopBarNotifications();
 
-    // --- B. Sidebar Toggle Logic ---
-    $('#sidebarToggle').click(function (e) {
+    // SIDEBAR TOGGLE
+    $('#sidebarToggle').on('click', function (e) {
         e.stopPropagation();
-        $notifDropdown.removeClass('active');
-        $profileDropdown.removeClass('active');
-        $profileChevron.css("transform", "rotate(0deg)");
         $sidebar.toggleClass('collapsed');
-        
-        // Map resize fix
-        setTimeout(() => { if (typeof map !== 'undefined') map.invalidateSize(); }, 300);
     });
 
-    // --- C. Dropdowns Toggles ---
+    // CLOSE SIDEBAR BUTTON (Mobile Fix)
+    $('#closeSidebarBtn').on('click', function (e) {
+        e.stopPropagation();
+        $sidebar.removeClass('collapsed');
+    });
+
+    // DROPDOWN TOGGLES
     window.toggleNotification = function (event) {
         event.stopPropagation();
-        $sidebar.removeClass('collapsed');
-        $profileDropdown.removeClass('active');
-        $profileChevron.css("transform", "rotate(0deg)");
+        $('.sidebar').removeClass('collapsed');
         $notifDropdown.toggleClass('active');
+        $profileDropdown.removeClass('active');
     };
 
     window.toggleProfileDropdown = function (event) {
         event.stopPropagation();
-        $sidebar.removeClass('collapsed');
-        $notifDropdown.removeClass('active');
+        $('.sidebar').removeClass('collapsed');
         const isActive = $profileDropdown.toggleClass('active').hasClass('active');
         $profileChevron.css("transform", isActive ? "rotate(180deg)" : "rotate(0deg)");
+        $notifDropdown.removeClass('active');
     };
 
-    // --- D. Global Click Close ---
-    $(document).click(function (event) {
-        if (!$(event.target).closest('.sidebar, .notification-wrapper, .profile-info, .notif-dropdown, .profile-dropdown').length) {
+    // GLOBAL CLICK (Outside Click to close everything)
+    $(document).on('click', function (event) {
+        // Sidebar close logic
+        if (!$(event.target).closest('.sidebar, #sidebarToggle').length) {
             $sidebar.removeClass('collapsed');
+        }
+
+        // Dropdowns close logic
+        if (!$(event.target).closest('.notification-wrapper, .profile-info, .notif-dropdown, .profile-dropdown').length) {
             $notifDropdown.removeClass('active');
             $profileDropdown.removeClass('active');
             $profileChevron.css("transform", "rotate(0deg)");
         }
-        // Modal ke bahar click karne par band ho (Optional)
-        if ($(event.target).is('#logoutModal')) {
-            closeLogoutModal();
-        }
+
+        // Modal close
+        if ($(event.target).is('#logoutModal')) closeLogoutModal();
     });
 
-    $('#closeSidebarBtn').click(function () {
-        $sidebar.removeClass('collapsed');
-    });
+    const checkStatusBtn = document.getElementById('checkStatusBtn');
+    if (checkStatusBtn) {
+        checkStatusBtn.addEventListener('click', handleHealthCheck);
+    }
 });
 
-
 // ==========================================
-// TOP BAR NOTIFICATIONS LOGIC (Global)
+// 5. NOTIFICATIONS & HELPERS
 // ==========================================
-
-// ==========================================
-// TIME AGO FORMATTER FUNCTION
-// ==========================================
-
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     
@@ -134,95 +153,43 @@ function timeAgo(dateString) {
     
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
-
-$(document).ready(function () {
-    // Page load hote hi notifications fetch karo
-    loadTopBarNotifications();
-});
-
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
-
-    $.ajax({
-        url: `http://localhost:8080/api/top-notifications/get?email=${email}`,
-        type: "GET",
-        success: function (res) {
-            const count = res.unreadCount;
-            const notifs = res.notifications;
-
-            // 1. Update Red Badge (Bell icon ke upar ka number)
-            if (count > 0) {
-                $('.notif-count').text(count).show();
-            } else {
-                $('.notif-count').hide();
-            }
-
-            // 2. Clear Purana Static HTML
-            const notifListUI = $('.notif-list');
-            if (notifListUI.length === 0) return; // Agar kisi page par top bar nahi hai toh error na aaye
-
-            notifListUI.empty();
-
-            if (notifs.length === 0) {
-                notifListUI.append('<li style="padding:15px; text-align:center; color:#888;">No new notifications</li>');
-                return;
-            }
-
-            // 3. Loop lagakar naye notifications UI me daalo
-            const recentNotifs = notifs.slice(0, 3); 
-
-            recentNotifs.forEach(log => {
-                let iconClass = "info";
-                let iconHtml = '<i class="fa-solid fa-bell"></i>';
-                if (log.type === "SUCCESS") {
-                    iconClass = "success"; 
-                    iconHtml = '<i class="fa-solid fa-check"></i>';
-                } else if (log.type === "INFO") {
-                    iconClass = "info"; 
-                    iconHtml = '<i class="fa-solid fa-user-plus"></i>';
-                } else if (log.type === "WARNING" || log.type === "ERROR") {
-                    iconClass = "warning"; 
-                    iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                }
-
-                let readClass = log.read ? "" : "unread";
-
-                let html = `
-                    <li class="notif-item ${readClass}">
-                        <div class="n-icon ${iconClass}">${iconHtml}</div>
-                        <div class="n-text">
-                            <p><strong>${log.title}</strong></p>
-                            <span>${log.message}</span>
-                        </div>
-                        <span class="n-time">${timeAgo(log.createdAt)}</span> 
-                    </li>
-                `;
-                notifListUI.append(html);
-            });
-        },
-        error: function(err) {
-            console.error("Failed to fetch top notifications", err);
+    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
+        $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
+        const list = $('.notif-list').empty();
+        if (res.notifications.length === 0) {
+            list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
+            return;
         }
+        res.notifications.slice(0, 3).forEach(log => {
+            list.append(`<li class="notif-item ${log.read ? '' : 'unread'}">
+                <div class="n-icon ${log.type.toLowerCase()}"><i class="fa-solid fa-bell"></i></div>
+                <div class="n-text"><p><strong>${log.title}</strong></p><span>${log.message}</span></div>
+                <span class="n-time">${timeAgo(log.createdAt)}</span>
+            </li>`);
+        });
     });
 }
 
-// "Mark all read" Button ka click logic (Global Event Delegation)
-$(document).on('click', '.mark-read', function(e) {
-    e.stopPropagation(); 
+$(document).on('click', '.mark-read', function () {
     const email = localStorage.getItem("agencyEmail");
-    if (!email) return;
-
-    // UI ko turant update karo
     $('.notif-item').removeClass('unread');
-    $('.notif-count').fadeOut(); 
-
-    // Background me DB update karo
-    $.ajax({
-        url: `http://localhost:8080/api/top-notifications/mark-read?email=${email}`,
-        type: "POST",
-        success: function() {
-            console.log("Database updated: All notifications marked as read.");
-        }
-    });
+    $('.notif-count').fadeOut();
+    $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
 });
+
+async function handleHealthCheck() {
+    const statusText = document.getElementById('statusMessage');
+    if (!statusText) return;
+    statusText.innerText = "Checking...";
+    try {
+        const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
+        statusText.innerText = response.ok ? "✅ Server Online" : "❌ Server Error";
+        statusText.style.color = response.ok ? "green" : "red";
+    } catch (e) {
+        statusText.innerText = "❌ Server Offline";
+        statusText.style.color = "orange";
+    }
+}
