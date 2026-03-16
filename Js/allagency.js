@@ -1,9 +1,9 @@
 // ==========================================
 // 1. AJAX PREFILTER (Localhost Fix)
 // ==========================================
-$.ajaxPrefilter(function(options) {
+$.ajaxPrefilter(function (options) {
     var oldBase = "http://localhost:8080";
-    var liveBase = "https://quantifire-iris-backend.onrender.com"; 
+    var liveBase = "https://quantifire-iris-backend.onrender.com";
 
     if (options.url.indexOf(oldBase) !== -1) {
         options.url = options.url.replace(oldBase, liveBase);
@@ -29,10 +29,10 @@ function syncGlobalAgencyUI() {
                 // Supabase Cleaning Logic
                 if (finalPath.includes("https://egkhvxnutuiivybwibqx.supabase.co")) {
                     if (finalPath.includes("localhost:8080")) {
-                         finalPath = finalPath.substring(finalPath.indexOf("https://"));
-                         finalPath = decodeURIComponent(finalPath);
+                        finalPath = finalPath.substring(finalPath.indexOf("https://"));
+                        finalPath = decodeURIComponent(finalPath);
                     }
-                } 
+                }
                 else if (!finalPath.startsWith('http')) {
                     finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + finalPath;
                 }
@@ -112,14 +112,14 @@ $(document).ready(function () {
         if (!$(event.target).closest('.sidebar, #sidebarToggle').length) {
             $sidebar.removeClass('collapsed');
         }
-        
+
         // Dropdowns close logic
         if (!$(event.target).closest('.notification-wrapper, .profile-info, .notif-dropdown, .profile-dropdown').length) {
             $notifDropdown.removeClass('active');
             $profileDropdown.removeClass('active');
             $profileChevron.css("transform", "rotate(0deg)");
         }
-        
+
         // Modal close
         if ($(event.target).is('#logoutModal')) closeLogoutModal();
     });
@@ -136,10 +136,11 @@ $(document).ready(function () {
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     const date = new Date(dateString);
-    const seconds = Math.floor((new Date() - date) / 1000);
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
     if (seconds < 60) return "Just now";
-    if (seconds < 3600) return Math.floor(seconds/60) + "m ago";
-    if (seconds < 86400) return Math.floor(seconds/3600) + "h ago";
+    if (seconds < 3600) return Math.floor(seconds / 60) + "m ago";
+    if (seconds < 86400) return Math.floor(seconds / 3600) + "h ago";
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
 
@@ -149,7 +150,7 @@ function loadTopBarNotifications() {
     $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
         $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
         const list = $('.notif-list').empty();
-        if(res.notifications.length === 0){
+        if (res.notifications.length === 0) {
             list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
             return;
         }
@@ -163,7 +164,7 @@ function loadTopBarNotifications() {
     });
 }
 
-$(document).on('click', '.mark-read', function() {
+$(document).on('click', '.mark-read', function () {
     const email = localStorage.getItem("agencyEmail");
     $('.notif-item').removeClass('unread');
     $('.notif-count').fadeOut();
@@ -172,7 +173,7 @@ $(document).on('click', '.mark-read', function() {
 
 async function handleHealthCheck() {
     const statusText = document.getElementById('statusMessage');
-    if(!statusText) return;
+    if (!statusText) return;
     statusText.innerText = "Checking...";
     try {
         const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
