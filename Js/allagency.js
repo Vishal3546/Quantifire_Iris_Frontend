@@ -1,33 +1,32 @@
 // ==========================================
 // 1. GLOBAL UI SYNC (Logos & Names)
 // ==========================================
-// Base URL constant taaki baar-baar type na karna pade
-const BASE_URL = "https://quantifire-iris-backend.onrender.com";
-
 function syncGlobalAgencyUI() {
     const agencyEmail = localStorage.getItem("agencyEmail");
     if (!agencyEmail) return;
 
     $.ajax({
-        url: `${BASE_URL}/api/agency/profile`,
+        // Direct live URL use ho raha hai jaisa aapne code mein diya tha
+        url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
         type: "GET",
         data: { email: agencyEmail },
         success: function (data) {
             if (data.agencyLogo) {
                 let finalPath = data.agencyLogo;
 
-                // Supabase Cleaning Logic (Localhost check removed)
+                // Supabase Cleaning Logic
                 if (finalPath.includes("https://egkhvxnutuiivybwibqx.supabase.co")) {
-                    // Seedha URL use karein agar Supabase ka hai
-                    finalPath = decodeURIComponent(finalPath);
-                } 
+                    if (finalPath.includes("localhost:8080")) {
+                        finalPath = finalPath.substring(finalPath.indexOf("https://"));
+                        finalPath = decodeURIComponent(finalPath);
+                    }
+                }
                 else if (!finalPath.startsWith('http')) {
-                    // Agar relative path hai toh backend uploads folder se connect karein
-                    finalPath = `${BASE_URL}/uploads/logos/${finalPath}`;
+                    finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + finalPath;
                 }
 
                 $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
-                console.log("✅ Global Logo Updated:", finalPath);
+                console.log("✅ Global Logo Fixed:", finalPath);
             }
 
             const aName = data.agencyName || "Agency User";
@@ -51,7 +50,6 @@ function closeLogoutModal() {
 
 function confirmLogout() {
     localStorage.clear();
-    // Cookie clear logic
     document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = "AgencyLogin.html";
 }
@@ -68,7 +66,6 @@ $(document).ready(function () {
     syncGlobalAgencyUI();
     loadTopBarNotifications();
 
-    // SIDEBAR & DROPDOWN EVENTS
     $('#sidebarToggle').on('click', function (e) {
         e.stopPropagation();
         $sidebar.toggleClass('collapsed');
@@ -81,20 +78,19 @@ $(document).ready(function () {
 
     window.toggleNotification = function (event) {
         event.stopPropagation();
-        $sidebar.removeClass('collapsed');
+        $('.sidebar').removeClass('collapsed');
         $notifDropdown.toggleClass('active');
         $profileDropdown.removeClass('active');
     };
 
     window.toggleProfileDropdown = function (event) {
         event.stopPropagation();
-        $sidebar.removeClass('collapsed');
+        $('.sidebar').removeClass('collapsed');
         const isActive = $profileDropdown.toggleClass('active').hasClass('active');
         $profileChevron.css("transform", isActive ? "rotate(180deg)" : "rotate(0deg)");
         $notifDropdown.removeClass('active');
     };
 
-    // Outside Click to close
     $(document).on('click', function (event) {
         if (!$(event.target).closest('.sidebar, #sidebarToggle').length) {
             $sidebar.removeClass('collapsed');
@@ -114,20 +110,19 @@ $(document).ready(function () {
 });
 
 // ==========================================
-// 4. NOTIFICATIONS & HEALTH CHECK
+// 4. NOTIFICATIONS & TIMEAGO FIX
 // ==========================================
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     
-    // Parse the date and handle timezone offset
     const date = new Date(dateString);
     const now = new Date();
     
-    // Difference in seconds
+    // Difference in seconds (Timezone adjusted by browser automatically)
     const seconds = Math.floor((now - date) / 1000);
     
-    // Agar difference minus mein ja raha ho (server/client sync issue) toh "Just now" dikhayein
-    if (seconds < 30) return "Just now";
+    // Agar server time aage piche ho toh 30 sec ka buffer
+    if (seconds < 60) return "Just now";
     
     const minutes = Math.floor(seconds / 60);
     if (minutes < 60) return minutes + "m ago";
@@ -144,21 +139,19 @@ function timeAgo(dateString) {
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
-    
-    $.get(`${BASE_URL}/api/top-notifications/get?email=${email}`, function (res) {
+    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
         $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
         const list = $('.notif-list').empty();
-        if (!res.notifications || res.notifications.length === 0) {
+        if (res.notifications.length === 0) {
             list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
             return;
         }
         res.notifications.slice(0, 3).forEach(log => {
-            list.append(`
-                <li class="notif-item ${log.read ? '' : 'unread'}">
-                    <div class="n-icon ${log.type.toLowerCase()}"><i class="fa-solid fa-bell"></i></div>
-                    <div class="n-text"><p><strong>${log.title}</strong></p><span>${log.message}</span></div>
-                    <span class="n-time">${timeAgo(log.createdAt)}</span>
-                </li>`);
+            list.append(`<li class="notif-item ${log.read ? '' : 'unread'}">
+                <div class="n-icon ${log.type.toLowerCase()}"><i class="fa-solid fa-bell"></i></div>
+                <div class="n-text"><p><strong>${log.title}</strong></p><span>${log.message}</span></div>
+                <span class="n-time">${timeAgo(log.createdAt)}</span>
+            </li>`);
         });
     });
 }
@@ -167,7 +160,7 @@ $(document).on('click', '.mark-read', function () {
     const email = localStorage.getItem("agencyEmail");
     $('.notif-item').removeClass('unread');
     $('.notif-count').fadeOut();
-    $.post(`${BASE_URL}/api/top-notifications/mark-read?email=${email}`);
+    $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
 });
 
 async function handleHealthCheck() {
@@ -175,7 +168,7 @@ async function handleHealthCheck() {
     if (!statusText) return;
     statusText.innerText = "Checking...";
     try {
-        const response = await fetch(`${BASE_URL}/api/health`);
+        const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
         statusText.innerText = response.ok ? "✅ Server Online" : "❌ Server Error";
         statusText.style.color = response.ok ? "green" : "red";
     } catch (e) {
