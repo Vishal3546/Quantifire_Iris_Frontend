@@ -271,6 +271,9 @@ $(document).ready(function () {
         $.ajax({
             url: `http://localhost:8080/api/agency/campaigns/client/${encodeURIComponent(clientName)}?agencyId=${aId}`,
             type: "GET",
+            headers: { 
+            "X-Agency-Id": aId  
+        },
             success: function (campaigns) {
                 let rows = "";
                 let totalLeads = 0;
