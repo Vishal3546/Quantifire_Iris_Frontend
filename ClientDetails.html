@@ -269,7 +269,7 @@ $(document).ready(function () {
     // 4. Campaigns Fetch & Table Update
     function loadClientCampaigns(clientName, aId) {
         $.ajax({
-            url: `http://localhost:8080/api/agency/campaigns/client/${encodeURIComponent(clientName)}?agencyId=${aId}`,
+            url: `http://localhost:8080/api/agency/campaigns/client/${clientId}?agencyId=${aId}`,
             type: "GET",
             headers: { 
             "X-Agency-Id": aId  
