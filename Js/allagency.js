@@ -136,13 +136,15 @@ $(document).ready(function () {
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     
+    // Server date ko parse karein
     const date = new Date(dateString);
     const now = new Date();
     
-    // Difference in seconds (Timezone adjusted by browser automatically)
+    // Difference in seconds
+    // Math.max(0, ...) isliye taaki agar server time 1-2 second aage ho toh minus mein na jaye
     const seconds = Math.floor((now - date) / 1000);
-    
-    // Agar server time aage piche ho toh 30 sec ka buffer
+
+    // Agar 0 se kam hai ya 60 second se kam, toh "Just now"
     if (seconds < 60) return "Just now";
     
     const minutes = Math.floor(seconds / 60);
@@ -154,6 +156,7 @@ function timeAgo(dateString) {
     const days = Math.floor(hours / 24);
     if (days < 7) return days + "d ago";
     
+    // Agar 7 din se purana hai toh date dikhaye
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
 
