@@ -81,6 +81,10 @@ $(document).ready(function () {
     // SIDEBAR TOGGLE
     $('#sidebarToggle').on('click', function (e) {
         e.stopPropagation();
+
+        $notifDropdown.removeClass('active');
+        $profileDropdown.removeClass('active');
+        $profileChevron.css("transform", "rotate(0deg)");
         $sidebar.toggleClass('collapsed');
     });
 
@@ -93,17 +97,20 @@ $(document).ready(function () {
     // DROPDOWN TOGGLES
     window.toggleNotification = function (event) {
         event.stopPropagation();
-        $('.sidebar').removeClass('collapsed');
-        $notifDropdown.toggleClass('active');
+        $sidebar.removeClass('collapsed'); 
         $profileDropdown.removeClass('active');
+        $profileChevron.css("transform", "rotate(0deg)");
+        
+        $notifDropdown.toggleClass('active');
     };
 
     window.toggleProfileDropdown = function (event) {
         event.stopPropagation();
-        $('.sidebar').removeClass('collapsed');
+        $sidebar.removeClass('collapsed');
+        $notifDropdown.removeClass('active');
+        
         const isActive = $profileDropdown.toggleClass('active').hasClass('active');
         $profileChevron.css("transform", isActive ? "rotate(180deg)" : "rotate(0deg)");
-        $notifDropdown.removeClass('active');
     };
 
     // GLOBAL CLICK (Outside Click to close everything)
