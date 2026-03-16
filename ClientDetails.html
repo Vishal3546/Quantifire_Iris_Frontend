@@ -272,7 +272,7 @@ $(document).ready(function () {
             url: `http://localhost:8080/api/agency/campaigns/client/${encodeURIComponent(clientName)}?agencyId=${aId}`,
             type: "GET",
             headers: { 
-            "X-Agency-Id": aId  
+            "X-Agency-Id": aId.toString()  
         },
             success: function (campaigns) {
                 let rows = "";
