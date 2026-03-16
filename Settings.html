@@ -1093,7 +1093,7 @@
                     loginAlertsEnabled: alerts
                 }),
                 success: function () {
-                    console.log("Security preferences updated to: 2FA=", is2fa, "Method=", method, "Alerts=", alerts);
+                    
                 }
             });
         }
@@ -1451,7 +1451,7 @@
                 contentType: "application/json",
                 data: JSON.stringify(requestData),
                 success: function (res) {
-                    console.log("Updated DB: ", res.message); // Console me verify karne ke liye
+                   
                 },
                 error: function () {
                     console.error("Error updating notifications in DB.");

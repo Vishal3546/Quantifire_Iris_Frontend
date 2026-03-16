@@ -386,8 +386,6 @@
         },
                 success: function (data) {
             allCampaignsLocal = data;
-            console.log("Data loaded:", data);
-            // Agar pehle se search container hidden hai (results show ho rahe hain)
             if ($("#mainWrapper").hasClass("table-visible")) {
                 performSearch();
             }
