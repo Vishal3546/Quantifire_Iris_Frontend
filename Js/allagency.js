@@ -93,12 +93,14 @@ $(document).ready(function () {
     // DROPDOWN TOGGLES
     window.toggleNotification = function (event) {
         event.stopPropagation();
+        $('.sidebar').removeClass('collapsed');
         $notifDropdown.toggleClass('active');
         $profileDropdown.removeClass('active');
     };
 
     window.toggleProfileDropdown = function (event) {
         event.stopPropagation();
+        $('.sidebar').removeClass('collapsed');
         const isActive = $profileDropdown.toggleClass('active').hasClass('active');
         $profileChevron.css("transform", isActive ? "rotate(180deg)" : "rotate(0deg)");
         $notifDropdown.removeClass('active');
