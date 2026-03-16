@@ -7,7 +7,7 @@ $.ajaxPrefilter(function (options) {
 
     if (options.url.indexOf(oldBase) !== -1) {
         options.url = options.url.replace(oldBase, liveBase);
-        console.log("Redirecting AJAX: ", options.url);
+        
     }
 });
 
@@ -38,7 +38,7 @@ function syncGlobalAgencyUI() {
                 }
 
                 $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
-                console.log("✅ Global Logo Fixed:", finalPath);
+               
             }
 
             const aName = data.agencyName || "Agency User";
