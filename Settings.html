@@ -1032,7 +1032,7 @@
                 }
             });
         });
-        
+
         // --- LOAD SECURITY DATA ---
         function loadSecurityData() {
             const email = localStorage.getItem("agencyEmail");
@@ -1158,7 +1158,7 @@
         });
 
         // ==========================================
-        // 2FA OTP SEND & VERIFY LOGIC
+        // 5. 2FA OTP SEND & VERIFY LOGIC
         // ==========================================
 
         function sendOtp() {
@@ -1169,27 +1169,25 @@
             }
 
             if (!targetValue) {
-                alert("Please enter your " + method + " details first.");
+                showCustomAlert("Action Required", "Please enter your " + method + " details first.", "error");
                 return;
             }
 
             const btn = $('#tfaSubmitBtn');
             btn.text('Sending...').prop('disabled', true);
 
-            // API Call to Send OTP
             $.ajax({
                 url: "http://localhost:8080/api/agency/security/request-otp",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ method: method, target: targetValue }),
                 success: function (res) {
-                    // Success hone par OTP box dikhao
                     btn.text('Resend OTP').prop('disabled', false);
-                    $('#otpVerificationBox').slideDown(); // Smooth animation
-                    alert(res.message || "OTP Sent Successfully!");
+                    $('#otpVerificationBox').slideDown(); 
+                    showCustomAlert("OTP Sent", res.message || "OTP Sent Successfully!", "success");
                 },
                 error: function () {
-                    alert("Error sending OTP. Please check backend.");
+                    showCustomAlert("Error", "Error sending OTP. Please check backend.", "error");
                     btn.text('Send OTP').prop('disabled', false);
                 }
             });
@@ -1201,38 +1199,36 @@
             const email = localStorage.getItem("agencyEmail");
 
             if (!otpValue || otpValue.length < 5) {
-                alert("Please enter a valid OTP.");
+                showCustomAlert("Invalid Input", "Please enter a valid OTP.", "error");
                 return;
             }
 
             const btn = $('#tfaVerifyBtn');
             btn.text('Verifying...').prop('disabled', true);
 
-            // API Call to Verify OTP
             $.ajax({
                 url: "http://localhost:8080/api/agency/security/verify-2fa",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ target: targetValue, otp: otpValue, email: email }),
                 success: function (res) {
-                    btn.text('Verified!').css('background', '#28a745').css('color', '#fff'); // Green success button
-                    
-                   
+                    btn.text('Verified!').css('background', '#28a745').css('color', '#fff'); 
                     setTimeout(() => {
                         $('#otpVerificationBox').slideUp();
-                        $('#tfaMethodsWrapper').slideUp(); // Pura box band karega
+                        $('#tfaMethodsWrapper').slideUp(); 
                         $('#tfaSubmitBtn').slideUp();
-                        alert("2FA Enabled Successfully!");
-                    }, 1000);
+                        showCustomAlert("2FA Enabled", "Two-Factor Authentication Enabled Successfully!", "success");
+                    }, 800);
                 },
                 error: function (xhr) {
-                    alert(xhr.responseJSON?.message || "Invalid OTP. Please try again.");
+                    let errMsg = "Invalid OTP. Please try again.";
+                    if (xhr.responseJSON && xhr.responseJSON.message) errMsg = xhr.responseJSON.message;
+                    showCustomAlert("Verification Failed", errMsg, "error");
                     btn.text('Verify').prop('disabled', false);
                 }
             });
         }
 
-        // Chhota sa fix: Jab user method switch kare (Email -> SMS) ya Toggle off kare toh OTP box hide ho jaye
         $('.tfa-method-card').on('click', function () {
             $('#otpVerificationBox').hide();
             $('#tfaSubmitBtn').text('Send OTP');
