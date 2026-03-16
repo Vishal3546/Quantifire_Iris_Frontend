@@ -33,8 +33,9 @@
                     <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
                     <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
                     <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
-                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
-                
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
                     <div class="mobile-only-menu">
                         <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
                         <div class="dropdown-divider"
@@ -83,7 +84,8 @@
                                     <span class="n-time">1d</span>
                                 </li>
                             </ul>
-                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a>
+                            </div>
                         </div>
                     </div>
                     <div class="profile-info" onclick="toggleProfileDropdown(event)"
@@ -204,8 +206,8 @@
     <script src="Js/allagency.js"></script>
 
     <script>
-var rowsPerPage = 4; // Default
-var currentPage = 1;
+        var rowsPerPage = 4; // Default
+        var currentPage = 1;
 
 
         $(document).ready(function () {
@@ -213,39 +215,39 @@ var currentPage = 1;
         });
 
         function loadClients() {
-            const agencyId = localStorage.getItem('agencyId'); 
+            const agencyId = localStorage.getItem('agencyId');
 
-    if (!agencyId) {
-        console.error("Agency ID not found!");
-        return;
-    }
-    $.ajax({
-        url: `http://localhost:8080/api/agency/clients/all?agencyId=${agencyId}`,
-        type: "GET",
-        success: function (data) {
-            let rows = "";
-            let topCardsHtml = "";
+            if (!agencyId) {
+                console.error("Agency ID not found!");
+                return;
+            }
+            $.ajax({
+                url: `http://localhost:8080/api/agency/clients/all?agencyId=${agencyId}`,
+                type: "GET",
+                success: function (data) {
+                    let rows = "";
+                    let topCardsHtml = "";
 
-            let sortedForKpi = [...data].sort((a, b) => {
-                let activeA = a.activeCampaignsCount || 0;
-                let activeB = b.activeCampaignsCount || 0;
-                
-                if (activeB !== activeA) {
-                    return activeB - activeA; // Primary Sort
-                }
-                
-                let totalA = a.totalCampaigns || 0;
-                let totalB = b.totalCampaigns || 0;
-                return totalB - totalA; // Secondary Sort (Tie-breaker)
-            });
+                    let sortedForKpi = [...data].sort((a, b) => {
+                        let activeA = a.activeCampaignsCount || 0;
+                        let activeB = b.activeCampaignsCount || 0;
 
-            // Top 3 Clients generate karein
-            sortedForKpi.slice(0, 3).forEach((client) => {
-                let convRate = client.conversionRate ? parseFloat(client.conversionRate).toFixed(1) : "0.0";
-                let initials = client.clientName ? client.clientName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : "CL";
-                let activeCamps = client.activeCampaignsCount || 0; 
+                        if (activeB !== activeA) {
+                            return activeB - activeA; // Primary Sort
+                        }
 
-                topCardsHtml += `
+                        let totalA = a.totalCampaigns || 0;
+                        let totalB = b.totalCampaigns || 0;
+                        return totalB - totalA; // Secondary Sort (Tie-breaker)
+                    });
+
+                    // Top 3 Clients generate karein
+                    sortedForKpi.slice(0, 3).forEach((client) => {
+                        let convRate = client.conversionRate ? parseFloat(client.conversionRate).toFixed(1) : "0.0";
+                        let initials = client.clientName ? client.clientName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : "CL";
+                        let activeCamps = client.activeCampaignsCount || 0;
+
+                        topCardsHtml += `
                 <div class="client-highlight-card">
                     <div class="ch-header">
                         <div class="ch-avatar">${initials}</div>
@@ -262,12 +264,12 @@ var currentPage = 1;
                         <div class="ch-stat-item"><label>Total Camp</label><span>${client.totalCampaigns || 0}</span></div>
                     </div>
                 </div>`;
-            });
+                    });
 
-            // Table Rows logic
-            data.forEach((client) => {
-                let convRate = client.conversionRate ? parseFloat(client.conversionRate).toFixed(1) : "0.0";
-                rows += `
+                    // Table Rows logic
+                    data.forEach((client) => {
+                        let convRate = client.conversionRate ? parseFloat(client.conversionRate).toFixed(1) : "0.0";
+                        rows += `
                 <tr>
                     <td><strong>${client.clientName}</strong><br><span style="font-size:0.75rem; color:#888;">${client.agencyName || ''}</span></td>
                     <td><span>${client.email || 'N/A'}</span><br><span style="font-size:0.75rem; color:#888;">${client.contactNumber || ''}</span></td>
@@ -282,45 +284,45 @@ var currentPage = 1;
                         </div>
                     </td>
                 </tr>`;
+                    });
+
+                    $("#kpiCardsContainer").html(topCardsHtml);
+                    $("#clientTableBody").html(rows);
+                    initPagination();
+                },
+                error: function (err) {
+                    console.error("Error fetching data:", err);
+                    alert("Database connection error!");
+                }
             });
-
-            $("#kpiCardsContainer").html(topCardsHtml);
-            $("#clientTableBody").html(rows);
-            initPagination();
-        },
-        error: function (err) { 
-            console.error("Error fetching data:", err); 
-            alert("Database connection error!");
         }
-    });
-}
 
-window.toggleDropdown = function(id) {
-        $('.custom-dropdown').not('#' + id).removeClass('active');
-        $('#' + id).toggleClass('active');
-    };
+        window.toggleDropdown = function (id) {
+            $('.custom-dropdown').not('#' + id).removeClass('active');
+            $('#' + id).toggleClass('active');
+        };
 
-    // Outside click se dropdown band karne ke liye
-    $(document).on("click", function (event) {
-        if (!$(event.target).closest('.custom-dropdown').length) {
-            $('.custom-dropdown').removeClass('active');
+        // Outside click se dropdown band karne ke liye
+        $(document).on("click", function (event) {
+            if (!$(event.target).closest('.custom-dropdown').length) {
+                $('.custom-dropdown').removeClass('active');
+            }
+        });
+
+
+        // Function: Rows per page badalne ke liye
+        function changeRowsPerPage(val) {
+            rowsPerPage = parseInt(val);
+            $('#rowsPerPageDropdown .selected-text').text(val);
+            $('#rowsPerPageDropdown').removeClass('active');
+            currentPage = 1; // Reset to first page
+            initPagination(); // Refresh table
         }
-    });
-
-
-// Function: Rows per page badalne ke liye
-function changeRowsPerPage(val) {
-    rowsPerPage = parseInt(val);
-    $('#rowsPerPageDropdown .selected-text').text(val);
-    $('#rowsPerPageDropdown').removeClass('active');
-    currentPage = 1; // Reset to first page
-    initPagination(); // Refresh table
-}
         function initPagination() {
             const rows = $('#clientTableBody tr');
             const totalRows = rows.length;
             const totalPages = Math.ceil(totalRows / rowsPerPage);
-            
+
 
             function updateTable() {
                 const start = (currentPage - 1) * rowsPerPage;
@@ -360,28 +362,30 @@ function changeRowsPerPage(val) {
             clientIdToDelete = null;
         }
         function confirmDelete() {
-    const agencyId = localStorage.getItem('agencyId');
+            const agencyId = localStorage.getItem('agencyId');
 
-    if (!agencyId) {
-        alert("Session expired. Please login again.");
-        return;
-    }
+            if (!agencyId) {
+                alert("Session expired. Please login again.");
+                return;
+            }
 
-    if (clientIdToDelete) {
-        $.ajax({
-    url: `http://localhost:8080/api/agency/clients/delete/${id}`,
-    type: "DELETE",
-    headers: {
-        "X-Agency-Id": localStorage.getItem('agencyId') // Header set kiya
-    },
-    success: function(res) { 
-        alert("Client Deleted!"); 
-        loadClients(); 
-    },
-    error: function(xhr) { alert(xhr.responseText); }
-});
-    }
-}
+            if (clientIdToDelete) {
+                $.ajax({
+                    url: `http://localhost:8080/api/agency/clients/delete/${clientIdToDelete}`,
+                    type: "DELETE",
+                    headers: {
+                        "X-Agency-Id": agencyId
+                    },
+                    success: function (res) {
+                        alert("Client Deleted!");
+                        closeDeleteModal();
+                        loadClients();
+                    },
+                    error: function (xhr) { alert(xhr.responseText); }
+                });
+            }
+        }
     </script>
 </body>
+
 </html>
