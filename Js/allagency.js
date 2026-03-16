@@ -136,15 +136,15 @@ $(document).ready(function () {
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
     
-    // Server date ko parse karein
-    const date = new Date(dateString);
+    // Server se aane wali date (UTC parse)
+    const date = new Date(dateString); 
     const now = new Date();
-    
-    // Difference in seconds
-    // Math.max(0, ...) isliye taaki agar server time 1-2 second aage ho toh minus mein na jaye
-    const seconds = Math.floor((now - date) / 1000);
 
-    // Agar 0 se kam hai ya 60 second se kam, toh "Just now"
+    // Timezone difference adjustment (Convert both to UTC milliseconds)
+    const diffInMs = now.getTime() - date.getTime();
+    const seconds = Math.floor(diffInMs / 1000);
+
+    // Agar server/client time sync issue ho toh limit set karein
     if (seconds < 60) return "Just now";
     
     const minutes = Math.floor(seconds / 60);
@@ -156,14 +156,13 @@ function timeAgo(dateString) {
     const days = Math.floor(hours / 24);
     if (days < 7) return days + "d ago";
     
-    // Agar 7 din se purana hai toh date dikhaye
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
 
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
-    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
+    $.get(`http://localhost:8080/api/top-notifications/get?email=${email}`, function (res) {
         $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
         const list = $('.notif-list').empty();
         if (res.notifications.length === 0) {
