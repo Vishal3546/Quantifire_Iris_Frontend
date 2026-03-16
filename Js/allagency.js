@@ -1,5 +1,5 @@
 // ==========================================
-// 1. AJAX PREFILTER (Localhost fix)
+// 1. AJAX PREFILTER (Localhost Fix)
 // ==========================================
 $.ajaxPrefilter(function(options) {
     var oldBase = "http://localhost:8080";
@@ -37,12 +37,10 @@ function syncGlobalAgencyUI() {
                     finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + finalPath;
                 }
 
-                // UI Update - Sabhi images ko ek saath update karein
                 $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
                 console.log("✅ Global Logo Fixed:", finalPath);
             }
 
-            // Sync Text Data
             const aName = data.agencyName || "Agency User";
             $(".display-agency-name, .user-mini-profile p, .d-name").text(aName);
             $("#display-agency-email").text(data.email);
@@ -69,7 +67,7 @@ function confirmLogout() {
 }
 
 // ==========================================
-// 4. DOCUMENT READY
+// 4. DOCUMENT READY (Sidebar Fix included)
 // ==========================================
 $(document).ready(function () {
     const $sidebar = $('.sidebar');
@@ -77,16 +75,22 @@ $(document).ready(function () {
     const $profileDropdown = $('#profileDropdown');
     const $profileChevron = $('#profileChevron');
 
-    // Load Profile & Logos
     syncGlobalAgencyUI();
     loadTopBarNotifications();
 
-    // Sidebar & Dropdown Logic
-    $('#sidebarToggle').click(function (e) {
+    // SIDEBAR TOGGLE
+    $('#sidebarToggle').on('click', function (e) {
         e.stopPropagation();
         $sidebar.toggleClass('collapsed');
     });
 
+    // CLOSE SIDEBAR BUTTON (Mobile Fix)
+    $('#closeSidebarBtn').on('click', function (e) {
+        e.stopPropagation();
+        $sidebar.removeClass('collapsed');
+    });
+
+    // DROPDOWN TOGGLES
     window.toggleNotification = function (event) {
         event.stopPropagation();
         $notifDropdown.toggleClass('active');
@@ -100,16 +104,24 @@ $(document).ready(function () {
         $notifDropdown.removeClass('active');
     };
 
-    $(document).click(function (event) {
+    // GLOBAL CLICK (Outside Click to close everything)
+    $(document).on('click', function (event) {
+        // Sidebar close logic
+        if (!$(event.target).closest('.sidebar, #sidebarToggle').length) {
+            $sidebar.removeClass('collapsed');
+        }
+        
+        // Dropdowns close logic
         if (!$(event.target).closest('.notification-wrapper, .profile-info, .notif-dropdown, .profile-dropdown').length) {
             $notifDropdown.removeClass('active');
             $profileDropdown.removeClass('active');
             $profileChevron.css("transform", "rotate(0deg)");
         }
+        
+        // Modal close
         if ($(event.target).is('#logoutModal')) closeLogoutModal();
     });
 
-    // 🔴 FIX: Line 292 error handle (checkStatusBtn)
     const checkStatusBtn = document.getElementById('checkStatusBtn');
     if (checkStatusBtn) {
         checkStatusBtn.addEventListener('click', handleHealthCheck);
@@ -135,6 +147,10 @@ function loadTopBarNotifications() {
     $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
         $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
         const list = $('.notif-list').empty();
+        if(res.notifications.length === 0){
+            list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
+            return;
+        }
         res.notifications.slice(0, 4).forEach(log => {
             list.append(`<li class="notif-item ${log.read ? '' : 'unread'}">
                 <div class="n-icon ${log.type.toLowerCase()}"><i class="fa-solid fa-bell"></i></div>
@@ -145,7 +161,6 @@ function loadTopBarNotifications() {
     });
 }
 
-// Mark Read Logic
 $(document).on('click', '.mark-read', function() {
     const email = localStorage.getItem("agencyEmail");
     $('.notif-item').removeClass('unread');
@@ -153,9 +168,9 @@ $(document).on('click', '.mark-read', function() {
     $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
 });
 
-// 🔴 Helper for Health Check
 async function handleHealthCheck() {
     const statusText = document.getElementById('statusMessage');
+    if(!statusText) return;
     statusText.innerText = "Checking...";
     try {
         const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
