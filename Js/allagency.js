@@ -1,13 +1,16 @@
 // ==========================================
-// 1. AJAX PREFILTER (Localhost Fix)
+// 1. SMART AJAX PREFILTER (Auto-Detect Local vs Live)
 // ==========================================
 $.ajaxPrefilter(function (options) {
-    var oldBase = "http://localhost:8080";
+    var localBase = "http://localhost:8080";
     var liveBase = "https://quantifire-iris-backend.onrender.com";
 
-    if (options.url.indexOf(oldBase) !== -1) {
-        options.url = options.url.replace(oldBase, liveBase);
-        console.log("Redirecting AJAX: ", options.url);
+    // Agar hum github pages ya live server par hain, tabhi Render par bhejo
+    var isLocalFrontend = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+    if (!isLocalFrontend && options.url.indexOf(localBase) !== -1) {
+        options.url = options.url.replace(localBase, liveBase);
+        console.log("Redirecting AJAX to Live: ", options.url);
     }
 });
 
@@ -18,8 +21,13 @@ function syncGlobalAgencyUI() {
     const agencyEmail = localStorage.getItem("agencyEmail");
     if (!agencyEmail) return;
 
+    // Smart URL Detect
+    const baseUrl = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") 
+                    ? "http://localhost:8080" 
+                    : "https://quantifire-iris-backend.onrender.com";
+
     $.ajax({
-        url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
+        url: baseUrl + "/api/agency/profile",
         type: "GET",
         data: { email: agencyEmail },
         success: function (data) {
@@ -34,11 +42,10 @@ function syncGlobalAgencyUI() {
                     }
                 }
                 else if (!finalPath.startsWith('http')) {
-                    finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + finalPath;
+                    finalPath = baseUrl + "/uploads/logos/" + finalPath;
                 }
 
                 $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
-                console.log("✅ Global Logo Fixed:", finalPath);
             }
 
             const aName = data.agencyName || "Agency User";
@@ -157,7 +164,13 @@ function timeAgo(dateString) {
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
-    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
+
+    // Smart URL Detect
+    const baseUrl = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") 
+                    ? "http://localhost:8080" 
+                    : "https://quantifire-iris-backend.onrender.com";
+
+    $.get(`${baseUrl}/api/top-notifications/get?email=${email}`, function (res) {
         $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
         const list = $('.notif-list').empty();
         if (res.notifications.length === 0) {
@@ -176,17 +189,26 @@ function loadTopBarNotifications() {
 
 $(document).on('click', '.mark-read', function () {
     const email = localStorage.getItem("agencyEmail");
+    const baseUrl = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") 
+                    ? "http://localhost:8080" 
+                    : "https://quantifire-iris-backend.onrender.com";
+
     $('.notif-item').removeClass('unread');
     $('.notif-count').fadeOut();
-    $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
+    $.post(`${baseUrl}/api/top-notifications/mark-read?email=${email}`);
 });
 
 async function handleHealthCheck() {
     const statusText = document.getElementById('statusMessage');
     if (!statusText) return;
     statusText.innerText = "Checking...";
+
+    const baseUrl = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") 
+                    ? "http://localhost:8080" 
+                    : "https://quantifire-iris-backend.onrender.com";
+
     try {
-        const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
+        const response = await fetch(`${baseUrl}/api/health`);
         statusText.innerText = response.ok ? "✅ Server Online" : "❌ Server Error";
         statusText.style.color = response.ok ? "green" : "red";
     } catch (e) {
