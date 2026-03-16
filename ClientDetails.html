@@ -315,6 +315,9 @@ $(document).ready(function () {
                 $("#detailRate").text(avgRate + "%");
             },
             error: function() {
+                console.error("Status Code:", xhr.status); // Yahan check karein 403 hai ya 500
+    console.error("Error Thrown:", error);
+    console.error("Response Text:", xhr.responseText);
                 $("#associatedCampaignsBody").html("<tr><td colspan='5' style='text-align:center; color:red;'>Error loading campaigns.</td></tr>");
             }
         });
