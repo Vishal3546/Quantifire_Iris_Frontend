@@ -927,6 +927,8 @@
                 e.preventDefault();
                 let address2Val = $('#agencyAddress2').val() ? ", " + $('#agencyAddress2').val() : "";
                 const updateData = {
+                    id: localStorage.getItem("agencyId"), // 🔴 Sabse zaroori: ID bhejna
+        oldEmail: localStorage.getItem("agencyEmail"),
                     email: $('#agencyEmailInput').val(),
                     ownerName: $('#agencyFirstNameInput').val() + " " + $('#agencyLastNameInput').val(),
                     phoneNumber: $('#agencyPhoneInput').val(),
