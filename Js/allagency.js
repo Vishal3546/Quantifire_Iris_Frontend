@@ -138,8 +138,11 @@ function timeAgo(dateString) {
     
     const date = new Date(dateString);
     const now = new Date();
+    
+    // Difference in seconds (Timezone adjusted by browser automatically)
     const seconds = Math.floor((now - date) / 1000);
     
+    // Agar server time aage piche ho toh 30 sec ka buffer
     if (seconds < 60) return "Just now";
     
     const minutes = Math.floor(seconds / 60);
@@ -153,6 +156,7 @@ function timeAgo(dateString) {
     
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
+
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
