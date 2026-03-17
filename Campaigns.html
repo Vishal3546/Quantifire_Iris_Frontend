@@ -88,7 +88,8 @@
                                     <span class="n-time">1d</span>
                                 </li>
                             </ul>
-                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a>
+                            </div>
                         </div>
                     </div>
                     <div class="profile-info" onclick="toggleProfileDropdown(event)"
@@ -389,18 +390,18 @@
                 return;
             }
 
-           $.ajax({
-        url: `http://localhost:8080/api/agency/campaigns/all?filter=${filter}`,
-        type: "GET",
-        headers: {
-            "X-Agency-Id": aid // Query param ki jagah Header bhejein
-        },
+            $.ajax({
+                url: `http://localhost:8080/api/agency/campaigns/all?filter=${filter}`,
+                type: "GET",
+                headers: {
+                    "X-Agency-Id": aid // Query param ki jagah Header bhejein
+                },
                 success: function (data) {
-            allCampaignsLocal = data;
-            if ($("#mainWrapper").hasClass("table-visible")) {
-                performSearch();
-            }
-        }
+                    allCampaignsLocal = data;
+                    if ($("#mainWrapper").hasClass("table-visible")) {
+                        performSearch();
+                    }
+                }
             });
         }
 
@@ -568,11 +569,13 @@
                         "X-Agency-Id": aid // Header mein agencyId bheji security ke liye
                     },
                     success: function () {
-                        // Success hone par list refresh karein
-                        loadCampaignsData('all');
-                        setTimeout(() => performSearch(), 500);
+                        // Modal ko pehle band karein
                         closeDeleteModal();
-                        showCustomAlert("Deleted!", "Campaign has been removed successfully.", "success");
+
+                        setTimeout(() => {
+                            showCustomAlert("Deleted!", "Campaign has been removed successfully.", "success");
+                            loadCampaignsData('all');
+                        }, 400);
                     },
                     error: function (xhr) {
                         closeDeleteModal();
