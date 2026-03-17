@@ -966,15 +966,18 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        // 1. Check karo ki kya email badla gaya hai
-                        if (response.newEmail) {
-                            // Purana storage saaf karo
+                        // 🔴 SMART CHECK: Purana email local storage se uthao
+                        const oldEmail = localStorage.getItem("agencyEmail");
+                        const updatedEmail = response.newEmail; // Backend se aaya naya email
+
+                        // Agar email sach mein change hua hai (Purane wale se different hai)
+                        if (updatedEmail && updatedEmail.toLowerCase() !== oldEmail.toLowerCase()) {
+
                             localStorage.clear();
                             document.cookie.split(";").forEach(function (c) {
                                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
                             });
 
-                            // Naye login ke liye Redirect karo
                             showCustomAlert(
                                 "Email Updated",
                                 "Your login email has been changed. Please login again with your new email.",
@@ -982,13 +985,15 @@
                             );
 
                             $('.btn-alert-ok').off('click').on('click', function () {
-                                window.location.href = "AgencyLogin.html"; // 🔴 Sabse safe tarika
+                                window.location.href = "AgencyLogin.html";
                             });
+
                         } else {
-                            // Agar sirf profile update hui hai (email nahi), to normal reload
+                            // 🟢 Agar email wahi hai, sirf baaki details badli hain
                             showCustomAlert("Profile Updated", "Success!", "success");
+
                             $('.btn-alert-ok').off('click').on('click', function () {
-                                location.reload();
+                                location.reload(); // Page reload karo taaki naya data dikhe
                             });
                         }
                     },
