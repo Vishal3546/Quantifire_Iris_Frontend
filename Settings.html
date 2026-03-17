@@ -966,21 +966,32 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        if (response.newEmail) {
-                            localStorage.setItem("agencyEmail", response.newEmail);
-                        }
-                        showCustomAlert("Profile Updated", "Your profile has been updated successfully!", "success");
-                        $('.btn-alert-ok').off('click').on('click', function () {
-                            location.reload();
-                        });
-                        $('.btn-alert-ok').off('click').on('click', function () {
-                            closeCustomAlert();
-                            // 🔴 Bas yahan reload ki jagah ye delay daal do
-                            setTimeout(function () {
-                                window.location.href = "Settings.html";
-                            }, 500);
-                        });
-                    },
+    // 1. Check karo ki kya email badla gaya hai
+    if (response.newEmail) {
+        // Purana storage saaf karo
+        localStorage.clear();
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+        });
+
+        // Naye login ke liye Redirect karo
+        showCustomAlert(
+            "Email Updated", 
+            "Your login email has been changed. Please login again with your new email.", 
+            "success"
+        );
+
+        $('.btn-alert-ok').off('click').on('click', function () {
+            window.location.href = "AgencyLogin.html"; // 🔴 Sabse safe tarika
+        });
+    } else {
+        // Agar sirf profile update hui hai (email nahi), to normal reload
+        showCustomAlert("Profile Updated", "Success!", "success");
+        $('.btn-alert-ok').off('click').on('click', function () {
+            location.reload();
+        });
+    }
+},
                     error: function () {
                         showCustomAlert("Error", "Server error updating profile.", "error");
                         $btn.text('Save Changes').prop('disabled', false);
