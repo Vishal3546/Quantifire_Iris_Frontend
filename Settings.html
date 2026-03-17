@@ -923,16 +923,27 @@
             }
 
             // --- SAVE CHANGES BUTTON ---
+
             $('.btn-update').on('click', function (e) {
                 e.preventDefault();
+
+                // 🔴 Validation Check: Agar koi field khali hai toh aage mat badho
+                let isPersonalValid = validateSection('personal-group');
+                let isAddressValid = validateSection('address-group');
+
+                if (!isPersonalValid || !isAddressValid) {
+                    showCustomAlert("Validation Error", "Please fill all required fields before saving.", "error");
+                    return; // AJAX call nahi hogi
+                }
+
+                // Agar valid hai toh hi data collect karo
                 let address2Val = $('#agencyAddress2').val() ? ", " + $('#agencyAddress2').val() : "";
                 const updateData = {
-                    id: localStorage.getItem("agencyId"), // 🔴 Sabse zaroori: ID bhejna
-        oldEmail: localStorage.getItem("agencyEmail"),
-                    email: $('#agencyEmailInput').val(),
-                    ownerName: $('#agencyFirstNameInput').val() + " " + $('#agencyLastNameInput').val(),
-                    phoneNumber: $('#agencyPhoneInput').val(),
-                    address: $('#agencyAddress1').val() + address2Val,
+                    id: localStorage.getItem("agencyId"),
+                    email: $('#agencyEmailInput').val().trim(),
+                    ownerName: $('#agencyFirstNameInput').val().trim() + " " + $('#agencyLastNameInput').val().trim(),
+                    phoneNumber: $('#agencyPhoneInput').val().trim(),
+                    address: $('#agencyAddress1').val().trim() + address2Val,
                     country: $('#countrySearchSelect').val(),
                     state: $('#stateSearchSelect').val(),
                     city: $('#citySearchSelect').val(),
@@ -956,23 +967,17 @@
                     contentType: false,
                     success: function (response) {
                         if (response.newEmail) {
-                            // Agar email badla hai, toh local storage update karo taaki login bana rahe
                             localStorage.setItem("agencyEmail", response.newEmail);
                         }
-                        if (response.logoUrl) {
-                            $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", response.logoUrl);
-                        }
-                        showCustomAlert("Profile Updated", response.message || "Your profile has been updated successfully!", "success");
+                        showCustomAlert("Profile Updated", "Your profile has been updated successfully!", "success");
                         $('.btn-alert-ok').off('click').on('click', function () {
-                            closeCustomAlert();
-                            location.reload(); // Ab refresh modal band hone ke BAAD hoga
+                            location.reload();
                         });
                     },
                     error: function () {
-                        showCustomAlert("Error", "Error updating profile.", "error");
+                        showCustomAlert("Error", "Server error updating profile.", "error");
                         $btn.text('Save Changes').prop('disabled', false);
                     }
-
                 });
             });
 
