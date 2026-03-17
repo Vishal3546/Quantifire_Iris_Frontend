@@ -279,6 +279,17 @@
         </div>
     </div>
 
+    <div class="custom-alert-overlay" id="customAlertOverlay">
+        <div class="custom-alert-box">
+            <div class="alert-icon-box" id="alertIconBox">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="alertTitle">Alert Title</h3>
+            <p id="alertMessage">Alert Message goes here.</p>
+            <button class="btn-alert-ok">OK</button>
+        </div>
+    </div>
+
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/flatpickr.js"></script>
     <script src="Js/allagency.js"></script>
@@ -524,6 +535,26 @@
             if (period === 'all') { sp.clear(); ep.clear(); } else { sp.setDate(startDate); ep.setDate(today); }
             if ($("#mainWrapper").hasClass("table-visible")) performSearch();
         }
+
+        function showCustomAlert(title, message, type) {
+            $('#alertTitle').text(title);
+            $('#alertMessage').text(message);
+
+            if (type === 'success') {
+                $('#alertIconBox').html('<i class="fa-solid fa-check"></i>');
+                $('#alertIconBox').removeClass('alert-icon-error').addClass('alert-icon-success');
+            } else {
+                $('#alertIconBox').html('<i class="fa-solid fa-triangle-exclamation"></i>');
+                $('#alertIconBox').removeClass('alert-icon-success').addClass('alert-icon-error');
+            }
+
+            $('#customAlertOverlay').addClass('active');
+
+            $('.btn-alert-ok').off('click').on('click', function () {
+                $('#customAlertOverlay').removeClass('active');
+            });
+        }
+
         function openDeleteModal(id) { campaignIdToDelete = id; $('#deleteModal').css('display', 'flex').hide().fadeIn(200).addClass('show'); }
         function closeDeleteModal() { $('#deleteModal').removeClass('show').fadeOut(200); }
         function confirmDelete() {
@@ -541,10 +572,11 @@
                         loadCampaignsData('all');
                         setTimeout(() => performSearch(), 500);
                         closeDeleteModal();
-                        alert("Campaign Deleted Successfully!");
+                        showCustomAlert("Deleted!", "Campaign has been removed successfully.", "success");
                     },
                     error: function (xhr) {
-                        alert("Error: " + xhr.responseText);
+                        closeDeleteModal();
+                        showCustomAlert("Error", "Failed to delete campaign: " + xhr.responseText, "error");
                     }
                 });
             }
