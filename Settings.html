@@ -973,6 +973,13 @@
                         $('.btn-alert-ok').off('click').on('click', function () {
                             location.reload();
                         });
+                        $('.btn-alert-ok').off('click').on('click', function () {
+                            closeCustomAlert();
+                            // 🔴 Bas yahan reload ki jagah ye delay daal do
+                            setTimeout(function () {
+                                window.location.href = "Settings.html";
+                            }, 500);
+                        });
                     },
                     error: function () {
                         showCustomAlert("Error", "Server error updating profile.", "error");
