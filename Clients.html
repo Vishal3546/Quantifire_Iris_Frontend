@@ -202,6 +202,17 @@
         </div>
     </div>
 
+    <div class="custom-alert-overlay" id="customAlertOverlay">
+        <div class="custom-alert-box">
+            <div class="alert-icon-box" id="alertIconBox">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="alertTitle">Alert Title</h3>
+            <p id="alertMessage">Alert Message goes here.</p>
+            <button class="btn-alert-ok">OK</button>
+        </div>
+    </div>
+
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/allagency.js"></script>
 
@@ -352,6 +363,25 @@
             generatePages();
         }
 
+        function showCustomAlert(title, message, type) {
+            $('#alertTitle').text(title);
+            $('#alertMessage').text(message);
+
+            if (type === 'success') {
+                $('#alertIconBox').html('<i class="fa-solid fa-check"></i>');
+                $('#alertIconBox').removeClass('alert-icon-error').addClass('alert-icon-success');
+            } else {
+                $('#alertIconBox').html('<i class="fa-solid fa-triangle-exclamation"></i>');
+                $('#alertIconBox').removeClass('alert-icon-success').addClass('alert-icon-error');
+            }
+
+            $('#customAlertOverlay').addClass('active');
+
+            $('.btn-alert-ok').off('click').on('click', function () {
+                $('#customAlertOverlay').removeClass('active');
+            });
+        }
+
         let clientIdToDelete = null;
         function openDeleteModal(id) {
             clientIdToDelete = id;
@@ -365,7 +395,7 @@
             const agencyId = localStorage.getItem('agencyId');
 
             if (!agencyId) {
-                alert("Session expired. Please login again.");
+                showCustomAlert("Session Expired", "Please login again.", "error");
                 return;
             }
 
@@ -377,11 +407,13 @@
                         "X-Agency-Id": agencyId
                     },
                     success: function (res) {
-                        alert("Client Deleted!");
+                        showCustomAlert("Deleted!", "Client has been removed successfully.", "success");
                         closeDeleteModal();
                         loadClients();
                     },
-                    error: function (xhr) { alert(xhr.responseText); }
+                    error: function (xhr) {
+                        closeDeleteModal();
+                        showCustomAlert("Error", "Failed to delete client: " + xhr.responseText, "error"); }
                 });
             }
         }
