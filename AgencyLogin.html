@@ -80,7 +80,7 @@
                     contentType: "application/json",
                     // 🌟 YE LINE ADD KARNA SABSE ZAROORI HAI CORS KE LIYE
                     xhrFields: {
-                        withCredentials: true 
+                        withCredentials: true
                     },
                     data: JSON.stringify({ email: userEmail, password: userPassword }),
                     success: function (response) {
@@ -99,7 +99,11 @@
                         }
                     },
                     error: function (xhr) {
-                        $("#loginError").text("Invalid Credentials").show();
+                        if (xhr.status === 401 || xhr.status === 400) {
+                            $("#loginError").text("Invalid Credentials").show();
+                        } else {
+                            $("#loginError").text("Server is not responding. Please try again later.").show();
+                        }
                     }
                 });
             });
