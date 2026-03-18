@@ -124,7 +124,7 @@
                     </div>
                     <div>
                         <h1 style="color: #fff;">Mehsana</h1>
-                        <p>Mehsana , Gujarat</p>
+                        <p>Detailed overview and key attributes of the selected region</p>
                     </div>
                 </div>
                 <div class="header-actions">
@@ -262,8 +262,7 @@
 
                 // 1. Title Update
                 $("h1").text(data.locationName);
-                $(".page-header p").text(data.locationName + " "); // Custom logic based on location
-
+               
                 // 2. Summary Stats update (Handling null/undefined safely)
                 $(".stats-sidebar .stat-card-small:eq(0) .stat-number").text(data.visitors || '0'); 
                 $(".stats-sidebar .stat-card-small:eq(1) .stat-number").text(data.leads || 0); 
