@@ -588,7 +588,7 @@
                     "X-Agency-Id": agencyId // YEH LINE ADD KARNA ZAROORI HAI
                 },
                 success: function (data) {
-                    console.log("Received Campaign Data:", data);
+                    
                     if (!data) {
                         alert("API returned empty data!");
                         return;
@@ -873,7 +873,7 @@
         }
 
         function renderMapShape(geoInfo) {
-            console.log("Rendering data for:", geoInfo); // Debug line
+            
             clearOverlays();
             let shape;
 
@@ -917,7 +917,7 @@
 
             if (shape) {
                 overlays.push(shape);
-                console.log("Shape added successfully");
+                
             } else {
                 console.warn("No shape was created. Check geoInfo.type");
             }
