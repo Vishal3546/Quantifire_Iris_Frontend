@@ -262,7 +262,7 @@
 
                 // 1. Title Update
                 $("h1").text(data.locationName);
-                $(".page-header p").text(data.locationName + " , India"); // Custom logic based on location
+                $(".page-header p").text(data.locationName + " "); // Custom logic based on location
 
                 // 2. Summary Stats update (Handling null/undefined safely)
                 $(".stats-sidebar .stat-card-small:eq(0) .stat-number").text(data.visitors || '0'); 
