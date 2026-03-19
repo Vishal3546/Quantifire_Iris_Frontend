@@ -141,6 +141,83 @@
 
             <div class="glass-card form-container">
                 <form id="editCampaignForm">
+
+                    <div class="form-group">
+                        <label style="display: block; margin-bottom: 15px;">Platform & Geo-Fence Selection</label>
+
+                        <div class="map-platform-container" style="display: flex; gap: 20px; align-items: stretch;">
+
+                            <div class="platform-selection-box" id="platformBox"
+                                style="width: 280px; background: rgba(11, 22, 21, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+
+                                <h4
+                                    style="color: #00ff9d; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">
+                                    Ad Platform</h4>
+
+                                <label class="platform-option">
+                                    <input type="checkbox" name="adPlatform" value="Google Ads" id="adPlatformGoogle">
+                                    <div class="platform-card">
+                                        <i class="fa-brands fa-google"></i>
+                                        <span>Google Ads</span>
+                                        <i class="fa-solid fa-circle-check check-mark"></i>
+                                    </div>
+                                </label>
+
+                                <label class="platform-option">
+                                    <input type="checkbox" name="adPlatform" value="Facebook" id="adPlatformMeta">
+                                    <div class="platform-card">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                        <span>Facebook Meta</span>
+                                        <i class="fa-solid fa-circle-check check-mark"></i>
+                                    </div>
+                                </label>
+
+                                <span id="platformErr" class="error-msg" style="margin-top: auto;">* Select at least one
+                                    platform</span>
+                            </div>
+
+                            <div style="flex: 1; display: flex; flex-direction: column;">
+
+                                <div style="margin-bottom: 10px; width: 100%;">
+                                    <div class="map-toolbar-overlay"
+                                        style="left: 0; position: static; display: flex; gap: 8px; background: rgba(11, 22, 21, 0.6); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); width: 100%;">
+
+                                        <div class="map-dropdown" id="shapeDropdown">
+                                            <div class="map-dd-trigger" onclick="toggleMapDropdown(event)">
+                                                <span id="selectedToolText"><i class="far fa-circle"></i> Circle</span>
+                                                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                                            </div>
+                                            <ul class="map-dd-menu">
+                                                <li class="map-dd-item" onclick="selectTool('circle', 'Circle')"><i
+                                                        class="far fa-circle"></i> Circle</li>
+                                            </ul>
+                                        </div>
+
+                                        <input type="text" id="customSearchInput" class="map-input" style="flex: 2;"
+                                            placeholder="City name..." onkeypress="handleEnter(event)">
+
+                                        <input type="number" id="radiusInput" class="map-input" style="flex: 1;"
+                                            placeholder="Rad(Km)" oninput="handleRadiusInput()">
+
+                                        <button type="button" class="btn-icon btn-check" onclick="drawRadiusCircle()"><i
+                                                class="fas fa-check"></i></button>
+                                        <button type="button" class="btn-icon btn-clear" onclick="clearMap()"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="map-input-wrapper" id="mapWrapper"
+                                    style="height: 250px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                                    <div id="editCampaignMap" style="height: 100%; width: 100%;"></div>
+                                </div>
+
+                                <span id="mapErr" class="error-msg" style="margin-top: 5px;">* Please mark a location on
+                                    the map</span>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <div class="form-grid-2">
                         <div class="form-group">
                             <label>Campaign Name</label>
@@ -241,76 +318,6 @@
                             <label>Total Conversions</label>
                             <input type="number" id="totalConversions" class="form-input">
                             <span id="totalConversionsErr" class="error-msg">* Required</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Geo-Fence & Platform</label>
-                        <div class="map-platform-container" style="display: flex; gap: 20px;">
-                            <div>
-
-                                <div style="margin-bottom: 10px; width: 650px;">
-                                    <div class="map-toolbar-overlay"
-                                        style="left: 0; position: static; display: flex; gap: 8px; background: rgba(11, 22, 21, 0.6); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-                                        <div class="map-dropdown" id="shapeDropdown">
-                                            <div class="map-dd-trigger" onclick="toggleMapDropdown(event)">
-                                                <span id="selectedToolText"><i class="far fa-circle"></i> Circle</span>
-                                                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
-                                            </div>
-                                            <ul class="map-dd-menu">
-                                                <li class="map-dd-item" onclick="selectTool('circle', 'Circle')"><i
-                                                        class="far fa-circle"></i> Circle</li>
-                                                <!-- <li class="map-dd-item" onclick="selectTool('rectangle', 'Rectangle')">
-                                                    <i class="far fa-square"></i> Rectangle
-                                                </li>
-                                                <li class="map-dd-item" onclick="selectTool('polygon', 'Polygon')"><i
-                                                        class="fas fa-draw-polygon"></i> Polygon</li> -->
-                                            </ul>
-                                        </div>
-                                        <input type="text" id="customSearchInput" class="map-input"
-                                            placeholder="City name..." onkeypress="handleEnter(event)">
-
-                                        <input type="number" id="radiusInput" class="map-input" placeholder="Rad(Km)"
-                                            oninput="handleRadiusInput()">
-                                        <button type="button" class="btn-icon btn-check"
-                                            onclick="handleRadiusInput()"><i class="fas fa-check"></i></button>
-                                        <button type="button" class="btn-icon btn-clear" onclick="clearMap()"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </div>
-                                </div>
-
-                                <div class="map-input-wrapper" id="mapWrapper"
-                                    style="  border-radius: 12px;  border: 1px solid rgba(255,255,255,0.1);">
-
-                                    <div id="editCampaignMap" style="height: 100%; width: 100%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="platform-selection-box" id="platformBox"
-                                style="flex: 1; background: rgba(11, 22, 21, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px;">
-                                <h4
-                                    style="color: #00ff9d; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">
-                                    Ad Platform</h4>
-
-                                <label class="platform-option">
-                                    <input type="checkbox" name="adPlatform" value="Google Ads" id="adPlatformGoogle">
-                                    <div class="platform-card">
-                                        <i class="fa-brands fa-google"></i>
-                                        <span>Google Ads</span>
-                                        <i class="fa-solid fa-circle-check check-mark"></i>
-                                    </div>
-                                </label>
-
-                                <label class="platform-option">
-                                    <input type="checkbox" name="adPlatform" value="Facebook" id="adPlatformMeta">
-                                    <div class="platform-card">
-                                        <i class="fa-brands fa-facebook-f"></i>
-                                        <span>Facebook Meta</span>
-                                        <i class="fa-solid fa-circle-check check-mark"></i>
-                                    </div>
-                                </label>
-                                <span id="platformErr" class="error-msg">* Select at least one platform</span>
-                            </div>
                         </div>
                     </div>
 
@@ -612,13 +619,20 @@
                     setDropdownView('editGenderDropdown', data.gender, 'selectedGenderValue');
                     setDropdownView('statusDropdown', data.status, 'selectedStatusValue');
 
-                    if (data.adPlatform) {
+                   if (data.adPlatform) {
                         let platforms = data.adPlatform.toLowerCase();
+                        
                         if (platforms.includes("google")) {
                             $('#adPlatformGoogle').prop('checked', true);
-                        }
-                        if (platforms.includes("facebook") || platforms.includes("meta")) {
+                            // Facebook ko disable karo
+                            $('#adPlatformMeta').prop('disabled', true);
+                            $('#adPlatformMeta').closest('label').css({'opacity': '0.4', 'cursor': 'not-allowed', 'pointer-events': 'none'});
+                        } 
+                        else if (platforms.includes("facebook") || platforms.includes("meta")) {
                             $('#adPlatformMeta').prop('checked', true);
+                            // Google ko disable karo
+                            $('#adPlatformGoogle').prop('disabled', true);
+                            $('#adPlatformGoogle').closest('label').css({'opacity': '0.4', 'cursor': 'not-allowed', 'pointer-events': 'none'});
                         }
                     }
 
