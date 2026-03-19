@@ -370,7 +370,7 @@
             const aid = localStorage.getItem("agencyId");
 
             $.ajax({
-                url: "http://localhost:8080/api/agency/clients/all?agencyId=" + aid,
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all?agencyId=" + aid,
                 type: "GET",
                 success: function (data) {
                     let dropdown = $('#clientSearchSelect');
@@ -417,7 +417,7 @@
             }
 
             $.ajax({
-                url: `http://localhost:8080/api/agency/campaigns/all?filter=${filter}`,
+                url: `https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all?filter=${filter}`,
                 type: "GET",
                 headers: {
                     "X-Agency-Id": aid // Query param ki jagah Header bhejein
@@ -589,7 +589,7 @@
 
             if (campaignIdToDelete && aid) {
                 $.ajax({
-                    url: "http://localhost:8080/api/agency/campaigns/delete/" + campaignIdToDelete,
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/delete/" + campaignIdToDelete,
                     type: "DELETE",
                     headers: {
                         "X-Agency-Id": aid // Header mein agencyId bheji security ke liye
@@ -661,7 +661,7 @@
             $('#platformModal .btn-modal').prop('disabled', true).css('opacity', '0.6');
 
             $.ajax({
-                url: "http://localhost:8080/api/integration/status",
+                url: "https://quantifire-iris-backend.onrender.com/api/integration/status",
                 type: "GET",
                 data: { email: userEmail },
                 success: function (response) {
@@ -675,7 +675,7 @@
                             setTimeout(() => {
                                 // AddCampaign ko target banakar bhej rahe hain
                                 let stateData = userEmail + "|add_campaign";
-                                window.location.href = `http://localhost:8080/api/integration/google/connect?email=${encodeURIComponent(stateData)}`;
+                                window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/google/connect?email=${encodeURIComponent(stateData)}`;
                             }, 1500);
                         } else {
                             // Agar connected hai, toh seedha naya campaign banane wale page par jao
@@ -690,7 +690,7 @@
                             setTimeout(() => {
                                 // AddCampaign ko target banakar bhej rahe hain
                                 let stateData = userEmail + "|add_campaign";
-                                window.location.href = `http://localhost:8080/api/integration/facebook/connect?email=${encodeURIComponent(stateData)}`;
+                                window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/facebook/connect?email=${encodeURIComponent(stateData)}`;
                             }, 1500);
                         } else {
                             // Agar connected hai, toh seedha naya campaign banane wale page par jao
