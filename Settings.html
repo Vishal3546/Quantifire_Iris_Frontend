@@ -519,7 +519,7 @@
                                 <img src="Images/Google-Ads.png">
                                 <h4>Google Ads</h4>
                                 <p>Connect your Google account for seamless data sync.</p>
-                                <button class="sys-btn-outline" style="width: 100%;" onclick="connectGoogleAds()"
+                                <button class="sys-btn-outline" style="width: 100%;" 
                                     id="googleBtn">Connect</button>
                             </div>
 
@@ -527,7 +527,7 @@
                                 <img src="Images/meta.png">
                                 <h4>Facebook </h4>
                                 <p>Connect your Meta account for seamless data sync.</p>
-                                <button class="sys-btn-outline" style="width: 100%;" onclick="connectFacebookAds()"
+                                <button class="sys-btn-outline" style="width: 100%;"
                                     id="fbBtn">Connect</button>
                             </div>
                         </div>
@@ -1296,6 +1296,9 @@
             const btnId = platform === 'google' ? '#googleBtn' : '#fbBtn';
             const btn = $(btnId);
 
+            // Safety ke liye HTML ka onclick remove kar rahe hain
+            btn.removeAttr('onclick');
+
             if (isConnected) {
                 // Connected State: Show Disconnect Button (Red)
                 btn.text('Disconnect')
@@ -1313,8 +1316,8 @@
                 btn.text(text)
                     .css({
                         'background': 'transparent',
-                        'color': '',
-                        'border-color': '',
+                        'color': '#00ff9d',
+                        'border-color': 'rgba(0, 255, 157, 0.5)',
                         'cursor': 'pointer',
                         'pointer-events': 'auto'
                     })
