@@ -1387,16 +1387,13 @@
         // --- Auth Redirects ---
         function connectGoogleAds() {
             if (!agencyEmailForInt) return alert("Agency Email not found!");
-            $.get(`http://localhost:8080/api/integration/google/connect?email=${agencyEmailForInt}`, function (res) {
-                window.location.href = res.url;
-            });
+            window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/google/connect?email=${agencyEmailForInt}`;
+           
         }
 
         function connectFacebookAds() {
             if (!agencyEmailForInt) return alert("Agency Email not found!");
-            $.get(`http://localhost:8080/api/integration/facebook/connect?email=${agencyEmailForInt}`, function (res) {
-                window.location.href = res.url;
-            });
+            window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/facebook/connect?email=${agencyEmailForInt}`;
         }
 
         // --------- Modal show function (Redirect URL)  ----------------------------- //
