@@ -862,7 +862,7 @@
             const agencyEmail = localStorage.getItem("agencyEmail");
             if (agencyEmail) {
                 $.ajax({
-                    url: "https://quantifire-iris-frontend.vercel.app/api/agency/profile",
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
                     type: "GET",
                     data: { email: agencyEmail },
                     success: function (data) {
@@ -960,7 +960,7 @@
                 $btn.text('Saving...').prop('disabled', true);
 
                 $.ajax({
-                    url: "https://quantifire-iris-frontend.vercel.app/api/agency/update-profile",
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/update-profile",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -1042,7 +1042,7 @@
             btn.text('Updating...').prop('disabled', true);
 
             $.ajax({
-                url: "https://quantifire-iris-frontend.vercel.app/api/agency/security/change-password",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/change-password",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -1088,7 +1088,7 @@
             const email = localStorage.getItem("agencyEmail");
 
             // 1. Fetch Preferences (2FA & Alerts)
-            $.get(`https://quantifire-iris-frontend.vercel.app/api/agency/security/preferences?email=${email}`, function (data) {
+            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/security/preferences?email=${email}`, function (data) {
                 // Set 2FA Toggle
                 if (data.is2faEnabled) {
                     $('#tfaToggle').prop('checked', true);
@@ -1101,7 +1101,7 @@
             });
 
             // 2. Fetch Login Activity
-            $.get(`https://quantifire-iris-frontend.vercel.app/api/agency/security/login-history?email=${email}`, function (history) {
+            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/security/login-history?email=${email}`, function (history) {
                 const tbody = $('#security .sys-table tbody');
                 tbody.empty(); // Clear static HTML data
 
@@ -1140,7 +1140,7 @@
         function updateSecurityPreferences(is2fa, method, alerts) {
             const email = localStorage.getItem("agencyEmail");
             $.ajax({
-                url: "https://quantifire-iris-frontend.vercel.app/api/agency/security/update-preferences",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/update-preferences",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -1227,7 +1227,7 @@
             btn.text('Sending...').prop('disabled', true);
 
             $.ajax({
-                url: "https://quantifire-iris-frontend.vercel.app/api/agency/security/request-otp",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/request-otp",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ method: method, target: targetValue }),
@@ -1257,7 +1257,7 @@
             btn.text('Verifying...').prop('disabled', true);
 
             $.ajax({
-                url: "https://quantifire-iris-frontend.vercel.app/api/agency/security/verify-2fa",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/verify-2fa",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ target: targetValue, otp: otpValue, email: email }),
@@ -1332,7 +1332,7 @@
             $('#googleBtn, #fbBtn').text('Checking status...').css('pointer-events', 'none');
 
             $.ajax({
-                url: `https://quantifire-iris-frontend.vercel.app/api/integration/status?email=${agencyEmailForInt}`,
+                url: `https://quantifire-iris-backend.onrender.com/api/integration/status?email=${agencyEmailForInt}`,
                 type: "GET",
                 success: function (status) {
                     updateButtonUI('google', status.google);
@@ -1352,7 +1352,7 @@
             if (!confirm(`Are you sure you want to disconnect ${platform}?`)) return;
 
             $.ajax({
-                url: `https://quantifire-iris-frontend.vercel.app/api/integration/disconnect`,
+                url: `https://quantifire-iris-backend.onrender.com/api/integration/disconnect`,
                 type: "GET",
                 data: { email: agencyEmailForInt, platform: platform },
                 success: function (res) {
@@ -1438,7 +1438,7 @@
             if (!email) return;
 
             $.ajax({
-                url: `https://quantifire-iris-frontend.vercel.app/api/agency/notifications?email=${email}`,
+                url: `https://quantifire-iris-backend.onrender.com/api/agency/notifications?email=${email}`,
                 type: "GET",
                 success: function (data) {
                     if (!data) return;
@@ -1496,7 +1496,7 @@
 
             // Backend ko bhejo bina page refresh kiye
             $.ajax({
-                url: "https://quantifire-iris-frontend.vercel.app/api/agency/notifications/update",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/notifications/update",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(requestData),
