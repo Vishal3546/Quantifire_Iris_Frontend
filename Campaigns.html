@@ -675,7 +675,7 @@
                             setTimeout(() => {
                                 // AddCampaign ko target banakar bhej rahe hain
                                 let stateData = userEmail + "|add_campaign";
-                                window.location.href = `http://localhost:8080/api/integration/google/connect?email=${encodeURIComponent(stateData)}`;
+                                window.location.href = `https://quantifire-iris-frontend.vercel.app/api/integration/google/connect?email=${encodeURIComponent(stateData)}`;
                             }, 1500);
                         } else {
                             // Agar connected hai, toh seedha naya campaign banane wale page par jao
