@@ -622,14 +622,32 @@
         </div>
     </div>
 
-    <div class="custom-alert-overlay" id="customAlertOverlay">
+    <div class="custom-alert-overlay" id="disconnectConfirmOverlay">
         <div class="custom-alert-box">
-            <div class="alert-icon-box" id="alertIconBox">
-                <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="alert-icon-box" style="background: rgba(255, 77, 77, 0.1); color: #ff4d4d;">
+                <i class="fa-solid fa-link-slash"></i>
             </div>
-            <h3 id="alertTitle">Alert Title</h3>
-            <p id="alertMessage">Alert Message goes here.</p>
-            <button class="btn-alert-ok">OK</button>
+            <h3 id="disconnectConfirmTitle">Disconnect Platform?</h3>
+            <p id="disconnectConfirmMessage" style="font-size: 0.9rem; color: #8b9c9c; margin-bottom: 20px;">Are you sure you want to disconnect?</p>
+            
+            <div style="display: flex; gap: 15px; width: 100%;">
+                <button class="btn-alert-ok" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 50%;" onclick="closeDisconnectModal()">Cancel</button>
+                <button class="btn-alert-ok" id="confirmDisconnectBtn" style="background: #ff4d4d; color: #fff; width: 50%; border: none;" onclick="confirmDisconnect()">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay1" id="disconnectModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2" style="background: rgba(255, 77, 77, 0.1); color: #ff4d4d;">
+                <i class="fa-solid fa-link-slash"></i>
+            </div>
+            <h2>Disconnect Platform?</h2>
+            <p>Are you sure you want to disconnect this platform? Data sync will stop.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeDisconnectModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" style="background: #ff4d4d;" onclick="confirmDisconnect()">Disconnect</button>
+            </div>
         </div>
     </div>
 
@@ -1348,24 +1366,57 @@
             });
         }
 
-        // --- Disconnect Logic ---
-        // --- Disconnect Logic ---
-        function disconnectPlatform(platform) {
-            if (!confirm(`Are you sure you want to disconnect ${platform}?`)) return;
+        // ==========================================
+        // PREMIUM DISCONNECT MODAL LOGIC
+        // ==========================================
+        let platformToDisconnect = "";
 
-            // 🔴 YAHAN ADD KIYA HAI "FB" WALA LOGIC
-            const backendPlatformName = platform === 'google' ? 'GOOGLE' : 'FB';
+        // 1. Box Open Karne ka function
+        function disconnectPlatform(platform) {
+            platformToDisconnect = platform;
+            
+            let displayPlatform = platform === 'google' ? 'Google Ads' : 'Facebook';
+            
+            // Text Set Karein
+            $('#disconnectConfirmTitle').text(`Disconnect ${displayPlatform}?`);
+            $('#disconnectConfirmMessage').text(`Are you sure you want to disconnect ${displayPlatform}? Your data sync will stop.`);
+            
+            // Box ko dikhayein (Add active class just like your custom alert)
+            $('#disconnectConfirmOverlay').addClass('active');
+        }
+
+        // 2. Box Close Karne ka function
+        function closeDisconnectModal() {
+            $('#disconnectConfirmOverlay').removeClass('active');
+            platformToDisconnect = "";
+        }
+
+        // 3. Asli Disconnect API Call (Jab lal wala Disconnect button dabega)
+        function confirmDisconnect() {
+            if (!platformToDisconnect) return;
+
+            // Backend ko sahi naam bhejne ka logic
+            const backendPlatformName = platformToDisconnect === 'google' ? 'GOOGLE' : 'FB';
+            let currentPlat = platformToDisconnect; 
+            
+            const btn = $('#confirmDisconnectBtn');
+            btn.text('Wait...').prop('disabled', true);
 
             $.ajax({
                 url: `https://quantifire-iris-backend.onrender.com/api/integration/disconnect`,
                 type: "GET",
-                // 🔴 YAHAN PURANE 'platform' KI JAGAH 'backendPlatformName' LIKHA HAI
                 data: { email: agencyEmailForInt, platform: backendPlatformName }, 
                 success: function (res) {
-                    showCustomAlert("Success", `${platform} disconnected successfully!`, "success");
-                    updateButtonUI(platform, false);
+                    closeDisconnectModal(); // Confirmation box band karo
+                    btn.text('Disconnect').prop('disabled', false); // Button theek karo
+                    
+                    // Success ka Original Custom Alert dikhao
+                    showCustomAlert("Success", `${currentPlat} disconnected successfully!`, "success");
+                    updateButtonUI(currentPlat, false); // UI update kardo
                 },
                 error: function () {
+                    closeDisconnectModal();
+                    btn.text('Disconnect').prop('disabled', false); 
                     showCustomAlert("Error", "Server error. Could not disconnect.", "error");
                 }
             });
