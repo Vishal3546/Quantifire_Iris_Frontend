@@ -519,16 +519,14 @@
                                 <img src="Images/Google-Ads.png">
                                 <h4>Google Ads</h4>
                                 <p>Connect your Google account for seamless data sync.</p>
-                                <button class="sys-btn-outline" style="width: 100%;" 
-                                    id="googleBtn">Connect</button>
+                                <button class="sys-btn-outline" style="width: 100%;" id="googleBtn">Connect</button>
                             </div>
 
                             <div class="sys-int-card">
                                 <img src="Images/meta.png">
                                 <h4>Facebook </h4>
                                 <p>Connect your Meta account for seamless data sync.</p>
-                                <button class="sys-btn-outline" style="width: 100%;"
-                                    id="fbBtn">Connect</button>
+                                <button class="sys-btn-outline" style="width: 100%;" id="fbBtn">Connect</button>
                             </div>
                         </div>
                     </div>
@@ -1351,19 +1349,24 @@
         }
 
         // --- Disconnect Logic ---
+        // --- Disconnect Logic ---
         function disconnectPlatform(platform) {
             if (!confirm(`Are you sure you want to disconnect ${platform}?`)) return;
+
+            // 🔴 YAHAN ADD KIYA HAI "FB" WALA LOGIC
+            const backendPlatformName = platform === 'google' ? 'GOOGLE' : 'FB';
 
             $.ajax({
                 url: `https://quantifire-iris-backend.onrender.com/api/integration/disconnect`,
                 type: "GET",
-                data: { email: agencyEmailForInt, platform: platform },
+                // 🔴 YAHAN PURANE 'platform' KI JAGAH 'backendPlatformName' LIKHA HAI
+                data: { email: agencyEmailForInt, platform: backendPlatformName }, 
                 success: function (res) {
-                    alert(`${platform} disconnected successfully!`);
+                    showCustomAlert("Success", `${platform} disconnected successfully!`, "success");
                     updateButtonUI(platform, false);
                 },
                 error: function () {
-                    alert("Error: Server se disconnect nahi ho paya.");
+                    showCustomAlert("Error", "Server error. Could not disconnect.", "error");
                 }
             });
         }
@@ -1391,7 +1394,7 @@
         function connectGoogleAds() {
             if (!agencyEmailForInt) return alert("Agency Email not found!");
             window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/google/connect?email=${agencyEmailForInt}`;
-           
+
         }
 
         function connectFacebookAds() {
