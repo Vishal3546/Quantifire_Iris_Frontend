@@ -291,6 +291,30 @@
         </div>
     </div>
 
+    <div id="platformModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-icon-box" style="background: rgba(74, 144, 226, 0.1); color: #4a90e2;">
+            <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <h2>Select Platform</h2>
+        <p>Choose a marketing platform for your new campaign</p>
+        
+        <div class="modal-actions" style="flex-direction: column; gap: 12px; margin-top: 20px;">
+            <button class="btn-modal" onclick="redirectToForm('meta')" 
+                style="width: 100%; background: #1877F2; color: white; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <i class="fa-brands fa-facebook"></i> Facebook Meta
+            </button>
+            <button class="btn-modal" onclick="redirectToForm('google')" 
+                style="width: 100%; background: #4285F4; color: white; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <i class="fa-brands fa-google"></i> Google Ads
+            </button>
+            <button class="btn-modal-cancel" onclick="closePlatformModal()" style="margin-top: 5px; background: transparent; border: none; color: #888;">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/flatpickr.js"></script>
     <script src="Js/allagency.js"></script>
@@ -596,6 +620,97 @@
             e.stopPropagation(); $("#clientNameInput").val($(this).text()); $("#suggestionList").hide();
             if ($("#mainWrapper").hasClass("table-visible")) performSearch();
         });
+
+
+        // Modal open karne ke liye (Isme .addClass('show') add kiya hai)
+        function openPlatformModal() {
+            $('#platformModal').css('display', 'flex').hide().fadeIn(200).addClass('show');
+        }
+
+        // Modal close karne ke liye (Isme .removeClass('show') add kiya hai)
+        function closePlatformModal() {
+            $('#platformModal').removeClass('show').fadeOut(200);
+        }
+
+        // Platform select hone par redirect karne ke liye
+        // =======================================================
+        // PLATFORM MODAL & INTEGRATION CHECK LOGIC
+        // =======================================================
+
+        function openPlatformModal() {
+            $('#platformModal').css('display', 'flex').hide().fadeIn(200).addClass('show');
+        }
+
+        function closePlatformModal() {
+            $('#platformModal').removeClass('show').fadeOut(200);
+        }
+
+
+        // NAYA: Jab user modal mein platform select karta hai
+        function redirectToForm(platform) {
+            const userEmail = localStorage.getItem("agencyEmail");
+
+            if (!userEmail) {
+                showCustomAlert("Error", "Session expired. Please log in again.", "error");
+                return;
+            }
+
+            // Button par click karte hi thodi der ke liye disable karo taaki multiple click na ho
+            $('#platformModal .btn-modal').prop('disabled', true).css('opacity', '0.6');
+
+            $.ajax({
+                url: "http://localhost:8080/api/integration/status",
+                type: "GET",
+                data: { email: userEmail },
+                success: function (response) {
+                    $('#platformModal .btn-modal').prop('disabled', false).css('opacity', '1');
+
+                    // GOOGLE Logic
+                    if (platform === "google") {
+                        if (!response.google) {
+                            closePlatformModal();
+                            showCustomAlert("Connection Required", "Redirecting to Google Ads login...", "info");
+                            setTimeout(() => {
+                                // AddCampaign ko target banakar bhej rahe hain
+                                let stateData = userEmail + "|add_campaign";
+                                window.location.href = `http://localhost:8080/api/integration/google/connect?email=${encodeURIComponent(stateData)}`;
+                            }, 1500);
+                        } else {
+                            // Agar connected hai, toh seedha naya campaign banane wale page par jao
+                            window.location.href = `AddNewCampaign.html?platform=google`; // File name confirm kar lena
+                        }
+                    }
+                    // FACEBOOK META Logic
+                    else if (platform === "meta") {
+                        if (!response.facebook) {
+                            closePlatformModal();
+                            showCustomAlert("Connection Required", "Redirecting to Facebook Meta login...", "info");
+                            setTimeout(() => {
+                                // AddCampaign ko target banakar bhej rahe hain
+                                let stateData = userEmail + "|add_campaign";
+                                window.location.href = `http://localhost:8080/api/integration/facebook/connect?email=${encodeURIComponent(stateData)}`;
+                            }, 1500);
+                        } else {
+                            // Agar connected hai, toh seedha naya campaign banane wale page par jao
+                            window.location.href = `AddNewCampaign.html?platform=meta`; // File name confirm kar lena
+                        }
+                    }
+                },
+                error: function () {
+                    $('#platformModal .btn-modal').prop('disabled', false).css('opacity', '1');
+                    closePlatformModal();
+                    showCustomAlert("Error", "Could not check connection status with the server.", "error");
+                }
+            });
+        }
+
+        // Modal ke bahar click karne par band ho jaye
+        $(window).on('click', function (event) {
+            if ($(event.target).is('#platformModal')) {
+                closePlatformModal();
+            }
+        });
+
     </script>
 </body>
 

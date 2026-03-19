@@ -964,7 +964,7 @@ input:checked+.sys-slider:before { transform: translateX(20px); }
 @media (max-width: 768px) {
 .map-toolbar-inner { display: flex !important; }
 .btn-search { order: 2 !important; flex: 1 !important; min-width: 0 !important; }
-#customSearchInput.map-input { order: 1 !important; width: 206% !important; } }
+#customSearchInput.map-input { order: 1 !important; width: 205% !important; } }
   
 /* ---------- Agency Setting Page MOBILE VIEW SCROLLBAR WITH HOVER EFFECT ------------- */
 @media (max-width: 991px) {
