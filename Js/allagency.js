@@ -200,3 +200,53 @@ async function handleHealthCheck() {
         statusText.style.color = "orange";
     }
 }
+
+
+
+// ==========================================
+        // GLOBAL KEYBOARD SHORTCUTS (ENTER & ESCAPE KEYS)
+        // ==========================================
+        $(document).on('keydown', function (e) {
+            
+            // --- 1. ENTER KEY LOGIC (For OK / Submit / Confirm) ---
+            if (e.key === "Enter" || e.keyCode === 13) {
+                
+                // Agar Custom Alert (Success/Error) open hai
+                if ($('#customAlertOverlay').hasClass('active')) {
+                    e.preventDefault(); // Default form submit roke
+                    $('.btn-alert-ok').click(); // OK button click kare
+                }
+                
+                // Agar Logout Confirmation open hai
+                else if ($('#logoutModal').hasClass('active') || $('#logoutModal').css('display') === 'block') {
+                    e.preventDefault();
+                    confirmLogout(); 
+                }
+
+                // Agar Disconnect Confirmation open hai
+                else if ($('#disconnectConfirmOverlay').hasClass('active')) {
+                    e.preventDefault();
+                    $('#confirmDisconnectBtn').click(); 
+                }
+
+                // Agar OTP box dikh raha hai aur user OTP type kar raha hai
+                else if ($('#otpVerificationBox').is(':visible') && $('#tfaOtpInput').is(':focus')) {
+                    e.preventDefault();
+                    $('#tfaVerifyBtn').click(); // OTP Verify button dabaye
+                }
+            }
+
+            // --- 2. ESCAPE (ESC) KEY LOGIC (For Cancel / Close) ---
+            if (e.key === "Escape" || e.keyCode === 27) {
+                
+                if ($('#customAlertOverlay').hasClass('active')) {
+                    closeCustomAlert();
+                }
+                if ($('#logoutModal').hasClass('active') || $('#logoutModal').css('display') === 'block') {
+                    closeLogoutModal();
+                }
+                if ($('#disconnectConfirmOverlay').hasClass('active')) {
+                    closeDisconnectModal();
+                }
+            }
+        });
