@@ -170,8 +170,8 @@
     </div>
 
     <script src="Js/jquery-3.7.1.min.js"></script>
-     <script src="Js/flatpickr.js"></script>
     <script src="Js/allagency.js"></script>
+     <script src="Js/flatpickr.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     <script>
@@ -286,13 +286,35 @@
             fetchAllNotifications();
             
             // Basic Profile Load (Just to keep UI looking correct)
-            $.get(`http://localhost:8080/api/agency/profile?email=${email}`, function(data) {
-                if(data.agencyName) $('.display-agency-name').text(data.agencyName);
+           // ==========================================
+            // Basic Profile Load (Sidebar & Header UI)
+            // ==========================================
+            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${email}`, function(data) {
+                
+                // 1. Agency Name set karna
+                if(data.agencyName) {
+                    $('.display-agency-name').text(data.agencyName);
+                }
+                
+                // 2. Logo set karna (Smart Logic ke sath)
                 if(data.agencyLogo) {
-                    let logo = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
-                    $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", logo);
+                    let finalPath;
+                    
+                    // Agar logo Supabase S3 ka direct URL hai (http se start hota hai)
+                    if (data.agencyLogo.startsWith('http')) {
+                        finalPath = data.agencyLogo; 
+                    } else {
+                        // Agar purana local image name hai, toh live server se uthao
+                        finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + encodeURIComponent(data.agencyLogo); 
+                    }
+                    
+                    $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", finalPath);
+                } else {
+                    // Agar database mein koi logo nahi hai toh default image lagao
+                    $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", "Images/default-avatar.png");
                 }
             });
+
         });
     </script>
 </body>
