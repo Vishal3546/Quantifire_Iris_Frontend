@@ -875,7 +875,7 @@ canvas, #sourceChart, #activityChart { width: 100% !important; height: 100% !imp
 .profile-identity h2 { color: #fff; font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; }
 .profile-identity p { color: #8b9c9c; font-size: 0.9rem; margin-bottom: 15px; }
 .status-badge { background: rgba(0, 255, 170, 0.1); color: #00ffaa; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; border: 1px solid rgba(0, 255, 170, 0.2); display: inline-flex; align-items: center; gap: 5px; }
-.profile-contact-list { padding: 10px 0 30px 30px; text-align: left; }
+.profile-contact-list { padding: 0px 20px 0px 20px; text-align: left; }
 .pc-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); margin: 20px 0; }
 .pc-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding: 10px; border-radius: 10px; transition: 0.3s; }
 .pc-item:hover { background: rgba(255, 255, 255, 0.03); }
