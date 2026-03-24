@@ -102,7 +102,8 @@
                                     <span class="n-time">1d</span>
                                 </li>
                             </ul>
-                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a>
+                            </div>
                         </div>
                     </div>
                     <div class="profile-info" onclick="toggleProfileDropdown(event)"
@@ -151,7 +152,8 @@
                             <div class="platform-selection-box" id="platformBox"
                                 style="width: 280px; background: rgba(11, 22, 21, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px;">
 
-                                <h4 style="color: #00ff9d; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">
+                                <h4
+                                    style="color: #00ff9d; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">
                                     Ad Platform</h4>
 
                                 <label class="platform-option">
@@ -172,12 +174,13 @@
                                     </div>
                                 </label>
 
-                                <button type="button" id="syncCampaignsBtn" class="btn btn-outline" 
+                                <button type="button" id="syncCampaignsBtn" class="btn btn-outline"
                                     style="margin-top: 10px; width: 100%; border: 1px dashed #00ff9d; color: #00ff9d; background: rgba(0, 255, 157, 0.05); padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px;">
                                     <i class="fa-solid fa-rotate"></i> Sync Data
                                 </button>
 
-                                <span id="platformErr" class="error-msg" style="margin-top: auto;">* Select at least one platform</span>
+                                <span id="platformErr" class="error-msg" style="margin-top: auto;">* Select at least one
+                                    platform</span>
                             </div>
 
                             <div style="flex: 1; display: flex; flex-direction: column;">
@@ -252,7 +255,7 @@
                         <span id="targetLocationErr" class="error-msg">* This field is required</span>
                     </div> -->
 
-                    <div class="form-grid-4">
+                    <div class="form-grid-3">
                         <div class="form-group">
                             <label for="startDate">Start Date</label>
                             <div class="date-wrapper">
@@ -274,14 +277,9 @@
                             <input type="number" id="budget" class="form-input" placeholder="Total budget">
                             <span id="budgetErr" class="error-msg">* Required</span>
                         </div>
-                        <div class="form-group">
-                            <label for="leads">Leads</label>
-                            <input type="number" id="leads" class="form-input" placeholder="Total Leads">
-                            <span id="leadsErr" class="error-msg">* Required</span>
-                        </div>
                     </div>
 
-                    <div class="form-grid-4">
+                    <div class="form-grid-3">
                         <div class="form-group">
                             <label>Gender Filter</label>
                             <div class="custom-dropdown" id="genderDropdown">
@@ -323,12 +321,6 @@
                                 <input type="hidden" name="status" id="selectedStatusValue" value="Active">
                             </div>
                             <span id="statusErr" class="error-msg">* Please select a status</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="conversions">Total Conversions</label>
-                            <input type="number" id="conversions" class="form-input" placeholder="e.g., 150"
-                                autocomplete="off">
-                            <span id="conversionsErr" class="error-msg">* Required</span>
                         </div>
                     </div>
 
@@ -415,11 +407,11 @@
             if (selectedPlatform === 'meta') {
                 // Google ko disable karo, sirf Meta open rahega
                 $('#adPlatformGoogle').prop('disabled', true);
-                $('#adPlatformGoogle').closest('label').css({'opacity': '0.4', 'cursor': 'not-allowed', 'pointer-events': 'none'});
+                $('#adPlatformGoogle').closest('label').css({ 'opacity': '0.4', 'cursor': 'not-allowed', 'pointer-events': 'none' });
             } else if (selectedPlatform === 'google') {
                 // Meta ko disable karo, sirf Google open rahega
                 $('#adPlatformMeta').prop('disabled', true);
-                $('#adPlatformMeta').closest('label').css({'opacity': '0.4', 'cursor': 'not-allowed', 'pointer-events': 'none'});
+                $('#adPlatformMeta').closest('label').css({ 'opacity': '0.4', 'cursor': 'not-allowed', 'pointer-events': 'none' });
             }
 
             // ==========================================
@@ -428,34 +420,34 @@
             let userWentToAdsManager = false;
 
             // Google Ads par tick karte hi naya tab kholo
-            $('#adPlatformGoogle').on('change', function() {
-                if($(this).is(':checked')) {
+            $('#adPlatformGoogle').on('change', function () {
+                if ($(this).is(':checked')) {
                     window.open('https://ads.google.com/aw/campaigns/new', '_blank');
-                    userWentToAdsManager = true; 
+                    userWentToAdsManager = true;
                 }
             });
 
             // Facebook par tick karte hi naya tab kholo
-            $('#adPlatformMeta').on('change', function() {
-                if($(this).is(':checked')) {
+            $('#adPlatformMeta').on('change', function () {
+                if ($(this).is(':checked')) {
                     window.open('https://adsmanager.facebook.com/adsmanager/manage/campaigns', '_blank');
-                    userWentToAdsManager = true; 
+                    userWentToAdsManager = true;
                 }
             });
 
             // Jaise hi tab wapas aaye, automatic Sync button daba do
-            window.addEventListener('focus', function() {
+            window.addEventListener('focus', function () {
                 if (userWentToAdsManager) {
-                    userWentToAdsManager = false; 
-                    $('#syncCampaignsBtn').trigger('click'); 
+                    userWentToAdsManager = false;
+                    $('#syncCampaignsBtn').trigger('click');
                 }
             });
 
             // Sync API Call
-            $('#syncCampaignsBtn').on('click', function(e) {
+            $('#syncCampaignsBtn').on('click', function (e) {
                 e.preventDefault();
                 let selectedPlat = $('input[name="adPlatform"]:checked').val();
-                
+
                 if (!selectedPlat) {
                     showCustomAlert("Select Platform", "Please tick a platform first to sync data.", "error");
                     return;
@@ -468,22 +460,55 @@
                 $.ajax({
                     url: "http://localhost:8080/api/integration/sync-recent",
                     type: "GET",
-                    data: { 
+                    data: {
                         email: localStorage.getItem("agencyEmail"),
                         platform: selectedPlat === 'Google Ads' ? 'google' : 'meta'
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log("Fetched Campaigns: ", response);
-                        showCustomAlert("Sync Successful!", "Recent campaigns synced and auto-filled.", "success");
+
+                        // Agar backend se List/Array aa raha hai toh pehla (latest) data uthao, warna direct object uthao
+                        let syncedData = Array.isArray(response) ? response[0] : response;
+
+                        if (syncedData) {
+                            // 1. Normal Text Inputs Bharna
+                            if (syncedData.campaignName) $("#campaignName").val(syncedData.campaignName);
+                            if (syncedData.budget) $("#budget").val(syncedData.budget);
+                            if (syncedData.leads) $("#leads").val(syncedData.leads);
+                            if (syncedData.totalConversions) $("#conversions").val(syncedData.totalConversions);
+
+                            // 2. Location Bharna
+                            if (syncedData.targetLocation) {
+                                $("#targetLocation").val(syncedData.targetLocation);
+                                $('#customSearchInput').val(syncedData.targetLocation);
+                            }
+
+                            // 3. Dates (Flatpickr) Bharna
+                            if (syncedData.startDate) {
+                                let startPicker = document.querySelector("#startDate")._flatpickr;
+                                if (startPicker) startPicker.setDate(syncedData.startDate);
+                            }
+                            if (syncedData.endDate) {
+                                let endPicker = document.querySelector("#endDate")._flatpickr;
+                                if (endPicker) endPicker.setDate(syncedData.endDate);
+                            }
+
+                            // 4. Status Dropdown set karna (Optional)
+                            if (syncedData.status) {
+                                selectItem('statusDropdown', syncedData.status);
+                            }
+                        }
+
+                        showCustomAlert("Sync Successful!", "Recent campaign data has been auto-filled.", "success");
                         $btn.html(originalText).prop('disabled', false);
                     },
-                    error: function() {
+                    error: function () {
                         showCustomAlert("Sync Failed", "Could not fetch recent campaigns. Please try again.", "error");
                         $btn.html(originalText).prop('disabled', false);
                     }
                 });
             });
-            
+
             // ==========================================
 
 
