@@ -90,12 +90,11 @@
                             localStorage.setItem("agencyId", response.agencyId);
                             localStorage.setItem("agencyName", response.agencyName);
                             localStorage.setItem("agencyEmail", userEmail);
-
-                            let now = new Date();
-                            now.setTime(now.getTime() + (24 * 60 * 60 * 1000));
-                            document.cookie = "isAgencyLoggedIn=true; expires=" + now.toUTCString() + "; path=/; SameSite=Lax";
-
-                            window.location.href = "AgencyDashboard.html";
+                            
+                            setTimeout(function (){
+                                window.location.href = "AgencyDashboard.html";
+                            }, 500);
+                            
                         }
                     },
                     error: function (xhr) {
