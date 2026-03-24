@@ -474,9 +474,7 @@
                             // 1. Normal Text Inputs Bharna
                             if (syncedData.campaignName) $("#campaignName").val(syncedData.campaignName);
                             if (syncedData.budget) $("#budget").val(syncedData.budget);
-                            if (syncedData.leads) $("#leads").val(syncedData.leads);
-                            if (syncedData.totalConversions) $("#conversions").val(syncedData.totalConversions);
-
+                            
                             // 2. Location Bharna
                             if (syncedData.targetLocation) {
                                 $("#targetLocation").val(syncedData.targetLocation);
@@ -553,10 +551,8 @@
                 if ($("#budget").val().trim() === "") { $("#budgetErr").show(); $("#budget").css("border", "1px solid red"); isValid = false; }
                 if ($("#startDate").val().trim() === "") { $("#startDateErr").show(); $("#startDate").parent().css("border", "1px solid red"); isValid = false; }
                 if ($("#endDate").val().trim() === "") { $("#endDateErr").show(); $("#endDate").parent().css("border", "1px solid red"); isValid = false; }
-                if ($("#leads").val().trim() === "") { $("#leadsErr").show(); $("#leads").css("border", "1px solid red"); isValid = false; }
                 if ($("#ageRange").val().trim() === "") { $("#ageRangeErr").show(); $("#ageRange").css("border", "1px solid red"); isValid = false; }
-                if ($("#conversions").val().trim() === "") { $("#conversionsErr").show(); $("#conversions").css("border", "1px solid red"); isValid = false; }
-
+                
                 // Is hisse ko validation section mein rakhein
                 let clientData = $('#clientName').select2('data')[0]; // Select2 ka data uthayein
 
@@ -590,8 +586,8 @@
 
                 var campaignObj = {
                     agencyId: aid, clientId: clientId, clientName: clientName, campaignName: $("#campaignName").val().trim(), targetLocation: normalizedLocation,
-                    startDate: $("#startDate").val(), endDate: $("#endDate").val(), budget: $("#budget").val(), leads: $("#leads").val(),
-                    totalConversions: $("#conversions").val(), gender: $("#selectedGenderValue").val(), ageRange: $("#ageRange").val(),
+                    startDate: $("#startDate").val(), endDate: $("#endDate").val(), budget: $("#budget").val(),
+                    gender: $("#selectedGenderValue").val(), ageRange: $("#ageRange").val(),
                     status: $("#selectedStatusValue").val() || "Active", geoData: JSON.stringify(mapData), adPlatform: selectedPlatforms.join(",")
                 };
 
