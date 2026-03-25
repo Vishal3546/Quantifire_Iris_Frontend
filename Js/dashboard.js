@@ -11,10 +11,12 @@ function initDashboardPage() {
         return;
     }
 
+    setTimeout(() => {
     initMap();
     initChart();
     loadDashboardData();
     bindEvents();
+}, 100);
 
     // ---------------- MAP ----------------
     function initMap() {
