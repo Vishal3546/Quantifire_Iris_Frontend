@@ -1,103 +1,145 @@
-<div class="page-header" style="margin-bottom: 20px;">
-    <div class="title-text">
-        <div class="icon-square">
-            <img src="Images/Agency50x50.ico">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agency Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link rel="stylesheet" href="Css/all.css">
+
+    <!-- Chart + Google Map -->
+    <script src="Js/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="logo-section">
+            <img src="Images/quantifirelogo.png" width="120">
         </div>
-        <div>
+
+        <div class="user-mini-profile">
+            <div class="avatar-circle">
+                <img id="sidebarAgencyLogo">
+            </div>
+            <p class="display-agency-name">Agency</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li class="active"><a href="AgencyDashboard.html">Dashboard</a></li>
+                <li><a href="Clients.html">Clients</a></li>
+                <li><a href="Campaigns.html">Campaigns</a></li>
+                <li><a href="Leads.html">Leads</a></li>
+                <li><a href="Locations.html">Locations</a></li>
+                <li><a href="Report&Analytics.html">Reports</a></li>
+                <li><a href="Settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main-content">
+
+        <!-- ===== TOP BAR ===== -->
+        <header class="top-bar">
+            <h2>Dashboard</h2>
+
+            <div class="profile-info">
+                <h4 class="display-agency-name">Agency</h4>
+                <span id="display-agency-email">email</span>
+            </div>
+        </header>
+
+        <!-- ===== PAGE HEADER ===== -->
+        <div class="page-header">
             <h1>Agency Dashboard</h1>
-            <p>Manage campaigns clients, and performance insights.</p>
+            <p>Manage campaigns, clients & performance insights</p>
         </div>
-    </div>
+
+        <!-- ===== STATS ===== -->
+        <section class="stats-grid">
+
+            <div class="stat-card" id="statcard1">
+                <h2>0</h2>
+                <p>Total Campaigns</p>
+            </div>
+
+            <div class="stat-card" id="statcard2">
+                <h2>0</h2>
+                <p>Total Leads</p>
+            </div>
+
+            <div class="stat-card" id="statcard3">
+                <h2>0</h2>
+                <p>Total Clients</p>
+            </div>
+
+            <div class="stat-card" id="statcard4">
+                <h2>0</h2>
+                <p>Reports Downloaded</p>
+            </div>
+
+        </section>
+
+        <!-- ===== CHART + MAP ===== -->
+        <section class="agency-mid-grid">
+
+            <!-- Chart -->
+            <div class="chart-container">
+                <h3>Leads by Source</h3>
+                <canvas id="sourceChart"></canvas>
+            </div>
+
+            <!-- Map -->
+            <div class="map-card">
+                <h3>Geofence Map</h3>
+                <div id="geofenceMap" style="height:300px;"></div>
+            </div>
+
+        </section>
+
+        <!-- ===== TABLE ===== -->
+        <div class="glass-card">
+
+            <h3>Client Insights</h3>
+
+            <table class="simple-table">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Agency Name</th>
+                        <th>Campaigns</th>
+                        <th>Leads</th>
+                        <th>Conv. Rate</th>
+                    </tr>
+                </thead>
+
+                <tbody id="clientTableBody">
+                    <!-- DATA FROM JS -->
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
 </div>
 
-<section class="stats-grid">
-    <div class="stat-card" id="statcard1">
-        <div class="card-header">
-            <div class="icon-box icon-cyan">
-                <img src="Images/Campaign50x50.ico">
-            </div>
-            <span class="percent up"><i class="fa-solid fa-arrow-up"></i> 12%</span>
-        </div>
-        <h2>0</h2>
-        <p>Total Campaigns Running</p>
-    </div>
+<!-- ================= JS ================= -->
 
-    <div class="stat-card" id="statcard2">
-        <div class="card-header">
-            <div class="icon-box icon-green">
-                <img src="Images/Leads50x50.ico">
-            </div>
-            <span class="percent up"><i class="fa-solid fa-arrow-up"></i> 8%</span>
-        </div>
-        <h2>0</h2>
-        <p>Total Leads Generated</p>
-    </div>
+<script src="Js/jquery-3.7.1.min.js"></script>
+<script src="Js/common.js"></script>
+<script src="Js/dashboard.js"></script>
 
-    <div class="stat-card" id="statcard3">
-        <div class="card-header">
-            <div class="icon-box icon-blue">
-                <img src="Images/Customer50x50.ico">
-            </div>
-            <span class="percent up"><i class="fa-solid fa-arrow-up"></i> 15%</span>
-        </div>
-        <h2>0</h2>
-        <p>Total Active Clients</p>
-    </div>
-
-    <div class="stat-card" id="statcard4">
-        <div class="card-header">
-            <div class="icon-box icon-dark-blue">
-                <img src="Images/Reports&Leads.ico">
-            </div>
-            <span class="percent up"><i class="fa-solid fa-arrow-up"></i> 5%</span>
-        </div>
-        <h2>0</h2>
-        <p>Report Downloaded</p>
-    </div>
-</section>
-
-<section class="agency-mid-grid">
-
-    <div class="chart-container" style="height: 450px;">
-        <h3>Leads by Source</h3>
-        <div class="chart-wrapper pie-wrapper">
-            <canvas id="sourceChart"></canvas>
-        </div>
-        <div class="pie-legend">
-            <span><i class="fa-solid fa-circle" style="color: #00ffaa;"></i> Google Ads</span>
-            <span><i class="fa-solid fa-circle" style="color: #ffcc00;"></i> Facebook</span>
-            <span><i class="fa-solid fa-circle" style="color: #ff6b6b;"></i> Instagram</span>
-            <span><i class="fa-solid fa-circle" style="color: #00d4ff;"></i> Whatsapp</span>
-        </div>
-    </div>
-
-    <div class="map-card">
-        <h3>Geofence Map</h3>
-
-        <div class="map-toolbar-inner">
-            <input type="text" id="customSearchInput" class="map-input" placeholder="City name...">
-            <button class="btn-icon btn-search" id="searchBtn">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-
-        <div id="geofenceMap" class="dark-theme-map"></div>
-    </div>
-
-</section>
-
-<div class="glass-card">
-    <h3 class="card-heading">Client Insights</h3>
-    <table class="simple-table">
-        <thead>
-            <tr>
-                <th>Client Name</th>
-                <th>Agency Name</th>
-                <th>Campaigns</th>
-                <th>Leads</th>
-                <th>Conv. Rate</th>
-            </tr>
-        </thead>
-        <tbody id="clientTableBody"></tbody>
-    </table>
-</div>
+</body>
+</html>
