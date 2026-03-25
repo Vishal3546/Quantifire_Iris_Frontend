@@ -41,7 +41,11 @@ const loadRoute = async () => {
         updateSidebarActiveLink(path);
 
         // Securely page ka specific javascript chalayein
+       requestAnimationFrame(() => {
+    setTimeout(() => {
         executePageLogic(route.scriptId);
+    }, 50);
+});
 
     } catch (error) {
         console.error("Routing Error:", error);
