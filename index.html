@@ -10,13 +10,19 @@
     <link rel="stylesheet" href="Css/sidebar.css">
     <link href="Css/fontstyle.css" rel="stylesheet">
     <link rel="stylesheet" href="Css/all.css">
+    
     <link rel="stylesheet" href="Css/datestyle.css">
     <link rel="stylesheet" href="Css/dateflatpickr.min.css">
     <link rel="stylesheet" href="Css/bigsearchbtn.css">
     <link rel="stylesheet" href="Css/clientnamedropdown.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <script src="Js/chart.js"></script>
     <script src="Js/auth-guard.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 </head>
 
 <body>
@@ -28,7 +34,7 @@
             </div>
             <div class="logo-section">
                 <div class="logo-icon">
-                    <img src="Images/quantifirelogo.png" alt="">
+                    <img src="Images/quantifirelogo.png" alt="Quantifyre">
                 </div>
             </div>
             <div class="user-mini-profile">
@@ -65,24 +71,22 @@
                     <div class="notification-wrapper" style="position: relative;">
                         <div class="icon-btn notification" onclick="toggleNotification(event)">
                             <img src="Images/Notifications.ico">
-                            <span class="notif-count"></span>
+                            <span class="notif-count" style="display:none;"></span>
                         </div>
                         <div class="notif-dropdown" id="notifDropdown">
                             <div class="notif-header">
                                 <h4>Notifications</h4><span class="mark-read">Mark all read</span>
                             </div>
                             <ul class="notif-list">
-                                <li class="notif-item unread">
-                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
-                                    <div class="n-text"><p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span></div>
-                                    <span class="n-time">2m</span>
-                                </li>
-                            </ul>
+                                </ul>
                             <div class="notif-footer"><a href="/notifications" data-link>View All Notifications</a></div>
                         </div>
                     </div>
+
                     <div class="profile-info" onclick="toggleProfileDropdown(event)" style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
-                        <div class="avatar-small"><img src="" id="headerAgencyLogo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="avatar-small">
+                            <img src="" id="headerAgencyLogo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        </div>
                         <div class="text-info">
                             <h4 class="display-agency-name">Agency Name</h4>
                             <p>Agency</p>
@@ -91,7 +95,8 @@
                     </div>
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header-info">
-                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email" id="display-agency-email">agency@quantifyre.com</span>
+                            <p class="d-name display-agency-name">Agency Name</p> 
+                            <span class="d-email" id="display-agency-email">agency@quantifyre.com</span>
                         </div>
                         <ul class="dropdown-list">
                             <li><a href="/settings" data-link><i class="fa-solid fa-gear"></i> Settings</a></li>
@@ -103,7 +108,8 @@
             </header>
 
             <div id="app-content"></div>
-            </main>
+
+        </main>
     </div>
 
     <div class="modal-overlay1" id="logoutModal">
@@ -123,7 +129,9 @@
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/flatpickr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <script src="Js/allagency.js"></script>
+
     <script src="Js/dashboard.js"></script>
     <script src="Js/clients.js"></script>
     <script src="Js/campaigns.js"></script>
@@ -133,55 +141,5 @@
 
     <script src="Js/router.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            const aid = localStorage.getItem("agencyId");
-            if(!aid) return;
-
-            let clientsData = [];
-            let campaignsData = [];
-
-            $.ajax({
-                url: `http://localhost:8080/api/agency/clients/all?agencyId=${aid}`,
-                type: "GET", headers: { "X-Agency-Id": aid },
-                success: function (data) { clientsData = Array.isArray(data) ? data : (data.content || []); }
-            });
-
-            $.ajax({
-                url: `http://localhost:8080/api/agency/campaigns/all?filter=all`,
-                type: "GET", headers: { "X-Agency-Id": aid },
-                success: function (data) { campaignsData = Array.isArray(data) ? data : (data.content || []); }
-            });
-
-            $("#globalSearchInput").on("keyup input", function () {
-                let query = $(this).val().toLowerCase().trim();
-                let suggestionBox = $("#globalSuggestionList");
-                suggestionBox.empty();
-
-                if (query.length < 1) { suggestionBox.hide(); return; }
-
-                let filteredClients = clientsData.filter(c => (c.clientName || "").toLowerCase().includes(query));
-                let filteredCampaigns = campaignsData.filter(cp => (cp.campaignName || "").toLowerCase().includes(query));
-
-                if (filteredClients.length === 0 && filteredCampaigns.length === 0) {
-                    suggestionBox.append('<li class="suggestion-item">No results found</li>');
-                } else {
-                    filteredClients.forEach(c => {
-                        suggestionBox.append(`<li class="suggestion-item" onclick="navigateTo('/client-details?id=${c.id}')"><span><i class="fa-solid fa-user"></i> ${c.clientName}</span><span class="type-badge type-client">Client</span></li>`);
-                    });
-                    filteredCampaigns.forEach(cp => {
-                        suggestionBox.append(`<li class="suggestion-item" onclick="navigateTo('/campaign-details?id=${cp.id}')"><span><i class="fa-solid fa-bullhorn"></i> ${cp.campaignName}</span><span class="type-badge type-campaign">Campaign</span></li>`);
-                    });
-                }
-                suggestionBox.show();
-            });
-
-            $(document).on("click", function (e) { if (!$(e.target).closest('.search-bar').length) $("#globalSuggestionList").hide(); });
-        });
-    </script>
-
-    <script src="Js/dashboard.js"></script>
-    
-    <script src="Js/router.js"></script>
 </body>
 </html>
