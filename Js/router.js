@@ -4,14 +4,14 @@
 
 // 1. Route Definitions (Yahan hum URL ko HTML file aur JS function se link karte hain)
 const routes = {
-    "/": { template: "AgencyDashboard.html", scriptId: "dashboard" },
-    "/dashboard": { template: "AgencyDashboard.html", scriptId: "dashboard" },
-    "/clients": { template: "Clients.html", scriptId: "clients" },
-    "/campaigns": { template: "Campaigns.html", scriptId: "campaigns" },
-    "/leads": { template: "Leads.html", scriptId: "leads" }, 
-    "/locations": { template: "Locations.html", scriptId: "locations" },
-    "/reports": { template: "Report&Analytics.html", scriptId: "reports" },
-    "/settings": { template: "Settings.html", scriptId: "settings" }
+    "/": { template: "Views/AgencyDashboard.html", scriptId: "dashboard" },
+    "/dashboard": { template: "Views/AgencyDashboard.html", scriptId: "dashboard" },
+    "/clients": { template: "Views/Clients.html", scriptId: "clients" },
+    "/campaigns": { template: "Views/Campaigns.html", scriptId: "campaigns" },
+    "/leads": { template: "Views/Leads.html", scriptId: "leads" }, 
+    "/locations": { template: "Views/Locations.html", scriptId: "locations" },
+    "/reports": { template: "Views/Report&Analytics.html", scriptId: "reports" },
+    "/settings": { template: "Views/Settings.html", scriptId: "settings" }
 };
 
 // 2. Main Router Function (Page load karta hai)
