@@ -1,152 +1,299 @@
-<div class="page-header">
-    <div class="title-text">
-        <div class="icon-square"><img src="Images/Campaign50x50.ico"></div>
-        <div>
-            <h1>List Of Campaigns</h1>
-            <p>Marketing Campaigns and their performance</p>
-        </div>
-    </div>
-    <button type="button" onclick="openPlatformModal()" class="btn-export" style="cursor: pointer;">Add New Campaign</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="filter-bar">
-    <div class="filter-item filter-wide">
-        <select id="clientSearchSelect" class="search-input-field">
-            <option></option>
-        </select>
-        <span id="clientError" class="error-msg">* Select Client</span>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Campaigns</title>
+    <link rel="icon" type="image/png" href="Images/quantifirelogo.png">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="Css/dateflatpickr.min.css">
+    <link rel="stylesheet" href="Css/datestyle.css">
+    <link rel="stylesheet" href="Css/bigsearchbtn.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
+    <script src="Js/auth-guard.js"></script>
+</head>
 
-    <div class="filter-item filter-wide">
-        <div class="custom-dropdown" id="campaignStatusDropdown">
-            <div class="dropdown-selected" onclick="toggleCampaignDropdown('campaignStatusDropdown')">
-                <span class="selected-text">All Campaigns</span><i class="fa-solid fa-chevron-down"></i>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn"><i class="fa-solid fa-xmark"></i></div>
+            <div class="logo-section">
+                <div class="logo-icon"><img src="Images/quantifirelogo.png" alt="Quantifyre"></div>
             </div>
-            <ul class="dropdown-options">
-                <li class="dropdown-item" onclick="selectCampaignItem('campaignStatusDropdown', 'All Campaigns')">All Campaigns</li>
-                <li class="dropdown-item" onclick="selectCampaignItem('campaignStatusDropdown', 'Active')">Active</li>
-                <li class="dropdown-item" onclick="selectCampaignItem('campaignStatusDropdown', 'Paused')">Paused</li>
-                <li class="dropdown-item" onclick="selectCampaignItem('campaignStatusDropdown', 'Completed')">Completed</li>
-            </ul>
-        </div>
-    </div>
-    <div class="filter-item filter-wide">
-        <div class="custom-dropdown" id="platformDropdown">
-            <div class="dropdown-selected" onclick="toggleCampaignDropdown('platformDropdown')">
-                <span class="selected-text">All Platforms</span><i class="fa-solid fa-chevron-down"></i>
-            </div>
-            <ul class="dropdown-options">
-                <li class="dropdown-item" onclick="selectCampaignItem('platformDropdown', 'All Platforms')">All Platforms</li>
-                <li class="dropdown-item" onclick="selectCampaignItem('platformDropdown', 'meta')">Facebook Meta</li>
-                <li class="dropdown-item" onclick="selectCampaignItem('platformDropdown', 'google')">Google Ads</li>
-                <li class="dropdown-item" onclick="selectCampaignItem('platformDropdown', 'Both')">Both (Google & Meta)</li>
-            </ul>
-        </div>
-    </div>
-    <div class="filter-item filter-date">
-        <div class="date-wrapper"><input type="text" id="startDate" placeholder="Start Date"><i class="fa-regular fa-calendar"></i></div>
-    </div>
-    <div class="filter-item filter-date">
-        <div class="date-wrapper"><input type="text" id="endDate" placeholder="End Date"><i class="fa-regular fa-calendar"></i></div>
-    </div>
-    <button class="btn-search" id="smallSearchBtn" style="padding: 12px 15px; height: 46px;">
-        <i class="fa-solid fa-check"></i>
-    </button>
-</div>
-
-<div class="quick-filter-row">
-    <div class="qf-item label-box"><i class="fa-solid fa-filter"></i> Filter By:</div>
-    <div class="qf-item active" onclick="applyCampaignFilter(this, 'all')">All</div>
-    <div class="qf-item" onclick="applyCampaignFilter(this, '3months')">Last 3 Months</div>
-    <div class="qf-item" onclick="applyCampaignFilter(this, '1month')">Last 1 Month</div>
-    <div class="qf-item" onclick="applyCampaignFilter(this, '7days')">Last 7 Days</div>
-</div>
-
-<div class="initial-search-container" id="largeSearchContainer">
-    <button class="btn-large-search" onclick="showCampaignResults()">
-        <i class="fa-solid fa-magnifying-glass"></i> Search Campaigns
-    </button>
-</div>
-
-<div id="backBtnWrapper">
-    <button class="btn-action" onclick="resetCampaignPage()" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <i class="fa-solid fa-arrow-left"></i> Back to Search
-    </button>
-</div>
-
-<div id="mainWrapper">
-    <div class="glass-card">
-        <table class="simple-table">
-            <thead>
-                <tr>
-                    <th>Campaign Name</th>
-                    <th>Client Name</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Leads</th>
-                    <th>Conv.Rate</th>
-                    <th>Budget</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="campaignTableBody"></tbody>
-        </table>
-    </div>
-
-    <div class="pagination-wrapper">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="pagination-info">
-                Showing <span id="camp-start-row">0</span> to <span id="camp-end-row">0</span> of
-                <span id="camp-total-rows">0</span> entries
-            </div>
-
-            <div class="custom-dropdown" id="campRowsPerPageDropdown" style="width: 60px;min-width: 60px;">
-                <div class="dropdown-selected" style="height: 32px; padding: 5px 10px; font-size: 0.8rem;" onclick="toggleCampaignDropdown('campRowsPerPageDropdown')">
-                    <span class="selected-text">4</span>
-                    <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+            <div class="user-mini-profile">
+                <div class="avatar-circle">
+                    <img src="" id="sidebarAgencyLogo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                 </div>
-                <ul class="dropdown-options" style="bottom: 100%; top: auto; margin-bottom: 5px;">
-                    <li class="dropdown-item" onclick="changeCampaignRowsPerPage(4)">4</li>
-                    <li class="dropdown-item" onclick="changeCampaignRowsPerPage(10)">10</li>
-                    <li class="dropdown-item" onclick="changeCampaignRowsPerPage(25)">25</li>
-                    <li class="dropdown-item" onclick="changeCampaignRowsPerPage(50)">50</li>
-                    <li class="dropdown-item" onclick="changeCampaignRowsPerPage(100)">100</li>
+                <p>Agency Name</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li class="active"><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
                 </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="mainWrapper">
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count"></span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="" id="headerAgencyLogo"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                        <div class="text-info">
+                            <h4 class="display-agency-name">Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name display-agency-name">Agency Name</p> <span class="d-email"
+                                id="display-agency-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square"><img src="Images/Campaign50x50.ico"></div>
+                    <div>
+                        <h1>List Of Campaigns</h1>
+                        <p>Marketing Campaigns and their performance</p>
+                    </div>
+                </div>
+                <button type="button" onclick="openPlatformModal()" class="btn-export" style="cursor: pointer;">Add New
+                    Campaign</button>
+            </div>
+
+            <div class="filter-bar">
+
+                <div class="filter-item filter-wide">
+                    <select id="clientSearchSelect" class="search-input-field">
+                        <option></option>
+                    </select>
+                    <span id="clientError" class="error-msg">* Select Client</span>
+                </div>
+
+                <div class="filter-item filter-wide">
+                    <div class="custom-dropdown" id="campaignStatusDropdown">
+                        <div class="dropdown-selected" onclick="toggleDropdown('campaignStatusDropdown')">
+                            <span class="selected-text">All Campaigns</span><i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'All Campaigns')">
+                                All Campaigns</li>
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'Active')">Active
+                            </li>
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'Paused')">Paused
+                            </li>
+                            <li class="dropdown-item" onclick="selectItem('campaignStatusDropdown', 'Completed')">
+                                Completed</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter-item filter-wide">
+                    <div class="custom-dropdown" id="platformDropdown">
+                        <div class="dropdown-selected" onclick="toggleDropdown('platformDropdown')">
+                            <span class="selected-text">All Platforms</span><i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <ul class="dropdown-options">
+                            <li class="dropdown-item" onclick="selectItem('platformDropdown', 'All Platforms')">All
+                                Platforms</li>
+                            <li class="dropdown-item" onclick="selectItem('platformDropdown', 'meta')">Facebook Meta
+                            </li>
+                            <li class="dropdown-item" onclick="selectItem('platformDropdown', 'google')">Google Ads</li>
+                            <li class="dropdown-item" onclick="selectItem('platformDropdown', 'Both')">Both (Google &
+                                Meta)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter-item filter-date">
+                    <div class="date-wrapper"><input type="text" id="startDate" placeholder="Start Date"><i
+                            class="fa-regular fa-calendar"></i></div>
+                </div>
+                <div class="filter-item filter-date">
+                    <div class="date-wrapper"><input type="text" id="endDate" placeholder="End Date"><i
+                            class="fa-regular fa-calendar"></i></div>
+                </div>
+                <button class="btn-search" id="smallSearchBtn" style="padding: 12px 15px; height: 46px;">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+            </div>
+
+            <div class="quick-filter-row">
+                <div class="qf-item label-box"><i class="fa-solid fa-filter"></i> Filter By:</div>
+                <div class="qf-item active" onclick="applyFilter(this, 'all')">All</div>
+                <div class="qf-item" onclick="applyFilter(this, '3months')">Last 3 Months</div>
+                <div class="qf-item" onclick="applyFilter(this, '1month')">Last 1 Month</div>
+                <div class="qf-item" onclick="applyFilter(this, '7days')">Last 7 Days</div>
+            </div>
+
+            <div class="initial-search-container" id="largeSearchContainer">
+                <button class="btn-large-search" onclick="showResults()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search Campaigns
+                </button>
+            </div>
+
+            <div id="backBtnWrapper">
+                <button class="btn-action" onclick="resetPage()"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Search
+                </button>
+            </div>
+
+            <div class="glass-card">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Client Name</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Leads</th>
+                            <th>Conv.Rate</th>
+                            <th>Budget</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campaignTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination-wrapper">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="pagination-info">
+                        Showing <span id="start-row">0</span> to <span id="end-row">0</span> of
+                        <span id="total-rows">0</span> entries
+                    </div>
+
+                    <div class="custom-dropdown" id="rowsPerPageDropdown" style="width: 60px;min-width: 60px;">
+                        <div class="dropdown-selected" style="height: 32px; padding: 5px 10px; font-size: 0.8rem;"
+                            onclick="toggleDropdown('rowsPerPageDropdown')">
+                            <span class="selected-text">4</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+                        </div>
+                        <ul class="dropdown-options" style="bottom: 100%; top: auto; margin-bottom: 5px;">
+                            <li class="dropdown-item" onclick="changeRowsPerPage(4)">4</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(10)">10</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(25)">25</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(50)">50</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(100)">100</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pagination-controls">
+                    <button class="page-btn prev-btn" onclick="prevPage(event)"><i
+                            class="fa-solid fa-chevron-left"></i></button>
+                    <div id="page-numbers" class="page-numbers"></div>
+                    <button class="page-btn next-btn" onclick="nextPage(event)"><i
+                            class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-icon-box"><i class="fa-regular fa-trash-can"></i></div>
+            <h2>Delete Campaign?</h2>
+            <p>Are you sure you want to delete this campaign?</p>
+            <div class="modal-actions">
+                <button class="btn-modal btn-modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn-modal btn-modal-delete" onclick="confirmDelete()">Delete</button>
             </div>
         </div>
+    </div>
 
-        <div class="pagination-controls">
-            <button class="page-btn prev-btn" onclick="prevCampaignPage(event)"><i class="fa-solid fa-chevron-left"></i></button>
-            <div id="camp-page-numbers" class="page-numbers"></div>
-            <button class="page-btn next-btn" onclick="nextCampaignPage(event)"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="campaignDeleteModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-icon-box"><i class="fa-regular fa-trash-can"></i></div>
-        <h2>Delete Campaign?</h2>
-        <p>Are you sure you want to delete this campaign?</p>
-        <div class="modal-actions">
-            <button class="btn-modal btn-modal-cancel" onclick="closeCampaignDeleteModal()">Cancel</button>
-            <button class="btn-modal btn-modal-delete" onclick="confirmCampaignDelete()">Delete</button>
+    <div class="custom-alert-overlay" id="customAlertOverlay">
+        <div class="custom-alert-box">
+            <div class="alert-icon-box" id="alertIconBox">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="alertTitle">Alert Title</h3>
+            <p id="alertMessage">Alert Message goes here.</p>
+            <button class="btn-alert-ok">OK</button>
         </div>
     </div>
-</div>
 
-<div class="custom-alert-overlay" id="campaignAlertOverlay">
-    <div class="custom-alert-box">
-        <div class="alert-icon-box" id="campAlertIconBox">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-        <h3 id="campAlertTitle">Alert Title</h3>
-        <p id="campAlertMessage">Alert Message goes here.</p>
-        <button class="btn-alert-ok" onclick="$('#campaignAlertOverlay').removeClass('active')">OK</button>
-    </div>
-</div>
-
-<div id="platformModal" class="modal-overlay">
+    <div id="platformModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 450px;">
         <div class="modal-icon-box" style="background: rgba(74, 144, 226, 0.1); color: #4a90e2;">
             <i class="fa-solid fa-layer-group"></i>
@@ -155,13 +302,419 @@
         <p>Choose a marketing platform for your new campaign</p>
         
         <div class="modal-actions" style="flex-direction: column; gap: 12px; margin-top: 20px;">
-            <button class="btn-modal" onclick="redirectToForm('google')" style="width: 100%; background: #19914B; color: white; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <button class="btn-modal" onclick="redirectToForm('google')" 
+                style="width: 100%; background: #19914B; color: white; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
                 <i class="fa-brands fa-google"></i> Google Ads
             </button>
-            <button class="btn-modal" onclick="redirectToForm('meta')" style="width: 100%; background: #96973C; color: white; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <button class="btn-modal" onclick="redirectToForm('meta')" 
+                style="width: 100%; background: #96973C; color: white; border: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
                 <i class="fa-brands fa-facebook"></i> Facebook Meta
             </button>
-            <button class="btn-modal-cancel" onclick="closePlatformModal()" style="margin-top: 5px; background: transparent; border: none; color: #DB2C2C;">Cancel</button>
+            
+            <button class="btn-modal-cancel" onclick="closePlatformModal()" style="margin-top: 5px; background: transparent; border: none; color: #DB2C2C;">
+                Cancel
+            </button>
         </div>
     </div>
 </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/flatpickr.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        var currentPage = 1;
+        var rowsPerPage = 4;
+        var allCampaignsLocal = [];
+        var campaignIdToDelete = null;
+
+        $(document).ready(function () {
+            loadCampaignsData('all');
+
+            loadClientsForSearch();
+
+            // Select2 Initialize 
+            $('#clientSearchSelect').select2({
+                placeholder: "Select/Search Client",
+                allowClear: true,
+                width: '100%'
+            }).on('change', function () {
+                const val = $(this).val();
+                if (val && val !== "") {
+                    $("#clientError").fadeOut(); // Error hide karo jab client select ho jaye
+                    $('.select2-selection').css('border-color', ''); // Border normal karo
+                }
+
+                // Agar pehle se table dikh raha hai toh filter update karo
+                if ($("#mainWrapper").hasClass("table-visible")) {
+                    performSearch();
+                }
+            });
+
+            flatpickr("#startDate", { dateFormat: "d M, Y", theme: "dark" });
+            flatpickr("#endDate", { dateFormat: "d M, Y", theme: "dark" });
+            $("#smallSearchBtn").on("click", performSearch);
+
+            $(document).on("click", function (event) {
+                if (!$(event.target).closest('.custom-dropdown').length) {
+                    $('.custom-dropdown').removeClass('active');
+                }
+
+                if (!$(event.target).closest('.search-input-wrapper').length) {
+                    $('.suggestion-box').hide();
+                }
+            });
+        });
+
+        function loadClientsForSearch() {
+            const aid = localStorage.getItem("agencyId");
+
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all?agencyId=" + aid,
+                type: "GET",
+                success: function (data) {
+                    let dropdown = $('#clientSearchSelect');
+                    dropdown.empty();
+                    // Default placeholder or All option
+                    dropdown.append('<option value="all_clients">All Clients</option>');
+
+                    data.forEach(client => {
+                        // Mukhya Badlav: Value mein ID pass karein, Text mein Name
+                        if (client.clientName && client.id) {
+                            dropdown.append(new Option(client.clientName, client.id));
+                        }
+                    });
+                    dropdown.val(null).trigger('change');
+                }
+            });
+        }
+
+        function showResults() {
+            $("#mainWrapper").addClass("table-visible");
+            performSearch();
+        }
+
+        function resetPage() {
+            $("#mainWrapper").removeClass("table-visible");
+            $("#clientSearchSelect").val(null).trigger('change');
+            $("#suggestionList").empty().hide();
+            $("#campaignStatusDropdown .selected-text").text("All Campaigns");
+            $("#platformDropdown .selected-text").text("All Platforms");
+            $('.custom-dropdown').removeClass('active');
+            const sp = document.querySelector("#startDate")._flatpickr;
+            const ep = document.querySelector("#endDate")._flatpickr;
+            if (sp) sp.clear(); if (ep) ep.clear();
+            $('.qf-item').removeClass('active');
+            $('.qf-item:contains("All")').addClass('active');
+        }
+
+        function loadCampaignsData(filter) {
+            const aid = localStorage.getItem("agencyId"); // LocalStorage se ID uthayi
+
+            if (!aid) {
+                console.error("Agency ID not found in localStorage!");
+                return;
+            }
+
+            $.ajax({
+                url: `https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all?filter=${filter}`,
+                type: "GET",
+                headers: {
+                    "X-Agency-Id": aid // Query param ki jagah Header bhejein
+                },
+                success: function (data) {
+                    allCampaignsLocal = data;
+                    if ($("#mainWrapper").hasClass("table-visible")) {
+                        performSearch();
+                    }
+                }
+            });
+        }
+
+        function performSearch() {
+            const selClientId = $('#clientSearchSelect').val();
+            const $errorSpan = $("#clientError");
+
+            // VALIDATION LOGIC
+            if (!selClientId || selClientId === "") {
+                $errorSpan.fadeIn();
+                $('.select2-selection').css('border-color', '#ff4d4d');
+
+                displayFilteredCampaignsOnly([]);
+                $("#mainWrapper").removeClass("table-visible");
+                return false; // Function yahan stop ho jayega
+            } else {
+                // Agar selection hai toh error hatao aur aage badho
+                $errorSpan.hide();
+                $('.select2-selection').css('border-color', '');
+            }
+
+            // --- Search Logic (Start) ---
+            const selStatus = $('#campaignStatusDropdown .selected-text').text().trim();
+            const selPlatform = $('#platformDropdown .selected-text').text().trim().toLowerCase();
+            const startTS = document.querySelector("#startDate")._flatpickr.selectedDates[0]?.setHours(0, 0, 0, 0);
+            const endTS = document.querySelector("#endDate")._flatpickr.selectedDates[0]?.setHours(0, 0, 0, 0);
+
+            const filteredData = allCampaignsLocal.filter(camp => {
+                // CLIENT FILTER (Based on ID)
+                let matchClient = true;
+                if (selClientId !== "all_clients") {
+                    // camp.clientId ki comparison dropdown value se karein
+                    matchClient = (camp.clientId == selClientId);
+                }
+
+                // STATUS FILTER
+                const matchStatus = (selStatus === "All Campaigns") ? true : (camp.status === selStatus);
+
+                // PLATFORM FILTER
+                const dbPlatforms = (camp.adPlatform || "").toLowerCase();
+                let matchPlatform = true;
+                if (selPlatform === "meta") {
+                    matchPlatform = dbPlatforms.includes("meta") && !dbPlatforms.includes("google");
+                } else if (selPlatform === "google") {
+                    matchPlatform = dbPlatforms.includes("google") && !dbPlatforms.includes("meta");
+                } else if (selPlatform === "both") {
+                    matchPlatform = dbPlatforms.includes("google") && dbPlatforms.includes("meta");
+                }
+
+                // DATE FILTER
+                let matchDate = true;
+                if (camp.startDate) {
+                    const cTS = new Date(camp.startDate).setHours(0, 0, 0, 0);
+                    if (startTS && cTS < startTS) matchDate = false;
+                    if (endTS && cTS > endTS) matchDate = false;
+                }
+
+                return matchStatus && matchPlatform && matchClient && matchDate;
+            });
+
+            displayFilteredCampaignsOnly(filteredData);
+            $("#mainWrapper").addClass("table-visible");
+        }
+
+        function displayFilteredCampaignsOnly(dataList) {
+            var tbody = $("#campaignTableBody").empty();
+            if (!dataList || dataList.length === 0) {
+                tbody.append('<tr><td colspan="8" style="text-align:center; padding: 20px;">No Campaigns Found</td></tr>');
+                $("#total-rows").text(0);
+                return;
+            }
+            dataList.forEach(camp => {
+                var statusClass = camp.status === 'Active' ? 'st-active' : (camp.status === 'Completed' ? 'st-completed' : 'st-paused');
+                tbody.append(`<tr id="row-${camp.id}">
+                    <td><strong>${camp.campaignName}</strong><br><span style="font-size:0.75rem; color:#888;">Started ${camp.startDate}</span></td>
+                    <td>${camp.clientName}</td><td>${camp.targetLocation}</td>
+                    <td><span class="status-pill ${statusClass}">${camp.status}</span></td>
+                    <td>${camp.leads || 0}</td><td>${camp.conversionRate || 0}%</td><td>₹ ${camp.budget || 0}</td>
+                    <td><div class="action-icons">
+                        <a href="CampaignDetails.html?id=${camp.id}" class="action-btn"><i class="fa-regular fa-eye"></i></a>
+                        <a href="EditCampaign.html?id=${camp.id}" class="action-btn"><i class="fa-solid fa-pen"></i></a>
+                        <div class="action-btn" onclick="openDeleteModal(${camp.id})"><i class="fa-regular fa-trash-can"></i></div>
+                    </div></td></tr>`);
+            });
+            currentPage = 1;
+            initPagination();
+        }
+        function changeRowsPerPage(val) {
+            rowsPerPage = parseInt(val);
+            $('#rowsPerPageDropdown .selected-text').text(val);
+            $('#rowsPerPageDropdown').removeClass('active');
+
+            currentPage = 1; // Page wapas 1 par reset karein
+            initPagination(); // Table refresh karein
+        }
+
+        function initPagination() {
+            const rows = $('#campaignTableBody tr');
+            const totalRows = rows.length;
+            if (totalRows === 0) {
+                $('#start-row').text(0);
+                $('#end-row').text(0);
+                $('#total-rows').text(0);
+                $('#page-numbers').empty();
+                return;
+            }
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            $('#total-rows').text(totalRows);
+            rows.hide().slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage).show();
+            $('#start-row').text(((currentPage - 1) * rowsPerPage) + 1);
+            $('#end-row').text(Math.min(currentPage * rowsPerPage, totalRows));
+            let pgHtml = '';
+            for (let i = 1; i <= totalPages; i++) pgHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(event, ${i})">${i}</button>`;
+            $('#page-numbers').html(pgHtml);
+            $('.prev-btn').prop('disabled', currentPage === 1);
+            $('.next-btn').prop('disabled', currentPage === totalPages || totalPages === 0);
+        }
+
+        function goToPage(e, p) { e.stopPropagation(); currentPage = p; initPagination(); }
+        function prevPage(e) { e.stopPropagation(); if (currentPage > 1) { currentPage--; initPagination(); } }
+        function nextPage(e) { e.stopPropagation(); if (currentPage < Math.ceil($('#campaignTableBody tr').length / rowsPerPage)) { currentPage++; initPagination(); } }
+        function toggleDropdown(id) { $('.custom-dropdown').not('#' + id).removeClass('active'); $('#' + id).toggleClass('active'); }
+        function selectItem(id, text) { $('#' + id + ' .selected-text').text(text); $('#' + id).removeClass('active'); if ($("#mainWrapper").hasClass("table-visible")) performSearch(); }
+        function applyFilter(element, period) {
+            $('.qf-item').removeClass('active'); $(element).addClass('active');
+            const today = new Date(); let startDate = null;
+            if (period === '7days') { startDate = new Date(); startDate.setDate(today.getDate() - 7); }
+            else if (period === '1month') { startDate = new Date(); startDate.setMonth(today.getMonth() - 1); }
+            else if (period === '3months') { startDate = new Date(); startDate.setMonth(today.getMonth() - 3); }
+            const sp = document.querySelector("#startDate")._flatpickr;
+            const ep = document.querySelector("#endDate")._flatpickr;
+            if (period === 'all') { sp.clear(); ep.clear(); } else { sp.setDate(startDate); ep.setDate(today); }
+            if ($("#mainWrapper").hasClass("table-visible")) performSearch();
+        }
+
+        function showCustomAlert(title, message, type) {
+            $('#alertTitle').text(title);
+            $('#alertMessage').text(message);
+
+            if (type === 'success') {
+                $('#alertIconBox').html('<i class="fa-solid fa-check"></i>');
+                $('#alertIconBox').removeClass('alert-icon-error').addClass('alert-icon-success');
+            } else {
+                $('#alertIconBox').html('<i class="fa-solid fa-triangle-exclamation"></i>');
+                $('#alertIconBox').removeClass('alert-icon-success').addClass('alert-icon-error');
+            }
+
+            $('#customAlertOverlay').addClass('active');
+
+            $('.btn-alert-ok').off('click').on('click', function () {
+                $('#customAlertOverlay').removeClass('active');
+            });
+        }
+
+        function openDeleteModal(id) { campaignIdToDelete = id; $('#deleteModal').css('display', 'flex').hide().fadeIn(200).addClass('show'); }
+        function closeDeleteModal() { $('#deleteModal').removeClass('show').fadeOut(200); }
+        function confirmDelete() {
+            const aid = localStorage.getItem("agencyId"); // Agency ID uthayi
+
+            if (campaignIdToDelete && aid) {
+                $.ajax({
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/delete/" + campaignIdToDelete,
+                    type: "DELETE",
+                    headers: {
+                        "X-Agency-Id": aid // Header mein agencyId bheji security ke liye
+                    },
+                    success: function () {
+                        // Modal ko pehle band karein
+                        closeDeleteModal();
+
+                        setTimeout(() => {
+                            showCustomAlert("Deleted!", "Campaign has been removed successfully.", "success");
+                            loadCampaignsData('all');
+                        }, 400);
+                    },
+                    error: function (xhr) {
+                        closeDeleteModal();
+                        showCustomAlert("Error", "Failed to delete campaign: " + xhr.responseText, "error");
+                    }
+                });
+            }
+        }
+        $("#clientNameInput").on("input", function () {
+            let val = $(this).val().toLowerCase().trim(); let suggestionBox = $("#suggestionList"); suggestionBox.empty().hide();
+            if (val.length > 0) {
+                let uniqueNames = [...new Set(allCampaignsLocal.map(camp => camp.clientName))];
+                let matches = uniqueNames.filter(name => name.toLowerCase().replace(/\s+/g, '').startsWith(val.replace(/\s+/g, '')));
+                if (matches.length > 0) { matches.forEach(name => suggestionBox.append(`<li class="suggestion-item">${name}</li>`)); suggestionBox.show(); }
+            }
+        });
+        $(document).on("click", ".suggestion-item", function (e) {
+            e.stopPropagation(); $("#clientNameInput").val($(this).text()); $("#suggestionList").hide();
+            if ($("#mainWrapper").hasClass("table-visible")) performSearch();
+        });
+
+
+        // Modal open karne ke liye (Isme .addClass('show') add kiya hai)
+        function openPlatformModal() {
+            $('#platformModal').css('display', 'flex').hide().fadeIn(200).addClass('show');
+        }
+
+        // Modal close karne ke liye (Isme .removeClass('show') add kiya hai)
+        function closePlatformModal() {
+            $('#platformModal').removeClass('show').fadeOut(200);
+        }
+
+        // Platform select hone par redirect karne ke liye
+        // =======================================================
+        // PLATFORM MODAL & INTEGRATION CHECK LOGIC
+        // =======================================================
+
+        function openPlatformModal() {
+            $('#platformModal').css('display', 'flex').hide().fadeIn(200).addClass('show');
+        }
+
+        function closePlatformModal() {
+            $('#platformModal').removeClass('show').fadeOut(200);
+        }
+
+
+        // NAYA: Jab user modal mein platform select karta hai
+        function redirectToForm(platform) {
+            const userEmail = localStorage.getItem("agencyEmail");
+
+            if (!userEmail) {
+                showCustomAlert("Error", "Session expired. Please log in again.", "error");
+                return;
+            }
+
+            // Button par click karte hi thodi der ke liye disable karo taaki multiple click na ho
+            $('#platformModal .btn-modal').prop('disabled', true).css('opacity', '0.6');
+
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/integration/status",
+                type: "GET",
+                data: { email: userEmail },
+                success: function (response) {
+                    $('#platformModal .btn-modal').prop('disabled', false).css('opacity', '1');
+
+                    // GOOGLE Logic
+                    if (platform === "google") {
+                        if (!response.google) {
+                            closePlatformModal();
+                            showCustomAlert("Connection Required", "Redirecting to Google Ads login...", "info");
+                            setTimeout(() => {
+                                // AddCampaign ko target banakar bhej rahe hain
+                                let stateData = userEmail + "|add_campaign";
+                                window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/google/connect?email=${encodeURIComponent(stateData)}`;
+                            }, 1500);
+                        } else {
+                            // Agar connected hai, toh seedha naya campaign banane wale page par jao
+                            window.location.href = `AddNewCampaign.html?platform=google`; // File name confirm kar lena
+                        }
+                    }
+                    // FACEBOOK META Logic
+                    else if (platform === "meta") {
+                        if (!response.facebook) {
+                            closePlatformModal();
+                            showCustomAlert("Connection Required", "Redirecting to Facebook Meta login...", "info");
+                            setTimeout(() => {
+                                // AddCampaign ko target banakar bhej rahe hain
+                                let stateData = userEmail + "|add_campaign";
+                                window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/facebook/connect?email=${encodeURIComponent(stateData)}`;
+                            }, 1500);
+                        } else {
+                            // Agar connected hai, toh seedha naya campaign banane wale page par jao
+                            window.location.href = `AddNewCampaign.html?platform=meta`; // File name confirm kar lena
+                        }
+                    }
+                },
+                error: function () {
+                    $('#platformModal .btn-modal').prop('disabled', false).css('opacity', '1');
+                    closePlatformModal();
+                    showCustomAlert("Error", "Could not check connection status with the server.", "error");
+                }
+            });
+        }
+
+        // Modal ke bahar click karne par band ho jaye
+        $(window).on('click', function (event) {
+            if ($(event.target).is('#platformModal')) {
+                closePlatformModal();
+            }
+        });
+
+    </script>
+</body>
+
+</html>
