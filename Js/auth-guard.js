@@ -7,7 +7,7 @@
     if (path.includes("AgencyLogin.html") || path === "/AgencyLogin.html" || path.endsWith("AgencyLogin.html")) {
         if (isLoggedIn === "true" && agencyEmail) {
             console.log("Already logged in. Redirecting to Dashboard...");
-            window.location.replace("AgencyDashboard.html");
+            window.location.replace("index.html");
             return; 
         }
         return; 

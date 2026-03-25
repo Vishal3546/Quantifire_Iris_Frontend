@@ -1,6 +1,8 @@
 {
   "rewrites": [
-    { "source": "/",
-     "destination": "/AgencyDashboard.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
