@@ -89,7 +89,18 @@ const executePageLogic = (scriptId) => {
     else if (scriptId === "campaigns" && typeof initCampaignsPage === "function") {
         initCampaignsPage();
     }
-    // Aise hi aage aane wale pages yahan add hote jayenge...
+    else if (scriptId === "leads" && typeof initLeadsPage === "function") {
+    initLeadsPage();
+}
+else if (scriptId === "locations" && typeof initLocationsPage === "function") {
+    initLocationsPage();
+}
+else if (scriptId === "reports" && typeof initReportsPage === "function") {
+    initReportsPage();
+}
+else if (scriptId === "settings" && typeof initSettingsPage === "function") {
+    initSettingsPage();
+}
 };
 
 // 6. Global Event Listeners
