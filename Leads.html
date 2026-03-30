@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="Css/dateflatpickr.min.css">
     <link rel="stylesheet" href="Css/datestyle.css">
     <link rel="stylesheet" href="Css/bigsearchbtn.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
     <script src="Js/auth-guard.js"></script>
+
 </head>
 
 <body>
@@ -131,24 +133,20 @@
             </div>
 
             <div class="filter-bar" id="mainFilterRow">
+
                 <div class="filter-item">
-                    <div class="custom-dropdown" id="leadCampaignDropdown">
-                        <div class="dropdown-selected" onclick="toggleDropdown('leadCampaignDropdown')">
-                            <span class="selected-text" data-value="">All Campaigns</span>
-                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                    <div class="custom-dropdown" id="campaignDropdownWrap">
+                        <div class="dropdown-selected" style="padding: 0; border: none !important;">
+                            <select id="campaignSearchSelect" class="search-input-field">
+                                <option></option>
+                                <option value="all_campaigns">All Campaigns</option>
+                                <option value="Summer Sale 2025">Summer Sale 2025</option>
+                                <option value="Eco-Friendly Initiative">Eco-Friendly Initiative</option>
+                            </select>
                         </div>
-                        <ul class="dropdown-options">
-                            <input type="text" class="dropdown-search-input" placeholder="Search campaign..."
-                                onkeyup="filterDropdown(this)">
-                            <li class="dropdown-item" onclick="selectItem('leadCampaignDropdown', 'All Campaigns')">All
-                                Campaigns</li>
-                            <li class="dropdown-item" onclick="selectItem('leadCampaignDropdown', 'Summer Sale 2025')">
-                                Summer Sale 2025</li>
-                            <li class="dropdown-item"
-                                onclick="selectItem('leadCampaignDropdown', 'Eco-Friendly Initiative')">Eco-Friendly
-                                Initiative</li>
-                        </ul>
                     </div>
+                    <span id="leadCampError" class="error-msg">* Select
+                        Campaign</span>
                 </div>
 
                 <div class="filter-item">
@@ -171,26 +169,23 @@
                 </div>
 
                 <div class="filter-item">
-                    <div class="custom-dropdown" id="leadLocationDropdown">
-                        <div class="dropdown-selected" onclick="toggleDropdown('leadLocationDropdown')">
-                            <span class="selected-text" data-value="">All Locations</span>
-                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                    <div class="custom-dropdown" id="locationDropdownWrap">
+                        <div class="dropdown-selected" style="padding: 0; border: none !important;">
+                            <select id="locationSearchSelect" class="search-input-field">
+                                <option></option>
+                                <option value="all_locations">All Locations</option>
+                                <option value="Mehsana">Mehsana</option>
+                                <option value="Ahmedabad">Ahmedabad</option>
+                            </select>
                         </div>
-                        <ul class="dropdown-options">
-                            <input type="text" class="dropdown-search-input" placeholder="Search location..."
-                                onkeyup="filterDropdown(this)">
-                            <li class="dropdown-item" onclick="selectItem('leadLocationDropdown', 'All Locations')">All
-                                Locations</li>
-                            <li class="dropdown-item" onclick="selectItem('leadLocationDropdown', 'Mehsana')">Mehsana
-                            </li>
-                            <li class="dropdown-item" onclick="selectItem('leadLocationDropdown', 'Ahmedabad')">
-                                Ahmedabad</li>
-                        </ul>
                     </div>
+                    <span id="leadLocError" class="error-msg"
+                        style="display: none; color: #ff4d4d; font-size: 11px; margin-top: 5px;">* Select
+                        Location</span>
                 </div>
 
-                <button class="btn-search" id="inlineCheckBtn"
-                    style="height: 46px; width: 46px; flex: 0 0 auto; margin-left: auto; justify-content: center; padding: 0;">
+                <button class="btn-search" id="inlineCheckBtn" onclick="executeLeadSearch()"
+                    style="padding: 12px 15px; height: 46px;">
                     <i class="fa-solid fa-check"></i>
                 </button>
             </div>
@@ -268,7 +263,8 @@
 
             <div class="pagination-wrapper">
                 <div class="pagination-info">Showing <span id="start-row">1</span> to <span id="end-row">2</span> of
-                    <span id="total-rows">2</span> entries</div>
+                    <span id="total-rows">2</span> entries
+                </div>
                 <div class="pagination-controls">
                     <button class="page-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
                     <div id="page-numbers" class="page-numbers"><button class="page-btn active">1</button></div>
@@ -307,9 +303,41 @@
 
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/allagency.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
         // --- DROPDOWN & SEARCH FILTER LOGIC ---
+
+        $(document).ready(function () {
+
+            // 🔴 1. Initialize Campaign Select2
+            $('#campaignSearchSelect').select2({
+                placeholder: "Search Campaign...",
+                allowClear: true,
+                width: '100%'
+            }).on('change', function () {
+                // Jab bhi user campaign change karega, table filter hogi
+                // executeLeadFilter(); // Future mein API aane par ye call hoga
+            });
+
+            // 🔴 2. Initialize Location Select2
+            $('#locationSearchSelect').select2({
+                placeholder: "Search Location...",
+                allowClear: true,
+                width: '100%'
+            }).on('change', function () {
+                // Jab bhi user location change karega, table filter hogi
+                // executeLeadFilter(); // Future mein API aane par ye call hoga
+            });
+
+            // Platform ka dropdown select hone par bhi API call ke liye
+            $('#leadPlatformDropdown .dropdown-item').on('click', function () {
+                // executeLeadFilter(); 
+            });
+
+        });
+
+
         function toggleDropdown(id) {
             document.querySelectorAll('.custom-dropdown').forEach(d => {
                 if (d.id !== id) d.classList.remove('active');
@@ -351,11 +379,71 @@
 
         // --- BUTTON FLOW LOGIC USING YOUR CSS CLASS (table-visible) ---
         function executeLeadSearch() {
-            document.getElementById('mainContentWrapper').classList.add('table-visible');
+            const campVal = $('#campaignSearchSelect').val();
+            const locVal = $('#locationSearchSelect').val();
+            let isValid = true;
+
+            // 🔴 Campaign Check
+            if (!campVal) {
+                $('#campaignDropdownWrap').addClass('dropdown-error');
+                $('#leadCampError').fadeIn();
+                isValid = false;
+            } else {
+                $('#campaignDropdownWrap').removeClass('dropdown-error');
+                $('#leadCampError').hide();
+            }
+
+            // 🔴 Location Check
+            if (!locVal) {
+                $('#locationDropdownWrap').addClass('dropdown-error');
+                $('#leadLocError').fadeIn();
+                isValid = false;
+            } else {
+                $('#locationDropdownWrap').removeClass('dropdown-error');
+                $('#leadLocError').hide();
+            }
+
+            if (isValid) {
+                document.getElementById('mainContentWrapper').classList.add('table-visible');
+                $('.initial-search-container').hide();
+                $('#backBtnWrapper').show();
+            }
         }
+
+        // 🔴 Selection change hone par error auto-hide karne ke liye
+        $(document).ready(function () {
+            $('#campaignSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $('#campaignDropdownWrap').removeClass('dropdown-error');
+                    $('#leadCampError').fadeOut();
+                }
+            });
+
+            $('#locationSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $('#locationDropdownWrap').removeClass('dropdown-error');
+                    $('#leadLocError').fadeOut();
+                }
+            });
+        });
 
         function resetToSearch() {
             document.getElementById('mainContentWrapper').classList.remove('table-visible');
+            $('.initial-search-container').show();
+            $('#backBtnWrapper').hide();
+            // Optional: Reset values
+            // $('#campaignSearchSelect, #locationSearchSelect').val(null).trigger('change');
+        }
+
+        // Custom Dropdown toggle for Platforms
+        function toggleDropdown(id) {
+            $('.custom-dropdown').not('#' + id).removeClass('active');
+            $('#' + id).toggleClass('active');
+        }
+
+        function selectItem(dropdownId, text) {
+            $(`#${dropdownId} .selected-text`).text(text);
+            $(`#${dropdownId}`).removeClass('active');
         }
 
         // --- QUICK FILTER (Tabs) ---
